@@ -25,7 +25,7 @@
                 <div class="flex gap-4 mr-10 ml-auto items-center">
                     @auth
                         <a href="{{ url('/dashboard') }}"
-                           class="px-4 py-2 bg-[#1A1A1A] rounded-xl font-semibold text-sm text-white hover:bg-[#4C4C4C] transition duration-700">
+                           class="px-4 py-2 bg-[#1A1A1A] border border-4 border-green-600 rounded-xl font-semibold text-sm text-white hover:bg-[#4C4C4C] transition duration-700">
                             {{ Auth::user()->name }}
                         </a>
                     @else
@@ -57,7 +57,7 @@
                  alt="background"
                  class="absolute inset-0 max-h-[120px] mt-[275px] ml-[350px] object-cover">
 
-            <div class="relative max-w-[50vw] h-[20vh] m-auto">
+            <div class="relative max-w-[50vw] min-h-[20vh] m-auto">
                 <!-- Glass Card Effect -->
                 <div class="relative h-full flex items-center justify-center">
                     <div class="w-full h-full bg-slate-500/30 backdrop-blur-sm rounded-2xl shadow-md p-6 flex items-center justify-center">
@@ -74,15 +74,21 @@
             <div class="flex flex-row items-center justify-center gap-8 w-5/6 bg-white rounded-xl p-4 shadow-md">
                 @foreach ( $requirements as $requirement )
                 <div class="h-[270px] w-fit flex flex-col items-start justify-end rounded-xl" style="background-image: url('{{ $requirement['img'] }}'); background-size: cover; background-position: center;">
-                    <h1 class="font-bold text-white mx-4">{{ $requirement['statement'] }}</h1>
-                    <p class="text-[12px] text-slate-700 p-2 bg-white mx-4 my-2 rounded-md">{{ $requirement['requirement'] }}</p>
+                    <p class="text-[12px] text-slate-800 p-2 bg-white mx-4 my-2 rounded-md">{{ $requirement['requirement'] }}</p>
+                    <h1 class="font-bold text-white w-full bg-black/30 px-4 py-2 rounded-b-xl">{{ $requirement['statement'] }}</h1>
                 </div>
                 @endforeach
             </div>
         </div>
 
-        <div class="h-[80vh] flex">
-            INI COURSE
+        <div class="max-w-screen min-h-[100vh] flex">
+            <img src="/img/logo.png"
+                 alt="background"
+                 class="absolute inset-0 min-h-[300px] mt-[1175px] ml-[350px] opacity-30 object-cover">
+
+            <div>
+
+            </div>
         </div>
 
         <footer>
@@ -93,7 +99,7 @@
                         EduBridge
                     </h2>
                     <p class="text-slate-700 tracking-wide">
-                        Platform digital penyedia kursus dalam bidang Teknologi Informasi dan Bisnis Digital.
+                        {{ $definition }}
                     </p>
                 </div>
                 <div class="w-1/5 flex flex-col items-start justify-center gap-4">
@@ -112,9 +118,9 @@
                         INFO KONTAK
                     </h2>
                     <div class="flex flex-col leading-relaxed">
-                        <a>+62211234567</a>
-                        <a>edubridge@email.com</a>
-                        <a>Jakrta Selatan, Indonesia</a>
+                        <a>{{ $contact['phone'] }}</a>
+                        <a>{{ $contact['email'] }}</a>
+                        <a>{{  $contact['address'] }}</a>
                     </div>
                 </div>
             </div>

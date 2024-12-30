@@ -21,10 +21,18 @@ class GuestController extends Controller
             [
                 'img' => '/img/req-3.png',
                 'statement' => 'Tidak membatasi domisili geografis (daerah)',
-                'requirement' => 'Selama berdomisili di Indonesia'
+                'requirement' => 'Berdomisili di Indonesia'
             ]
         ];
 
-        return view('welcome', compact('requirements'));
+        $definition = "Platform digital penyedia kursus dalam bidang Teknologi Informasi dan Bisnis Digital.";
+
+        $contact = [
+                    "phone" => "0812-3456-7890",
+                    "email" => "edubridge@email.com",
+                    "address" => "Jakarta Selatan, Indonesia"
+        ];
+
+        return view('welcome', compact(['requirements', 'definition', 'contact']));
     }
 }
