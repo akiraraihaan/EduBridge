@@ -33,6 +33,39 @@ class GuestController extends Controller
                     "address" => "Jakarta Selatan, Indonesia"
         ];
 
-        return view('welcome', compact(['requirements', 'definition', 'contact']));
+        $courses = [
+            [
+                'name' => "FrontEnd Course",
+                'status' => "Available",
+                'img' => '/img/course-1.png'
+            ],
+            [
+                'name' => "BackEnd Course",
+                'status' => "Available",
+                'img' => '/img/course-2.png'
+            ],
+            [
+                'name' => "UI/UX Design Course",
+                'status' => "Available",
+                'img' => '/img/course-3.png'
+            ],
+            [
+                'name' => "Data Science Course",
+                'status' => "Available",
+                'img' => '/img/course-4.png'
+            ],
+            [
+                'name' => "Artificial Intelligence",
+                'status' => "Available",
+                'img' => '/img/course-1.png'
+            ],
+            [
+                'name' => "Machine Learning",
+                'status' => "Available",
+                'img' => '/img/course-2.png'
+            ],
+        ];
+
+        return view('welcome', compact(['requirements', 'definition', 'contact', 'courses']));
     }
 }
