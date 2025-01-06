@@ -24,7 +24,7 @@
         </div>
 
         <!-- Navbar -->
-        <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-sm border-b border-white/50">
+        <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-md border-b border-white/50">
             <div class="px-4 md:ml-10 flex justify-center items-center animate-fade-in">
                 <h1 class="font-bold italic p-2 text-slate-800">{{ config('app.name') }}</h1>
             </div>
@@ -538,7 +538,7 @@
                     <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
                         @foreach(\App\Models\Course::all() as $course)
                         <a href="#" class="shadow-lg w-fit bg-white rounded-3xl hover:shadow-2xl transition duration-600">
-                            <img src="{{ $course->image_url ?? asset('img/course-placeholder.jpg') }}" class="max-h-[266px] p-2">
+                            <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}" class="max-h-[266px] p-2">
                             <h2 class="text-[20px] font-bold ml-4">{{ $course->name }}</h2>
                             <p class="text-[13px] font-medium text-[#9A9A9A] ml-4 pb-2">{{ $course->status ?? 'Available' }}</p>
                         </a>
