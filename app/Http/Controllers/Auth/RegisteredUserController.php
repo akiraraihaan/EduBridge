@@ -23,7 +23,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $role = request()->query('role', 'student');
+        return view('auth.register', ['defaultRole' => $role]);
     }
 
     /**
@@ -31,87 +32,105 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'birth_date' => [
-                'required',
-                'date',
-                function ($attribute, $value, $fail) use ($request) {
-                    $age = Carbon::parse($value)->age;
+        try {
+            $request->validate([
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'birth_date' => [
+                    'required',
+                    'date',
+                    function ($attribute, $value, $fail) use ($request) {
+                        $age = Carbon::parse($value)->age;
 
-                    if ($request->role_id == 3 && ($age < 17 || $age > 30)) {
-                        $fail('Usia untuk student harus antara 17-30 tahun.');
-                    }
+                        if ($request->role_id == 3 && ($age < 17 || $age > 30)) {
+                            $fail('Usia untuk student harus antara 17-30 tahun.');
+                        }
 
-                    if ($request->role_id == 2 && $age < 17) {
-                        $fail('Usia untuk mentor minimal 17 tahun.');
-                    }
-                },
-            ],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'whatsapp' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role_id' => ['required', 'in:2,3'],
+                        if ($request->role_id == 2 && $age < 17) {
+                            $fail('Usia untuk mentor minimal 17 tahun.');
+                        }
+                    },
+                ],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'whatsapp' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'role_id' => ['required', 'in:2,3'],
 
-            // Student validation
-            'profession' => ['required_if:role_id,3', 'nullable', 'string', 'max:255'],
-            'course_id' => ['required_if:role_id,3', 'nullable', 'exists:courses,id'],
-            'reason' => ['required_if:role_id,3', 'nullable', 'string'],
+                // Student validation
+                'profession' => ['required_if:role_id,3', 'nullable', 'string', 'max:255'],
+                'course_id' => ['required_if:role_id,3', 'nullable', 'exists:courses,id'],
+                'reason' => ['required_if:role_id,3', 'nullable', 'string'],
 
-            // Mentor validation
-            'education_background' => ['required_if:role_id,2', 'nullable', 'string'],
-            'certifications_file' => [
-                'required_if:role_id,2',
-                'nullable',
-                'file',
-                'mimes:pdf',
-                'max:2048' // maksimal 2MB
-            ],
-            'preferred_course' => ['required_if:role_id,2', 'nullable', 'exists:courses,id'],
-        ]);
-
-        $userData = [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'birth_date' => $request->birth_date,
-            'email' => $request->email,
-            'whatsapp' => $request->whatsapp,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-            'is_active' => true,
-        ];
-
-        $user = User::create($userData);
-
-        // Jika student, simpan data student
-        if ($request->role_id == 3) {
-            $user->update([
-                'profession' => $request->profession,
-                'course_id' => $request->course_id,
-                'reason' => $request->reason,
+                // Mentor validation
+                'education_background' => ['required_if:role_id,2', 'nullable', 'string'],
+                'certifications_file' => [
+                    'required_if:role_id,2',
+                    'nullable',
+                    'file',
+                    'mimes:pdf',
+                    'max:2048'
+                ],
+                'preferred_course' => ['required_if:role_id,2', 'nullable', 'exists:courses,id'],
             ]);
-        }
 
-        // Jika mentor, simpan data mentor
-        if ($request->role_id == 2) {
-            // Upload file sertifikasi
-            if ($request->hasFile('certifications_file')) {
-                $path = $request->file('certifications_file')->store('certifications', 'public');
+            $userData = [
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'birth_date' => $request->birth_date,
+                'email' => $request->email,
+                'whatsapp' => $request->whatsapp,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->role_id,
+                'is_active' => true,
+            ];
+
+            $user = User::create($userData);
+
+            // Jika student, simpan data student
+            if ($request->role_id == 3) {
+                $user->update([
+                    'profession' => $request->profession,
+                    'course_id' => $request->course_id,
+                    'reason' => $request->reason,
+                ]);
             }
 
-            $user->update([
-                'education_background' => $request->education_background,
-                'certifications_file' => $path ?? null,
-                'preferred_course' => $request->preferred_course,
-            ]);
+            // Jika mentor, simpan data mentor
+            if ($request->role_id == 2) {
+                // Upload file sertifikasi
+                if ($request->hasFile('certifications_file')) {
+                    $path = $request->file('certifications_file')->store('certifications', 'public');
+                }
+
+                $user->update([
+                    'education_background' => $request->education_background,
+                    'certifications_file' => $path ?? null,
+                    'preferred_course' => $request->preferred_course,
+                ]);
+            }
+
+            event(new Registered($user));
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Registrasi berhasil! Silakan login dengan akun Anda.'
+                ]);
+            }
+
+            return redirect()->route('login')
+                ->with('status', 'Registrasi berhasil! Silakan login dengan akun Anda.');
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ], 422);
+            }
+
+            throw $e;
         }
-
-        event(new Registered($user));
-
-        return redirect()->route('login')
-            ->with('status', 'Registrasi berhasil! Silakan login dengan akun Anda.');
     }
 }

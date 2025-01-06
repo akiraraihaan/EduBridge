@@ -1,7 +1,7 @@
 @props(['disabled' => false])
 
 <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
-    'class' => 'w-full px-3 sm:px-4 py-2 sm:py-3
+    'class' => 'w-full pr-3 sm:pr-4 py-2 sm:py-3
               bg-white/70 backdrop-blur-md border-0
               rounded-lg sm:rounded-xl
               shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)]

@@ -19,7 +19,7 @@
                     </svg>
                     Kembali
                 </a>
-                <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="h-8 sm:h-10 md:h-12 mx-auto mb-3 sm:mb-4 opacity-70">
+                <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="h-8 sm:h-10 md:h-12 mx-auto mb-3 sm:mb-4">
             </div>
 
             <!-- Role Selection -->
@@ -124,7 +124,7 @@
                     <div id="mentor-fields" class="space-y-6 hidden">
                         <div>
                             <x-input-label for="education_background" :value="__('Latar Belakang Pendidikan')" class="text-sm sm:text-base" />
-                            <textarea id="education_background" name="education_background" rows="3" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('education_background') }}</textarea>
+                            <textarea id="education_background" name="education_background" rows="3" class="w-full px-4 py-3 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)] transition duration-200 ease-in-out text-slate-600 placeholder:text-slate-400 hover:bg-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.03)] focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-100/50 disabled:opacity-50 disabled:cursor-not-allowed">{{ old('education_background') }}</textarea>
                             <x-input-error :messages="$errors->get('education_background')" class="mt-2 text-xs sm:text-sm" />
                         </div>
 
@@ -143,8 +143,8 @@
 
                         <div>
                             <x-input-label for="preferred_course" :value="__('Kursus yang Ingin Diajar')" class="text-sm sm:text-base" />
-                            <select id="preferred_course" name="preferred_course" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                <option value="">Pilih Kursus</option>
+                            <select id="preferred_course" name="preferred_course" class="w-full px-4 py-3 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)] transition duration-200 ease-in-out text-slate-600 placeholder:text-slate-400 hover:bg-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.03)] focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-100/50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <option value="" disabled selected>Pilih Kursus</option>
                                 @foreach(\App\Models\Course::all() as $course)
                                     <option value="{{ $course->id }}">{{ $course->name }}</option>
                                 @endforeach
@@ -228,8 +228,14 @@
                             {{ __('Sudah punya akun?') }}
                         </a>
 
-                        <button type="submit" class="ml-3 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-lg sm:rounded-xl font-medium text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 ease-in-out">
-                            {{ __('Daftar') }}
+                        <button type="submit" id="submit-btn" onclick="submitForm(event)" class="ml-3 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-lg sm:rounded-xl font-medium text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 ease-in-out relative">
+                            <span id="btn-text">{{ __('Daftar') }}</span>
+                            <span id="btn-loader" class="hidden absolute inset-0 items-center justify-center">
+                                <svg class="animate-spin h-5 w-5 text-slate-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </span>
                         </button>
                     </div>
                 </form>
@@ -299,6 +305,15 @@
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 0.5rem center;
             background-size: 1.5em 1.5em;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.3s ease-in-out;
         }
     </style>
 
@@ -373,7 +388,142 @@
 
         // Set initial role
         document.addEventListener('DOMContentLoaded', () => {
-            selectRole('student');
+            selectRole('{{ $defaultRole }}');
+        });
+
+        function submitForm(e) {
+            e.preventDefault();
+            console.log('Form submission started');
+
+            const form = document.getElementById('registerForm');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoader = document.getElementById('btn-loader');
+            const roleId = document.getElementById('role_id').value;
+
+            console.log('Role ID:', roleId);
+
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+
+            // Reset all error states
+            form.querySelectorAll('.border-red-500').forEach(el => {
+                el.classList.remove('border-red-500');
+            });
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Validate required fields based on role
+            requiredFields.forEach(field => {
+                const parentDiv = field.closest('div[id$="-fields"]');
+                if (!field.value && (!parentDiv || !parentDiv.classList.contains('hidden'))) {
+                    console.log('Invalid field:', field.id);
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                    field.classList.add('animate-shake');
+                    setTimeout(() => field.classList.remove('animate-shake'), 500);
+                }
+            });
+
+            // Validate password match
+            const password = document.getElementById('password');
+            const confirmation = document.getElementById('password_confirmation');
+            if (password.value !== confirmation.value) {
+                isValid = false;
+                password.classList.add('border-red-500');
+                confirmation.classList.add('border-red-500');
+                document.getElementById('password-match-error').classList.remove('hidden');
+            }
+
+            // Validate age
+            const birthDate = document.getElementById('birth_date');
+            const age = calculateAge(birthDate.value);
+
+            if (roleId == 3 && (age < 17 || age > 30)) {
+                isValid = false;
+                birthDate.classList.add('border-red-500');
+                document.getElementById('age-error').classList.remove('hidden');
+            } else if (roleId == 2 && age < 17) {
+                isValid = false;
+                birthDate.classList.add('border-red-500');
+                document.getElementById('age-error').classList.remove('hidden');
+            }
+
+            // Additional validation for mentor
+            if (roleId == 2) {
+                const educationBackground = document.getElementById('education_background');
+                const preferredCourse = document.getElementById('preferred_course');
+                const certificationsFile = document.getElementById('certifications_file');
+
+                if (!educationBackground.value) {
+                    isValid = false;
+                    educationBackground.classList.add('border-red-500');
+                }
+
+                if (!preferredCourse.value) {
+                    isValid = false;
+                    preferredCourse.classList.add('border-red-500');
+                }
+
+                if (!certificationsFile.files.length) {
+                    isValid = false;
+                    certificationsFile.classList.add('border-red-500');
+                }
+            }
+
+            console.log('Form validation result:', isValid);
+
+            if (!isValid) {
+                return false;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.classList.add('invisible');
+            btnLoader.classList.remove('hidden');
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Submit form using fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Redirect to login with success message
+                    window.location.href = '{{ route('login') }}?status=success&message=Registrasi+berhasil!+Silakan+login+dengan+akun+Anda.';
+                } else {
+                    // Show error message
+                    console.error('Registration failed:', data);
+                    submitBtn.disabled = false;
+                    btnText.classList.remove('invisible');
+                    btnLoader.classList.add('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                submitBtn.disabled = false;
+                btnText.classList.remove('invisible');
+                btnLoader.classList.add('hidden');
+            });
+        }
+
+        // Add input handler to remove red border
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('input', function() {
+                this.classList.remove('border-red-500');
+                const errorElement = this.parentElement.querySelector('.error-message');
+                if (errorElement) {
+                    errorElement.classList.add('hidden');
+                }
+            });
         });
     </script>
 </x-guest-layout>
