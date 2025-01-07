@@ -9,6 +9,9 @@
         </div>
     </div>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="min-h-screen py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md mx-auto space-y-4 sm:space-y-6 md:space-y-8">
             <!-- Header -->
@@ -28,16 +31,36 @@
                 <form id="loginForm" method="POST" action="{{ route('login') }}" class="space-y-4 sm:space-y-6">
                     @csrf
 
-                    @if (session('status'))
-                        <div class="mb-4 p-3 sm:p-4 rounded-xl bg-green-50/80 backdrop-blur-sm border border-green-200 text-green-700 animate-fade-in">
-                            {{ session('status') }}
-                        </div>
+                    @if (session('success'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: '{{ session('success') }}',
+                                    confirmButtonColor: '#3085d6',
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
+                                });
+                            });
+                        </script>
                     @endif
 
-                    @if (session('success'))
-                        <div class="mb-4 p-3 sm:p-4 rounded-xl bg-green-50/80 backdrop-blur-sm border border-green-200 text-green-700 animate-fade-in">
-                            {{ session('success') }}
-                        </div>
+                    @if (session('status'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Info',
+                                    text: '{{ session('status') }}',
+                                    confirmButtonColor: '#3085d6',
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false
+                                });
+                            });
+                        </script>
                     @endif
 
                     <div class="space-y-1 sm:space-y-2">

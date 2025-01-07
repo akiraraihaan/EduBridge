@@ -9,6 +9,9 @@
         </div>
     </div>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="min-h-screen py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto space-y-4 sm:space-y-6 md:space-y-8">
             <!-- Header -->
@@ -457,13 +460,27 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Tampilkan alert sukses
-                    alert('Akun berhasil dibuat! Silakan login dengan akun Anda.');
-                    // Redirect ke halaman login
-                    window.location.href = '{{ route('login') }}';
+                    // Tampilkan SweetAlert2 sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Akun berhasil dibuat! Silakan login dengan akun Anda.',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '{{ route('login') }}';
+                        }
+                    });
                 } else if (data.errors && data.errors.email) {
-                    // Tampilkan alert untuk email yang sudah terdaftar
-                    alert(data.errors.email[0]);
+                    // Tampilkan SweetAlert2 untuk email yang sudah terdaftar
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.errors.email[0],
+                        confirmButtonColor: '#3085d6'
+                    });
                     // Reset loading state
                     submitBtn.disabled = false;
                     btnText.classList.remove('invisible');
@@ -475,7 +492,13 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert(error.message);
+                // Tampilkan SweetAlert2 untuk error umum
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.message,
+                    confirmButtonColor: '#3085d6'
+                });
                 // Reset loading state
                 submitBtn.disabled = false;
                 btnText.classList.remove('invisible');
