@@ -35,6 +35,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         try {
+            // Cek apakah email sudah terdaftar (terlepas dari role)
+            $existingUser = User::where('email', $request->email)->first();
+            if ($existingUser) {
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status' => 'error',
+                        'errors' => [
+                            'email' => ['Email ini sudah terdaftar. Silakan gunakan email lain.']
+                        ]
+                    ], 422);
+                }
+                return back()
+                    ->withInput()
+                    ->withErrors(['email' => 'Email ini sudah terdaftar. Silakan gunakan email lain.'])
+                    ->with('error_type', 'email');
+            }
+
             $request->validate([
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['required', 'string', 'max:255'],
@@ -53,7 +70,7 @@ class RegisteredUserController extends Controller
                         }
                     },
                 ],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'whatsapp' => ['required', 'string', 'max:255'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'role_id' => ['required', 'in:2,3'],
@@ -121,15 +138,23 @@ class RegisteredUserController extends Controller
             }
 
             return redirect()->route('login')
-                ->with('status', 'Registrasi berhasil! Silakan login dengan akun Anda.');
+                ->with('success', 'Akun telah berhasil dibuat! Silakan login dengan akun Anda.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validasi gagal',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+            throw $e;
         } catch (\Exception $e) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 'error',
                     'message' => $e->getMessage()
-                ], 422);
+                ], 500);
             }
-
             throw $e;
         }
     }

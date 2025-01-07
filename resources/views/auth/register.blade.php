@@ -78,14 +78,19 @@
                     <div>
                         <x-input-label for="birth_date" :value="__('Tanggal Lahir')" class="text-sm sm:text-base" />
                         <x-text-input id="birth_date" class="block mt-1 w-full text-sm sm:text-base" type="date" name="birth_date" :value="old('birth_date')" required onchange="validateAge()" />
-                        <x-input-error :messages="$errors->get('birth_date')" class="mt-2 text-xs sm:text-sm" />
+                        @error('birth_date')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                         <p id="age-error" class="mt-2 text-sm text-red-600 hidden"></p>
                     </div>
 
                     <div>
                         <x-input-label for="email" :value="__('Email')" class="text-sm sm:text-base" />
                         <x-text-input id="email" class="block mt-1 w-full text-sm sm:text-base" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs sm:text-sm" />
+                        @error('email')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        <p id="email-error" class="mt-2 text-sm text-red-600 hidden"></p>
                     </div>
 
                     <div>
@@ -391,6 +396,36 @@
             selectRole('{{ $defaultRole }}');
         });
 
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const errorElement = document.getElementById('email-error');
+            const email = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            errorElement.classList.add('hidden');
+            emailInput.classList.remove('border-red-500');
+
+            if (!email) {
+                errorElement.textContent = 'Email tidak boleh kosong.';
+                errorElement.classList.remove('hidden');
+                emailInput.classList.add('border-red-500');
+                return false;
+            }
+
+            if (!emailRegex.test(email)) {
+                errorElement.textContent = 'Format email tidak valid.';
+                errorElement.classList.remove('hidden');
+                emailInput.classList.add('border-red-500');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Tambahkan event listener untuk validasi email
+        document.getElementById('email').addEventListener('input', validateEmail);
+        document.getElementById('email').addEventListener('blur', validateEmail);
+
         function submitForm(e) {
             e.preventDefault();
             console.log('Form submission started');
@@ -401,87 +436,11 @@
             const btnLoader = document.getElementById('btn-loader');
             const roleId = document.getElementById('role_id').value;
 
-            console.log('Role ID:', roleId);
-
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('[required]');
-
-            // Reset all error states
-            form.querySelectorAll('.border-red-500').forEach(el => {
-                el.classList.remove('border-red-500');
-            });
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.classList.add('hidden');
-            });
-
-            // Validate required fields based on role
-            requiredFields.forEach(field => {
-                const parentDiv = field.closest('div[id$="-fields"]');
-                if (!field.value && (!parentDiv || !parentDiv.classList.contains('hidden'))) {
-                    console.log('Invalid field:', field.id);
-                    isValid = false;
-                    field.classList.add('border-red-500');
-                    field.classList.add('animate-shake');
-                    setTimeout(() => field.classList.remove('animate-shake'), 500);
-                }
-            });
-
-            // Validate password match
-            const password = document.getElementById('password');
-            const confirmation = document.getElementById('password_confirmation');
-            if (password.value !== confirmation.value) {
-                isValid = false;
-                password.classList.add('border-red-500');
-                confirmation.classList.add('border-red-500');
-                document.getElementById('password-match-error').classList.remove('hidden');
-            }
-
-            // Validate age
-            const birthDate = document.getElementById('birth_date');
-            const age = calculateAge(birthDate.value);
-
-            if (roleId == 3 && (age < 17 || age > 30)) {
-                isValid = false;
-                birthDate.classList.add('border-red-500');
-                document.getElementById('age-error').classList.remove('hidden');
-            } else if (roleId == 2 && age < 17) {
-                isValid = false;
-                birthDate.classList.add('border-red-500');
-                document.getElementById('age-error').classList.remove('hidden');
-            }
-
-            // Additional validation for mentor
-            if (roleId == 2) {
-                const educationBackground = document.getElementById('education_background');
-                const preferredCourse = document.getElementById('preferred_course');
-                const certificationsFile = document.getElementById('certifications_file');
-
-                if (!educationBackground.value) {
-                    isValid = false;
-                    educationBackground.classList.add('border-red-500');
-                }
-
-                if (!preferredCourse.value) {
-                    isValid = false;
-                    preferredCourse.classList.add('border-red-500');
-                }
-
-                if (!certificationsFile.files.length) {
-                    isValid = false;
-                    certificationsFile.classList.add('border-red-500');
-                }
-            }
-
-            console.log('Form validation result:', isValid);
-
-            if (!isValid) {
-                return false;
-            }
-
             // Show loading state
             submitBtn.disabled = true;
             btnText.classList.add('invisible');
             btnLoader.classList.remove('hidden');
+            btnLoader.classList.add('flex');
 
             // Create FormData object
             const formData = new FormData(form);
@@ -491,27 +450,37 @@
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                    'Accept': 'application/json'
                 }
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Redirect to login with success message
-                    window.location.href = '{{ route('login') }}?status=success&message=Registrasi+berhasil!+Silakan+login+dengan+akun+Anda.';
-                } else {
-                    // Show error message
-                    console.error('Registration failed:', data);
+                    // Tampilkan alert sukses
+                    alert('Akun berhasil dibuat! Silakan login dengan akun Anda.');
+                    // Redirect ke halaman login
+                    window.location.href = '{{ route('login') }}';
+                } else if (data.errors && data.errors.email) {
+                    // Tampilkan alert untuk email yang sudah terdaftar
+                    alert(data.errors.email[0]);
+                    // Reset loading state
                     submitBtn.disabled = false;
                     btnText.classList.remove('invisible');
                     btnLoader.classList.add('hidden');
+                    btnLoader.classList.remove('flex');
+                } else {
+                    throw new Error('Terjadi kesalahan saat mendaftar');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert(error.message);
+                // Reset loading state
                 submitBtn.disabled = false;
                 btnText.classList.remove('invisible');
                 btnLoader.classList.add('hidden');
+                btnLoader.classList.remove('flex');
             });
         }
 

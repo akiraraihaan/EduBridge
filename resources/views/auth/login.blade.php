@@ -34,6 +34,12 @@
                         </div>
                     @endif
 
+                    @if (session('success'))
+                        <div class="mb-4 p-3 sm:p-4 rounded-xl bg-green-50/80 backdrop-blur-sm border border-green-200 text-green-700 animate-fade-in">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <div class="space-y-1 sm:space-y-2">
                         <x-input-label for="email" :value="__('Email')" class="text-sm sm:text-base" />
                         <div class="relative">
