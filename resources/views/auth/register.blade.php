@@ -22,7 +22,7 @@
                     </svg>
                     Kembali
                 </a>
-                <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="h-8 sm:h-10 md:h-12 mx-auto mb-3 sm:mb-4">
+                <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="h-8 sm:h-10 md:h-12 mx-auto mb-3 sm:mb-4">
             </div>
 
             <!-- Role Selection -->

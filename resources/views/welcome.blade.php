@@ -40,7 +40,7 @@
         </div>
 
         <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
-            <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[35px]">
+            <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[35px]">
         </div>
 
         @if (Route::has('login'))
