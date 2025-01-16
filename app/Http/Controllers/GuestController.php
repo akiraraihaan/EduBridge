@@ -27,12 +27,6 @@ class GuestController extends Controller
 
         $definition = "Platform digital penyedia kursus dalam bidang Teknologi Informasi dan Bisnis Digital.";
 
-        $contact = [
-                    "phone" => "0812-3456-7890",
-                    "email" => "edubridge@email.com",
-                    "address" => "Jakarta Selatan, Indonesia"
-        ];
-
         $courses = [
             [
                 'name' => "FrontEnd Course",
@@ -66,6 +60,6 @@ class GuestController extends Controller
             ],
         ];
 
-        return view('welcome', compact(['requirements', 'definition', 'contact', 'courses']));
+        return view('welcome', compact(['requirements', 'definition', 'courses']));
     }
 }

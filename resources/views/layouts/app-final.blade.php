@@ -228,51 +228,48 @@
 
     <!-- Footer -->
     <footer>
-        <div class="max-w-screen flex flex-col md:flex-row items-start py-20 justify-between px-4 md:px-20 bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90%">
-            <div class="w-full md:w-1/5 flex flex-col items-center justify-center gap-4 mb-8 md:mb-0">
+        <div class="max-w-screen flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-20 bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90%">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
                 <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="max-h-[45px]">
                 <h2 class="text-xl font-bold italic">
-                    EduBridge
+                    {{ env('APP_NAME') }}
                 </h2>
                 <p class="text-slate-700 tracking-wide text-center md:text-left">
-                    Platform pembelajaran digital yang menghubungkan siswa dengan mentor terbaik.
+                    {{ $footerData['description'] }}
                 </p>
             </div>
-            <div class="w-full md:w-1/5 flex flex-col items-center md:items-start justify-center gap-4 mb-8 md:mb-0">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
                 <h2 class="text-xl font-bold tracking-wide">
                     PUSAT BANTUAN
                 </h2>
-                <div class="flex flex-col leading-relaxed items-center md:items-start">
-                    <a href="#" class="hover:text-orange-700 transition duration-700">Kursus</a>
-                    <a href="#" class="hover:text-orange-700 transition duration-700">Pendaftaran</a>
-                    <a href="{{ route('about') }}" class="hover:text-orange-700 transition duration-700">Tentang Kami</a>
+                <div class="flex flex-col items-center leading-relaxed">
+                    @foreach($footerData['quickLinks'] as $link)
+                        <a href="{{ $link['url'] }}" class="hover:text-orange-700 transition duration-700">{{ $link['title'] }}</a>
+                    @endforeach
                 </div>
             </div>
-            <div class="w-full md:w-1/5 flex flex-col items-center md:items-start justify-center gap-4">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
                 <h2 class="text-xl font-bold tracking-wide">
                     INFO KONTAK
                 </h2>
-                <div class="flex flex-col leading-relaxed items-center md:items-start gap-4">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        <a href="#" class="hover:text-orange-700 transition duration-700">(021) 1234-5678</a>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <a href="#" class="hover:text-orange-700 transition duration-700">info@edubridge.com</a>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <a href="#" class="hover:text-orange-700 transition duration-700">Jakarta, Indonesia</a>
-                    </div>
+                <div class="flex flex-col items-center leading-relaxed">
+                    <a href="tel:{{ $footerData['contact']['phone'] }}" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['phone'] }}</a>
+                    <a href="mailto:{{ $footerData['contact']['email'] }}" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['email'] }}</a>
+                    <a href="https://maps.app.goo.gl/a69inXUNvLjRhbFP9" target="_blank" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['address'] }}</a>
                 </div>
+            </div>
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold tracking-wide">
+                    LOKASI KAMI
+                </h2>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2847154493584!2d106.78640777490325!3d-6.228550760602384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f13094c83677%3A0x1f4300031365732b!2sUniversitas%20Pertamina!5e0!3m2!1sid!2sid!4v1699486471099!5m2!1sid!2sid"
+                    class="w-full h-48 rounded-lg"
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
         <div class="bg-[#1A1A1A] w-full flex items-center justify-center py-4">
