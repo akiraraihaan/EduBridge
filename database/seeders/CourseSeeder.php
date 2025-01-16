@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -9,6 +10,8 @@ class CourseSeeder extends Seeder
 {
     public function run()
     {
+        Course::truncate();
+
         $courses = [
             [
                 'name' => 'Front End',

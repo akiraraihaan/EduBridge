@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('whatsapp');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('role_id')->constrained();
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->boolean('is_active')->default(true);
             $table->string('profile_image')->nullable();
             $table->text('bio')->nullable();

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'EduBridge') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,9 +63,14 @@
                             <div
                                 class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="px-1">
-                                    <a href="#"
+                                    <a href="{{ route('dashboard') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Dashboard
+                                    </a>
+                                    <a href="{{ route('admin.batches.index') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
+                                        Manajemen Batch
+                                        {{-- @dd(Auth::user()->isAdmin()) --}}
                                     </a>
                                     <a href="#"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
@@ -495,10 +501,10 @@
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                             <h2 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h2>
                             <div class="space-y-4">
-                                <button
+                                <a href="{{ route('admin.batches.index') }}"
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700">
-                                    Tambah Kursus Baru
-                                </button>
+                                    Kelola Batch
+                                </a>
                                 <button
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
                                     Kelola User
