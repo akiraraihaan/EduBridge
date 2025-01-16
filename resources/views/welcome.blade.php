@@ -84,15 +84,20 @@
         </div>
 
         <!-- Get Skilled Section -->
-        <div class="w-full bg-gradient-to-r from-orange-500 to-orange-400 py-20">
+        <div class="w-full bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% py-12 shadow-lg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-4xl font-bold text-white mb-8">Get Skilled with Payless Education</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-12">Persyaratan Peserta</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
                         @foreach($requirements as $requirement)
-                            <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                                <h3 class="text-xl font-semibold text-white mb-4">{{ $requirement['statement'] }}</h3>
-                                <p class="text-white/90">{{ $requirement['requirement'] }}</p>
+                            <div class="bg-white/80 rounded-xl shadow-md border border-white/50 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-[280px] group">
+                                <div class="h-[140px] w-full bg-gradient-to-b from-orange-50/50 to-white/50 relative overflow-hidden">
+                                    <img src="{{ asset($requirement['img']) }}" alt="Requirement Icon" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300">
+                                </div>
+                                <div class="p-5 flex-1 flex flex-col">
+                                    <h3 class="text-lg font-semibold text-slate-800 mb-2 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-blue-400 group-hover:text-transparent group-hover:bg-clip-text transition-colors duration-300">{{ $requirement['statement'] }}</h3>
+                                    <p class="text-slate-600 text-sm">{{ $requirement['requirement'] }}</p>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -350,7 +355,7 @@
 
     <!-- Preview Courses Section -->
     @guest
-        <div class="max-w-screen min-h-[1500px] flex relative">
+        <div class="max-w-screen min-fit flex relative">
             <img src="/img/logo.png" alt="background" class="absolute min-h-[400px] m-auto inset-0 opacity-10 object-cover z-0">
 
             <div class="w-screen flex flex-col items-center justify-start z-10">

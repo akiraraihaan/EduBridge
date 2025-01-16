@@ -1,29 +1,56 @@
 <x-app-final-layout>
     <!-- Header -->
-    <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-xl">
+    <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-lg mt-16">
         <h2 class="text-2xl font-semibold">Tentang</h2>
         <h1 class="text-3xl font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight">
             EduBridge</h1>
     </header>
 
     <!-- Vision & Mission Section -->
-    <div class="relative py-20 overflow-hidden">
-        <div class="relative max-w-5xl mx-auto">
-            <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-200/60">
-                <div class="flex flex-col items-center text-center space-y-8">
-                    <div class="space-y-4">
-                        <h2 class="text-2xl font-bold text-slate-800">Visi Kami</h2>
-                        <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">
-                            {{ $data['vision'] }}
-                        </p>
+    <div class="relative py-12 md:py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-blue-50 opacity-50"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Vision Section -->
+                <div class="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-orange-100 rounded-2xl">
+                                <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">Visi Kami</h2>
+                        </div>
+                        <div class="flex-grow flex items-center">
+                            <p class="text-lg text-gray-700 leading-relaxed">
+                                {{ $data['vision'] }}
+                            </p>
+                        </div>
                     </div>
-                    <div class="space-y-4">
-                        <h2 class="text-2xl font-bold text-slate-800">Misi Kami</h2>
-                        <ul class="space-y-2">
-                            @foreach($data['missions'] as $mission)
-                                <li class="text-lg text-gray-700">{{ $mission }}</li>
-                            @endforeach
-                        </ul>
+                </div>
+
+                <!-- Mission Section -->
+                <div class="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-blue-100 rounded-2xl">
+                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Misi Kami</h2>
+                        </div>
+                        <div class="flex-grow flex items-center">
+                            <ul class="space-y-4 w-full">
+                                @foreach($data['missions'] as $mission)
+                                    <li class="flex items-start space-x-3">
+                                        <span class="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-blue-500"></span>
+                                        <span class="text-lg text-gray-700">{{ $mission }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,45 +96,13 @@
     </div>
 
     <!-- Contact Section -->
-    <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% py-20">
+    <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% pt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
+            <div class="text-center">
                 <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Hubungi Kami</h2>
                 <p class="text-lg text-gray-600">Kami siap membantu Anda</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Email</h3>
-                    <p class="text-gray-600">{{ $data['contact']['email'] }}</p>
-                </div>
-
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Telepon</h3>
-                    <p class="text-gray-600">{{ $data['contact']['phone'] }}</p>
-                </div>
-
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
-                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Alamat</h3>
-                    <p class="text-gray-600">{{ $data['contact']['address'] }}</p>
-                </div>
-            </div>
         </div>
     </div>
 </x-app-final-layout>
