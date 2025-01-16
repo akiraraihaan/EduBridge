@@ -95,7 +95,7 @@
                                     <img src="{{ asset($requirement['img']) }}" alt="Requirement Icon" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300">
                                 </div>
                                 <div class="p-5 flex-1 flex flex-col">
-                                    <h3 class="text-lg font-semibold text-slate-800 mb-2 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-blue-400 group-hover:text-transparent group-hover:bg-clip-text transition-colors duration-300">{{ $requirement['statement'] }}</h3>
+                                    <h3 class="text-lg font-semibold text-slate-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-blue-400 group-hover:bg-clip-text transition-colors duration-300">{{ $requirement['statement'] }}</h3>
                                     <p class="text-slate-600 text-sm">{{ $requirement['requirement'] }}</p>
                                 </div>
                             </div>

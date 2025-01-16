@@ -30,11 +30,13 @@
     <!-- Navbar -->
     <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-md border-b border-white/50">
         <div class="px-4 md:ml-10 flex justify-center items-center animate-fade-in">
-            <h1 class="font-bold italic p-2 text-slate-800">{{ config('app.name') }}</h1>
+            <a href="{{ route('home') }}" class="font-bold italic p-2 text-slate-800 hover:text-orange-600 transition duration-300">{{ config('app.name') }}</a>
         </div>
 
         <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
-            <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[35px]">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[35px] hover:scale-110 transition-transform duration-300">
+            </a>
         </div>
 
         @if (Route::has('login'))
