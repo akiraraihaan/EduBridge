@@ -15,13 +15,13 @@ class AboutController extends Controller
                     'position' => 'CEO',
                     'description' => '15+ tahun pengalaman di bidang edukasi dan teknologi.',
                     'image' => '/img/Ony.png',
-                    'ig' => 'https://www.instagram.com/benonygabriel/',
-                    'github' => 'https://github.com/benonygabriel'
+                    'ig' => 'https://www.instagram.com/benogabriel_27',
+                    'github' => 'https://github.com/iambeno1'
                 ],
                 [
                     'name' => 'Raihan Akira R',
                     'position' => 'Owner and Founder',
-                    'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
+                    'description' => 'Spesialis tidur, bersyukur, dan belajar mengikhlaskan.',
                     'image' => '/img/Akira.png',
                     'ig' => 'https://www.instagram.com/raihaan_ar/',
                     'github' => 'https://github.com/akiraraihaan'
@@ -31,32 +31,32 @@ class AboutController extends Controller
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => '/img/Arshan.png',
-                    'ig' => 'https://www.instagram.com/arshanda_geulis/',
-                    'github' => 'https://github.com/arshanda-geulis'
+                    'ig' => 'https://www.instagram.com/arshndaagn',
+                    'github' => 'https://github.com/ArshandaGN'
                 ],
                 [
                     'name' => 'Fitria Nurhaliza',
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => '/img/Arshan.png',
-                    'ig' => 'https://www.instagram.com/fitrianurhaliza/',
-                    'github' => 'https://github.com/fitrianurhaliza'
+                    'ig' => 'https://www.instagram.com/fitrianlz_',
+                    'github' => 'https://github.com/FitriaaN'
                 ],
                 [
                     'name' => 'Felix Joshua P',
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
-                    'image' => '/img/Arshan.png',
+                    'image' => '/img/Felix.png',
                     'ig' => 'https://www.instagram.com/felixjoshua_/',
                     'github' => 'https://github.com/felixjoshua'
                 ],
                 [
-                    'name' => 'David Wilson',
+                    'name' => 'Anom Wajawening',
                     'position' => 'Head of Technology',
                     'description' => 'Ahli teknologi dengan fokus pada pengembangan platform edukasi.',
                     'image' => '/img/Arshan.png',
-                    'ig' => 'https://www.instagram.com/davidwilson_/',
-                    'github' => 'https://github.com/davidwilson'
+                    'ig' => 'https://www.instagram.com/a_wajawening',
+                    'github' => 'https://github.com/Nommmz'
                 ]
             ],
             'contact' => [
@@ -66,9 +66,8 @@ class AboutController extends Controller
             ],
             'vision' => 'Menjadi platform pendidikan terdepan yang memfasilitasi akses ke pendidikan berkualitas tinggi dan menghubungkan talenta dengan peluang karir yang sesuai.',
             'missions' => [
-                'Menyediakan pendidikan berkualitas yang terjangkau',
-                'Memfasilitasi kolaborasi antara siswa dan mentor profesional',
-                'Menciptakan ekosistem pembelajaran yang inovatif',
+                'Menyediakan pendidikan berkualitas tanpa pungutan biaya',
+                'Memfasilitasi kolaborasi antara siswa dan mentor berpengalaman',
                 'Membantu siswa meraih karir impian mereka'
             ]
         ];

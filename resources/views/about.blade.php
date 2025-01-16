@@ -1,22 +1,22 @@
 <x-app-final-layout>
     <!-- Header -->
     <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-lg mt-16">
-        <h2 class="text-2xl font-semibold fade-down">Tentang</h2>
-        <h1 class="text-3xl font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight fade-up">
+        <h2 class="text-2xl font-semibold fade-down mb-4">Tentang</h2>
+        <h1 class="text-3xl italic font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight fade-up">
             EduBridge</h1>
     </header>
 
     <!-- Team Section -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 ">
         <div class="text-center mb-12 fade-down">
-            <h2 class="text-[44px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Tim Kami</h2>
+            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Tim Kami</h2>
         </div>
 
         <div class="flex flex-wrap -mx-4">
             @foreach($data['team'] as $member)
                 <div class="w-full sm:w-1/2 md:w-1/3 px-4 mb-8 fade-up" style="animation-delay: {{ $loop->index * 0.2 }}s">
-                    <div class="h-[300px] w-full overflow-hidden">
-                        <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
+                    <div class="h-[300px] w-full overflow-hidden flex justify-center items-center">
+                        <img class="w-[300px] h-full object-cover transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,0,0,0.25)] drop-shadow-[0_0_15px_rgba(0,0,0,0.35)]" src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
                     </div>
                     <div class="bg-white/80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                         <div class="p-6">
@@ -45,12 +45,12 @@
 
     <!-- Vision & Mission Section -->
     <div class="relative py-12 md:py-20 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-blue-50 opacity-50"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-blue-50 opacity-35"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center fade-up mb-20">
                 <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Visi & Misi Kami</h2>
             </div>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="grid md:grid-cols-1 gap-12 items-center">
                 <!-- Vision Section -->
                 <div class="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 fade-right">
                     <div class="flex flex-col space-y-6">
@@ -60,7 +60,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h2 class="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">Visi Kami</h2>
+                            <h2 class="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">Visi</h2>
                         </div>
                         <div class="flex-grow flex items-center">
                             <p class="text-lg text-gray-700 leading-relaxed">
@@ -79,7 +79,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
-                            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Misi Kami</h2>
+                            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Misi</h2>
                         </div>
                         <div class="flex-grow flex items-center">
                             <ul class="space-y-4 w-full">

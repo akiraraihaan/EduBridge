@@ -207,7 +207,6 @@
                 <div class="flex flex-col leading-relaxed items-center md:items-start">
                     <a href="#" class="hover:text-orange-700 transition duration-700">Kursus</a>
                     <a href="#" class="hover:text-orange-700 transition duration-700">Pendaftaran</a>
-                    <a href="#" class="hover:text-orange-700 transition duration-700">Reviews</a>
                     <a href="{{ route('about') }}" class="hover:text-orange-700 transition duration-700">Tentang Kami</a>
                 </div>
             </div>
