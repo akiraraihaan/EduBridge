@@ -12,30 +12,30 @@ class AboutController extends Controller
             'team' => [
                 [
                     'name' => 'Benony Gabriel',
-                    'position' => 'CEO & Founder',
+                    'position' => 'CEO',
                     'description' => '15+ tahun pengalaman di bidang edukasi dan teknologi.',
                     'image' => 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
                 ],
                 [
                     'name' => 'Raihan Akira R',
+                    'position' => 'Owner and Founder',
+                    'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
+                    'image' => 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
+                ],
+                [
+                    'name' => 'Arshanda Geulis N',
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
                 ],
                 [
-                    'name' => 'Jane Smith',
+                    'name' => 'Fitria Nurhaliza',
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
                 ],
                 [
-                    'name' => 'Jane Smith',
-                    'position' => 'Head of Education',
-                    'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
-                    'image' => 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'
-                ],
-                [
-                    'name' => 'Jane Smith',
+                    'name' => 'Felix Joshua P',
                     'position' => 'Head of Education',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80'

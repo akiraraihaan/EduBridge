@@ -1,89 +1,41 @@
-<x-guest-layout>
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-    <!-- Hero Section -->
-    <div class="relative py-16 sm:py-24">
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-                    <span class="block">Tentang</span>
-                    <span class="block text-blue-600">EduBridge</span>
-                </h1>
-                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-                    Platform pembelajaran yang menghubungkan siswa dengan mentor terbaik untuk masa depan yang lebih cerah.
-                </p>
-            </div>
-        </div>
-    </div>
+<x-app-final-layout>
+    <!-- Header -->
+    <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-xl">
+        <h2 class="text-2xl font-semibold">Tentang</h2>
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight">
+            EduBridge</h1>
+    </header>
 
-    <!-- Visi Misi Section -->
-    <div class="py-16 bg-white/50 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center mb-16">
-                <p class="text-3xl font-bold text-gray-900">
-                    Visi & Misi Kami
-                </p>
-            </div>
-
-            <div class="mt-10">
-                <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-                    <!-- Visi -->
-                    <div class="relative bg-white/80 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                        <div class="absolute -top-4 -left-4">
-                            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500 text-white">
-                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="ml-4">
-                            <dt class="text-2xl font-bold text-gray-900 mb-4">
-                                Visi
-                            </dt>
-                            <dd class="mt-2 text-gray-600 text-lg leading-relaxed">
-                                {{ $data['vision'] }}
-                            </dd>
-                        </div>
+    <!-- Vision & Mission Section -->
+    <div class="relative py-20 overflow-hidden">
+        <div class="relative max-w-5xl mx-auto">
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-200/60">
+                <div class="flex flex-col items-center text-center space-y-8">
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-slate-800">Visi Kami</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">
+                            {{ $data['vision'] }}
+                        </p>
                     </div>
-
-                    <!-- Misi -->
-                    <div class="relative bg-white/80 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                        <div class="absolute -top-4 -left-4">
-                            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500 text-white">
-                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="ml-4">
-                            <dt class="text-2xl font-bold text-gray-900 mb-4">
-                                Misi
-                            </dt>
-                            <dd class="mt-2 text-gray-600 text-lg leading-relaxed">
-                                <ul class="list-disc list-inside space-y-2">
-                                    @foreach($data['missions'] as $mission)
-                                        <li>{{ $mission }}</li>
-                                    @endforeach
-                                </ul>
-                            </dd>
-                        </div>
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-slate-800">Misi Kami</h2>
+                        <ul class="space-y-2">
+                            @foreach($data['missions'] as $mission)
+                                <li class="text-lg text-gray-700">{{ $mission }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tim Kami Section -->
-    <div class="py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center mb-16">
-                <p class="text-3xl font-bold text-gray-900">
-                    Tim Kami
-                </p>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                    Dipimpin oleh para profesional yang berpengalaman di bidangnya.
-                </p>
-            </div>
+    <!-- Team Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Tim Kami</h2>
+            <p class="text-lg text-gray-600">Bertemu dengan para ahli yang mendorong inovasi di EduBridge</p>
+        </div>
 
             <div class="flex flex-wrap -mx-4">
                 @foreach($data['team'] as $member)
@@ -114,69 +66,48 @@
                     </div>
                 @endforeach
             </div>
-        </div>
     </div>
 
     <!-- Contact Section -->
-    <div class="py-16 bg-white/50 backdrop-blur-sm">
+    <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center mb-16">
-                <p class="text-3xl font-bold text-gray-900">
-                    Hubungi Kami
-                </p>
-                <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                    Punya pertanyaan? Jangan ragu untuk menghubungi kami.
-                </p>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Hubungi Kami</h2>
+                <p class="text-lg text-gray-600">Kami siap membantu Anda</p>
             </div>
 
-            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Email -->
-                <div class="bg-white/80 rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-12 w-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Email</h3>
-                            <p class="mt-1 text-gray-500">{{ $data['contact']['email'] }}</p>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-semibold mb-2">Email</h3>
+                    <p class="text-gray-600">{{ $data['contact']['email'] }}</p>
                 </div>
 
-                <!-- Phone -->
-                <div class="bg-white/80 rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-12 w-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Telepon</h3>
-                            <p class="mt-1 text-gray-500">{{ $data['contact']['phone'] }}</p>
-                        </div>
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-semibold mb-2">Telepon</h3>
+                    <p class="text-gray-600">{{ $data['contact']['phone'] }}</p>
                 </div>
 
-                <!-- Location -->
-                <div class="bg-white/80 rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-12 w-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Lokasi</h3>
-                            <p class="mt-1 text-gray-500">{{ $data['contact']['address'] }}</p>
-                        </div>
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-semibold mb-2">Alamat</h3>
+                    <p class="text-gray-600">{{ $data['contact']['address'] }}</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</x-guest-layout>
+</x-app-final-layout>
