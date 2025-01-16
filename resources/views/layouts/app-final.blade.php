@@ -19,13 +19,51 @@
 <body class="antialiased" style="font-family: Mona sans">
     <!-- Background with blur effect -->
     <div class="fixed inset-0 -z-10 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
+        <!-- Enhanced gradient base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-indigo-100"></div>
+        
+        <!-- Animated elegant accents -->
         <div class="absolute inset-0">
-            <div class="absolute top-20 left-20 w-48 md:w-72 h-48 md:h-72 bg-[#bae8ff] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
-            <div class="absolute top-40 right-20 w-48 md:w-72 h-48 md:h-72 bg-[#ffe9d5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-40 w-48 md:w-72 h-48 md:h-72 bg-[#ffe1c5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
+            <!-- Main accent rectangle -->
+            <div class="absolute top-0 right-0 w-1/2 h-screen 
+                        bg-gradient-to-b from-blue-200/40 to-transparent
+                        transform -skew-x-12">
+            </div>
+    
+            <!-- Primary animated circle -->
+            <div class="absolute top-20 right-20 w-96 h-96 
+                        bg-gradient-to-br from-blue-100/50 to-indigo-200/30 
+                        rounded-full
+                        animate-[float_8s_ease-in-out_infinite]">
+            </div>
+    
+            <!-- Orange accent circle -->
+            <div class="absolute bottom-40 left-40 w-80 h-80 
+                        bg-gradient-to-tr from-orange-100/30 to-orange-200/20 
+                        rounded-full
+                        animate-[float_10s_ease-in-out_infinite_reverse]">
+            </div>
+    
+            <!-- Decorative rectangle with orange accent -->
+            <div class="absolute top-40 left-20 w-64 h-64 
+                        bg-gradient-to-br from-blue-100/30 via-orange-100/20 to-indigo-100/20 
+                        rounded-lg transform rotate-12
+                        animate-[rotate_15s_linear_infinite]">
+            </div>
         </div>
     </div>
+    
+    <style>
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(0, 20px); }
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    </style>
 
     <!-- Navbar -->
     <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-md border-b border-white/50">
