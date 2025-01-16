@@ -356,7 +356,6 @@
     <!-- Preview Courses Section -->
     @guest
         <div class="max-w-screen min-fit flex relative">
-            <img src="/img/logo.png" alt="background" class="absolute min-h-[400px] m-auto inset-0 opacity-10 object-cover z-0">
 
             <div class="w-screen flex flex-col items-center justify-start z-10">
                 <div class="flex flex-col items-center mt-32">

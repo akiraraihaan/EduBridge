@@ -19,11 +19,34 @@
 <body class="antialiased" style="font-family: Mona sans">
     <!-- Background with blur effect -->
     <div class="fixed inset-0 -z-10 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
+        <!-- Enhanced gradient base -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-indigo-100"></div>
+        
+        <!-- More visible elegant accents -->
         <div class="absolute inset-0">
-            <div class="absolute top-20 left-20 w-48 md:w-72 h-48 md:h-72 bg-[#bae8ff] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
-            <div class="absolute top-40 right-20 w-48 md:w-72 h-48 md:h-72 bg-[#ffe9d5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-40 w-48 md:w-72 h-48 md:h-72 bg-[#ffe1c5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
+            <!-- Main accent rectangle -->
+            <div class="absolute top-0 right-0 w-1/2 h-screen 
+                        bg-gradient-to-b from-blue-200/40 to-transparent
+                        transform -skew-x-12">
+            </div>
+    
+            <!-- Primary circle -->
+            <div class="absolute top-20 right-20 w-96 h-96 
+                        bg-gradient-to-br from-blue-100/50 to-indigo-200/30 
+                        rounded-full">
+            </div>
+    
+            <!-- Secondary circle -->
+            <div class="absolute bottom-40 left-40 w-80 h-80 
+                        bg-gradient-to-tr from-indigo-100/40 to-blue-200/20 
+                        rounded-full">
+            </div>
+    
+            <!-- Decorative rectangle -->
+            <div class="absolute top-40 left-20 w-64 h-64 
+                        bg-gradient-to-br from-blue-100/30 to-indigo-100/20 
+                        rounded-lg transform rotate-12">
+            </div>
         </div>
     </div>
 
