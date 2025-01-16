@@ -1,6 +1,6 @@
 <x-app-final-layout>
     <!-- Header -->
-    <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-lg mt-16">
+    <header class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-md mt-16">
         <h2 class="text-2xl font-semibold fade-down mb-4">Tentang</h2>
         <h1 class="text-3xl italic font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight fade-up">
             EduBridge</h1>

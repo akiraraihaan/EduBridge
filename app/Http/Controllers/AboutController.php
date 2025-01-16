@@ -36,7 +36,7 @@ class AboutController extends Controller
                 ],
                 [
                     'name' => 'Fitria Nurhaliza',
-                    'position' => 'Head of Education',
+                    'position' => 'Master of Science',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => '/img/Arshan.png',
                     'ig' => 'https://www.instagram.com/fitrianlz_',
@@ -44,7 +44,7 @@ class AboutController extends Controller
                 ],
                 [
                     'name' => 'Felix Joshua P',
-                    'position' => 'Head of Education',
+                    'position' => 'Master of Code',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
                     'image' => '/img/Felix.png',
                     'ig' => 'https://www.instagram.com/felixjoshua_/',
@@ -52,7 +52,7 @@ class AboutController extends Controller
                 ],
                 [
                     'name' => 'Anom Wajawening',
-                    'position' => 'Head of Technology',
+                    'position' => 'Mewing Boy',
                     'description' => 'Ahli teknologi dengan fokus pada pengembangan platform edukasi.',
                     'image' => '/img/Arshan.png',
                     'ig' => 'https://www.instagram.com/a_wajawening',
