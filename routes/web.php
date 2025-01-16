@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [GuestController::class, 'welcoming'])->name('home');
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+
+Route::get('/home', [GuestController::class, 'welcoming'])->name('home');
 
 // About Us Route
 Route::get('/about', [AboutController::class, 'index'])->name('about');

@@ -27,11 +27,12 @@
             <!-- Main accent rectangle -->
             <div class="absolute top-0 right-0 w-1/2 h-screen 
                         bg-gradient-to-b from-blue-200/40 to-transparent
-                        transform -skew-x-12">
+                        transform -skew-x-12 hidden md:block">
             </div>
     
             <!-- Primary animated shape -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="400" height="400" class="absolute top-20 right-20 animate-[float_8s_ease-in-out_infinite] opacity-10">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" 
+                 class="absolute hidden lg:block w-[200px] h-[200px] md:w-[300px] md:h-[300px] xl:w-[400px] xl:h-[400px] top-10 md:top-20 right-10 md:right-20 animate-[float_8s_ease-in-out_infinite] opacity-10">
                 <g clip-path="url(#cs_clip_1_misc-9)">
                     <mask id="cs_mask_1_misc-9" style="mask-type:alpha" width="200" height="200" x="0" y="0" maskUnits="userSpaceOnUse">
                         <path fill="#fff" d="M8.475 78.884C27.008 22.9 70.833 4.108 89.905 1.464c110.239-15.283 132.313 92.87 90.046 148.772-36.448 48.204-100.638 57.186-139.16 44.676C6.86 183.894-11.983 140.686 8.475 78.884z"></path>
@@ -62,8 +63,8 @@
             </svg>
     
             <!-- Orange accent circle -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="320" height="320" 
-                 class="absolute bottom-40 left-40 animate-[float_10s_ease-in-out_infinite_reverse] opacity-30">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200"
+                 class="absolute hidden md:block w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] lg:w-[320px] lg:h-[320px] bottom-20 md:bottom-40 left-20 md:left-40 animate-[float_10s_ease-in-out_infinite_reverse] opacity-30">
                 <g clip-path="url(#cs_clip_1_polygon-7)">
                     <mask id="cs_mask_1_polygon-7" style="mask-type:alpha" width="182" height="200" x="9" y="0" maskUnits="userSpaceOnUse">
                         <path fill="#fff" d="M86.449 3.601a27.296 27.296 0 0127.102 0l63.805 36.514C185.796 44.945 191 53.9 191 63.594v72.812c0 9.694-5.204 18.649-13.644 23.479l-63.805 36.514a27.3 27.3 0 01-27.102 0l-63.805-36.514C14.204 155.055 9 146.1 9 136.406V63.594c0-9.694 5.204-18.649 13.644-23.48L86.45 3.602z"></path>
@@ -94,8 +95,8 @@
             </svg>
     
             <!-- Decorative star shape -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="256" height="256" 
-                 class="absolute top-40 left-20 animate-[rotate_25s_linear_infinite]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200"
+                 class="absolute hidden sm:block w-[128px] h-[128px] md:w-[192px] md:h-[192px] lg:w-[256px] lg:h-[256px] top-20 md:top-40 left-10 md:left-20 animate-[rotate_25s_linear_infinite]">
                 <g clip-path="url(#cs_clip_1_star-8)">
                     <mask id="cs_mask_1_star-8" style="mask-type:alpha" width="200" height="200" x="0" y="0" maskUnits="userSpaceOnUse">
                         <path fill="#fff" d="M100 0c12.424 62.382 37.256 87.456 100 100-62.759 12.544-87.591 37.618-100 100-12.424-62.382-37.256-87.471-100-100C62.758 87.456 87.591 62.382 100 0z"></path>
@@ -303,7 +304,7 @@
     <!-- Footer -->
     <footer>
         <div class="max-w-screen flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-20 bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90%">
-            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0 animate-fade-in-up animation-delay-300">
                 <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="max-h-[45px]">
                 <h2 class="text-xl font-bold italic">
                     {{ env('APP_NAME') }}
@@ -312,33 +313,33 @@
                     {{ $footerData['description'] }}
                 </p>
             </div>
-            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0 animate-fade-in-up animation-delay-500">
                 <h2 class="text-xl font-bold tracking-wide">
                     PUSAT BANTUAN
                 </h2>
                 <div class="flex flex-col items-center leading-relaxed">
                     @foreach($footerData['quickLinks'] as $link)
-                        <a href="{{ $link['url'] }}" class="hover:text-orange-700 transition duration-700">{{ $link['title'] }}</a>
+                        <a href="{{ $link['url'] }}" class="hover:text-orange-700 transition duration-700 animate-fade-in-up animation-delay-[{{ 700 + $loop->index * 100 }}ms]">{{ $link['title'] }}</a>
                     @endforeach
                 </div>
             </div>
-            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0 animate-fade-in-up animation-delay-700">
                 <h2 class="text-xl font-bold tracking-wide">
                     INFO KONTAK
                 </h2>
                 <div class="flex flex-col items-center leading-relaxed">
-                    <a href="tel:{{ $footerData['contact']['phone'] }}" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['phone'] }}</a>
-                    <a href="mailto:{{ $footerData['contact']['email'] }}" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['email'] }}</a>
-                    <a href="https://maps.app.goo.gl/a69inXUNvLjRhbFP9" target="_blank" class="hover:text-orange-700 transition duration-700">{{ $footerData['contact']['address'] }}</a>
+                    <a href="tel:{{ $footerData['contact']['phone'] }}" class="hover:text-orange-700 transition duration-700 animate-fade-in-up animation-delay-[800ms]">{{ $footerData['contact']['phone'] }}</a>
+                    <a href="mailto:{{ $footerData['contact']['email'] }}" class="hover:text-orange-700 transition duration-700 animate-fade-in-up animation-delay-[900ms]">{{ $footerData['contact']['email'] }}</a>
+                    <a href="https://maps.app.goo.gl/a69inXUNvLjRhbFP9" target="_blank" class="hover:text-orange-700 transition duration-700 animate-fade-in-up animation-delay-[1000ms]">{{ $footerData['contact']['address'] }}</a>
                 </div>
             </div>
-            <div class="w-full md:w-1/4 flex flex-col items-center gap-4">
+            <div class="w-full md:w-1/4 flex flex-col items-center gap-4 animate-fade-in-up animation-delay-1000">
                 <h2 class="text-xl font-bold tracking-wide">
                     LOKASI KAMI
                 </h2>
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2847154493584!2d106.78640777490325!3d-6.228550760602384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f13094c83677%3A0x1f4300031365732b!2sUniversitas%20Pertamina!5e0!3m2!1sid!2sid!4v1699486471099!5m2!1sid!2sid"
-                    class="w-full h-48 rounded-lg"
+                    class="w-full h-48 rounded-lg animate-fade-in-up animation-delay-[1200ms]"
                     style="border:0;" 
                     allowfullscreen="" 
                     loading="lazy"
@@ -347,7 +348,7 @@
             </div>
         </div>
         <div class="bg-[#1A1A1A] w-full flex items-center justify-center py-4">
-            <p class="text-white text-sm tracking-wide">
+            <p class="text-white text-sm tracking-wide animate-fade-in-up animation-delay-[1400ms]">
                 © {{ date('Y') }} EduBridge Team | All rights reserved
             </p>
         </div>

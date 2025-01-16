@@ -16,12 +16,12 @@
             @foreach($data['team'] as $member)
                 <div class="w-full sm:w-1/2 md:w-1/3 px-4 mb-8 fade-up" style="animation-delay: {{ $loop->index * 0.2 }}s">
                     <div class="h-[300px] w-full overflow-hidden flex justify-center items-center">
-                        <img class="w-[300px] h-full object-cover transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(0,0,0,0.25)] drop-shadow-[0_0_15px_rgba(0,0,0,0.35)]" src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
+                        <img class="w-[300px] h-full object-cover transition-all duration-300 hover:scale-110 " src="{{ $member['image'] }}" alt="{{ $member['name'] }}">
                     </div>
                     <div class="bg-white/80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-gray-900">{{ $member['name'] }}</h3>
-                            <p class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 font-medium mt-1">{{ $member['position'] }}</p>
+                            <p class="text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 font-medium mt-1">{{ $member['position'] }}</p>
                             <p class="text-gray-500 mt-4">{{ $member['description'] }}</p>
 
                             <div class="flex space-x-4 mt-6 justify-end">
@@ -91,6 +91,21 @@
                                 @endforeach
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center fade-up mb-4">
+                <h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800">Bagian dari</h2>
+            </div>
+            <div class="flex justify-center items-center fade-up">
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-white/50 hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                    <div class="flex flex-col items-center space-y-4">
+                        <img src="{{ asset('img/logo_uper.png') }}" alt="Logo Uper" class="h-24 w-auto group-hover:scale-110 transition-transform duration-300">
                     </div>
                 </div>
             </div>
