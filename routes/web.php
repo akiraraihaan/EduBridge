@@ -31,10 +31,8 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('batches', BatchController::class);
-    Route::post('batches/{batch}/toggle-status', [BatchController::class, 'toggleStatus'])
-        ->name('batches.toggle-status');
-    Route::post('batches/{batch}/toggle-registration', [BatchController::class, 'toggleRegistration'])
-        ->name('batches.toggle-registration');
+    Route::post('batches/{batch}/toggle-status', [BatchController::class, 'toggleStatus'])->name('batches.toggle-status');
+    Route::post('batches/{batch}/toggle-registration', [BatchController::class, 'toggleRegistration'])->name('batches.toggle-registration');
 });
 
 require __DIR__.'/auth.php';

@@ -22,13 +22,13 @@
         <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
         <div class="absolute inset-0">
             <div
-                class="absolute top-20 left-20 w-48 md:w-72 h-48 md:h-72 bg-[#bae8ff] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                class="absolute top-20 left-20 w-48 md:w-72 h-48 md:h-72 bg-[#bae8ff] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob">
             </div>
             <div
-                class="absolute top-40 right-20 w-48 md:w-72 h-48 md:h-72 bg-[#ffe9d5] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                class="absolute top-40 right-20 w-48 md:w-72 h-48 md:h-72 bg-[#ffe9d5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000">
             </div>
             <div
-                class="absolute -bottom-8 left-40 w-48 md:w-72 h-48 md:h-72 bg-[#ffe1c5] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+                class="absolute -bottom-8 left-40 w-48 md:w-72 h-48 md:h-72 bg-[#ffe1c5] rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000">
             </div>
         </div>
     </div>
@@ -231,56 +231,84 @@
 
     @guest
         <!-- Hero Section for Guest -->
-        <div class="min-h-[90vh] flex items-center justify-center px-4">
+        <div class="min-h-[90vh] flex items-center justify-center px-4 mb-8 sm:mb-0">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Content -->
-                <div class="space-y-8 animate-fade-in-up animation-delay-500">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-800">
-                        Belajar Tanpa Batas<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500">Raih Masa
-                            Depan</span>
+                <div class="space-y-6 sm:space-y-8 animate-fade-in-up animation-delay-500 px-4 sm:px-6 md:px-8">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-slate-800">
+                        <span class="block">Kembangkan Kemampuan,</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500 block mt-2">
+                            Gapai Masa Depan
+                        </span>
                     </h1>
-                    <p class="text-lg text-slate-600 max-w-xl">
+                    <p class="text-base sm:text-lg text-slate-600 max-w-xl">
                         Platform pembelajaran yang menghubungkan siswa dengan mentor terbaik. Tingkatkan skillmu dan raih
                         karir impianmu bersama EduBridge.
                     </p>
-                    <div class="flex flex-wrap gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('register') }}"
-                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-medium rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105">
-                            Mulai Belajar
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-full sm:w-auto text-center inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-medium rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105">
+                            <span>Mulai Belajar</span>
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                         </a>
                         <a href="#courses"
-                            class="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm text-slate-800 font-medium rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 border border-slate-200">
+                            class="w-full sm:w-auto text-center inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white/80 backdrop-blur-sm text-slate-800 font-medium rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 border border-slate-200">
                             Lihat Kursus
                         </a>
                     </div>
                 </div>
 
                 <!-- Right Content - Stats -->
-                <div class="grid grid-cols-2 gap-6 animate-fade-in-up animation-delay-1000">
-                    <div
-                        class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-bold text-blue-600 mb-2">500+</div>
-                        <div class="text-slate-600">Siswa Aktif</div>
+                <div class="space-y-8 animate-fade-in-up animation-delay-1000">
+
+                    <div class="text-center space-y-2">
+                        <h3 class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800">Didukung Oleh</h3>
                     </div>
-                    <div
-                        class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-bold text-orange-500 mb-2">50+</div>
-                        <div class="text-slate-600">Mentor Ahli</div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                            <div class="flex flex-col items-center space-y-2">
+                                <img src="{{ asset('/img/logoipsum.svg') }}" alt="Company 1" class="h-12 w-auto group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-sm font-medium text-slate-600">IpsumCorp</span>
+                            </div>
+                        </div>
+                        <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                            <div class="flex flex-col items-center space-y-2">
+                                <img src="{{ asset('/img/logoipsum2.svg') }}" alt="Company 2" class="h-12 w-auto group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-sm font-medium text-slate-600">IpsumSolutions</span>
+                            </div>
+                        </div>
+                        <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                            <div class="flex flex-col items-center space-y-2">
+                                <img src="{{ asset('/img/logoipsum3.svg') }}" alt="Company 3" class="h-12 w-auto group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-sm font-medium text-slate-600">IpsumPro</span>
+                            </div>
+                        </div>
+                        <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105 group">
+                            <div class="flex flex-col items-center space-y-2">
+                                <img src="{{ asset('icon.png') }}" alt="Company 4" class="h-12 w-auto group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-sm font-medium text-slate-600">FutureTech</span>
+                            </div>
+                        </div>
                     </div>
-                    <div
-                        class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-bold text-blue-600 mb-2">20+</div>
-                        <div class="text-slate-600">Kursus</div>
-                    </div>
-                    <div
-                        class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-white/50 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <div class="text-4xl font-bold text-orange-500 mb-2">95%</div>
-                        <div class="text-slate-600">Tingkat Kepuasan</div>
+
+                    <div class="text-center bg-white/80 backdrop-blur-sm px-8 py-6 rounded-2xl border border-white/50 max-w-2xl mx-auto hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
+                        <div class="space-y-3">
+                            <p class="text-slate-600 text-lg">
+                                Lebih dari <span class="font-bold text-blue-600 text-2xl group-hover:text-orange-500 transition-colors duration-300">1000+</span> alumni telah berhasil berkarir di berbagai
+                                <span class="italic font-medium">perusahaan teknologi terkemuka</span>
+                            </p>
+                            <div class="flex items-center justify-center gap-2 text-slate-500 text-sm">
+                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Penyaluran pekerjaan terjamin secara langsung*</span>
+                            </div>
+                            <p class="text-end text-xs text-red-500">*SK berlaku</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -550,7 +578,7 @@
         <!-- Content for Non-Logged In Users -->
         <!-- Header -->
         <header
-            class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative">
+            class="flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% relative shadow-xl">
             <h2 class="text-2xl font-semibold">Get skilled with</h2>
             <h1
                 class="text-3xl font-bold bg-gradient-to-r from-black via-gray-400 to-gray-900 bg-clip-text text-transparent tracking-tight">
@@ -558,51 +586,49 @@
         </header>
 
         <!-- Elegant Transition Section -->
-        <div class="relative py-20 overflow-hidden bg-gradient-to-b from-[#ffe9d5]/50 to-white">
-            <div class="absolute inset-0">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-orange-50 opacity-30"></div>
-                <div class="absolute inset-0 bg-grid-slate-900/[0.04] bg-[size:20px_20px]"></div>
-            </div>
+        <div class="relative py-20 overflow-hidden">
             <div class="relative max-w-5xl mx-auto">
-                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-200/60">
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-200/60">
                     <div class="flex flex-col items-center text-center space-y-4">
-                        <div class="w-16 h-1 bg-orange-400 rounded-full mb-4"></div>
+                        <svg class="w-16 h-16 text-orange-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
                         <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">
                             <b>EduBridge</b> memfasilitasi pemberian beasiswa dari perusahaan kepada
                             peserta pelatihan, serta membantu menghubungkan lulusan dengan peluang kerja di
                             perusahaan mitra.
                         </p>
-                        <div class="w-16 h-1 bg-orange-400 rounded-full mt-4"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Features Section -->
-        <section id="features" class="py-20 sm:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">Kenapa Memilih EduBridge?</h2>
-                    <p class="mt-4 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
-                        Kami menyediakan berbagai fitur yang membantu Anda mencapai tujuan pembelajaran.
-                    </p>
-                </div>
-            </div>
-        </section>
-
         <!-- Requirements Section -->
-        <div
-            class="max-w-screen flex flex-col items-center justify-center h-[20vh] bg-gradient-to-r from-[#bae8ff]/30 from-10% via-[#e2f5ff]/30 via-45% to-[#bae8ff]/30 to-90% min-h-[50vh]">
-            <div class="flex flex-row items-center justify-center gap-8 w-5/6 bg-white rounded-xl p-4 shadow-md">
-                @foreach ($requirements as $requirement)
-                    <div class="h-[270px] w-fit flex flex-col items-start justify-end rounded-xl"
-                        style="background-image: url('{{ $requirement['img'] }}'); background-size: cover; background-position: center;">
-                        <p class="text-[12px] text-slate-800 p-2 bg-white mx-4 my-2 rounded-md">
-                            {{ $requirement['requirement'] }}</p>
-                        <h1 class="font-bold text-white w-full bg-black/30 px-4 py-2 rounded-b-xl">
-                            {{ $requirement['statement'] }}</h1>
-                    </div>
-                @endforeach
+        <div class="max-w-screen py-20 bg-gradient-to-r from-[#bae8ff]/10 via-white to-[#bae8ff]/10">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-orange-800 mb-4">Persyaratan Program</h2>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-stretch justify-center gap-6 md:gap-8">
+                    @foreach ($requirements as $requirement)
+                        <div class="group relative w-full md:w-[350px] h-[300px] rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                            <div class="absolute inset-0">
+                                <img src="{{ $requirement['img'] }}" alt="Requirement Image" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80"></div>
+                            </div>
+
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-300">
+                                <div class="bg-white/90 backdrop-blur-sm text-gray-800 text-sm px-4 py-2 rounded-lg mb-3 shadow-lg">
+                                    {{ $requirement['requirement'] }}
+                                </div>
+                                <h3 class="font-bold text-lg">
+                                    {{ $requirement['statement'] }}
+                                </h3>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -613,20 +639,19 @@
 
             <div class="w-screen flex flex-col items-center justify-start z-10">
                 <div class="flex flex-col items-center mt-32">
-                    <h1 class="text-[#1A1A1A] text-[36px] font-bold">COURSES</h1>
-                    <div
-                        class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fef2e5] via-45% to-[#ffe1c5] to-90% w-[8vw] h-2 rounded-full">
-                    </div>
+                    <h1 class="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-orange-900 text-[36px] font-bold tracking-tight">Program Kursus</h1>
                 </div>
-                <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+
+                <div class="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12 max-w-4xl">
                     @foreach (\App\Models\Course::all() as $course)
-                        <a href="#"
-                            class="shadow-lg w-fit bg-white rounded-3xl hover:shadow-2xl transition duration-600">
-                            <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}"
-                                class="max-h-[266px] p-2">
-                            <h2 class="text-[20px] font-bold ml-4">{{ $course->name }}</h2>
-                            <p class="text-[13px] font-medium text-[#9A9A9A] ml-4 pb-2">
-                                {{ $course->status ?? 'Available' }}</p>
+                        <a href="#" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                            <div class="relative">
+                                <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}"
+                                    class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
+                            </div>
+                            <div class="p-6">
+                                <h2 class="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">{{ $course->name }}</h2>
+                            </div>
                         </a>
                     @endforeach
                 </div>
@@ -634,38 +659,70 @@
         </div>
     @endauth
 
+    <div class="max-w-screen min-h-[400px] flex relative">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-3xl mx-auto text-center">
+
+                @php
+                    $quotes = [
+                        ["text" => "Pendidikan adalah senjata paling ampuh yang dapat kamu gunakan untuk mengubah dunia.", "author" => "Nelson Mandela"],
+                        ["text" => "Belajar tanpa berpikir itu tidaklah berguna, berpikir tanpa belajar itu berbahaya.", "author" => "Confucius"],
+                        ["text" => "Kesuksesan bukanlah akhir, kegagalan bukanlah fatal. Keberanian untuk melanjutkan adalah yang terpenting.", "author" => "Winston Churchill"],
+                        ["text" => "Masa depan tergantung pada apa yang kita lakukan hari ini.", "author" => "Mahatma Gandhi"],
+                        ["text" => "Jangan pernah menyerah pada mimpimu, ikuti jalan hatimu.", "author" => "EduBridge's Team"]
+                    ];
+                    $randomQuote = $quotes[array_rand($quotes)];
+                @endphp
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <blockquote class="text-xl italic text-gray-800 mb-4">
+                        "{{ $randomQuote['text'] }}"
+                    </blockquote>
+                    <p class="text-gray-600">- {{ $randomQuote['author'] }}</p>
+                    <div class="flex items-center justify-center mt-4">
+                        <div class="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div
-            class="max-w-screen flex flex-row items-start py-20 justify-between px-20 bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90%">
-            <div class="w-1/5 flex flex-col items-center justify-center gap-4">
+            class="max-w-screen flex flex-col md:flex-row items-start py-20 justify-between px-4 md:px-20 bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90%">
+            <div class="w-full md:w-1/5 flex flex-col items-center justify-center gap-4 mb-8 md:mb-0">
                 <img src="{{ asset('img/logo.png') }}" alt="EduBridge Logo" class="max-h-[45px]">
                 <h2 class="text-xl font-bold italic">
                     EduBridge
                 </h2>
-                <p class="text-slate-700 tracking-wide">
+                <p class="text-slate-700 tracking-wide text-center md:text-left">
                     Platform pembelajaran digital yang menghubungkan siswa dengan mentor terbaik.
                 </p>
             </div>
-            <div class="w-1/5 flex flex-col items-start justify-center gap-4">
+            <div class="w-full md:w-1/5 flex flex-col items-center md:items-start justify-center gap-4 mb-8 md:mb-0">
                 <h2 class="text-xl font-bold tracking-wide">
                     PUSAT BANTUAN
                 </h2>
-                <div class="flex flex-col leading-relaxed">
+                <div class="flex flex-col leading-relaxed items-center md:items-start">
                     <a href="#" class="hover:text-orange-700 transition duration-700">Kursus</a>
                     <a href="#" class="hover:text-orange-700 transition duration-700">Pendaftaran</a>
                     <a href="#" class="hover:text-orange-700 transition duration-700">Reviews</a>
                     <a href="#" class="hover:text-orange-700 transition duration-700">Tentang Kami</a>
                 </div>
             </div>
-            <div class="w-1/5 flex flex-col items-start justify-center gap-4">
+            <div class="w-full md:w-1/5 flex flex-col items-center md:items-start justify-center gap-4">
                 <h2 class="text-xl font-bold tracking-wide">
                     INFO KONTAK
                 </h2>
-                <div class="flex flex-col leading-relaxed">
-                    <a>+62 812-3456-7890</a>
-                    <a>info@edubridge.com</a>
-                    <a>Jl. Pendidikan No. 123, Jakarta</a>
+                <div class="flex flex-col leading-relaxed items-center md:items-start">
+                    <a href="#" class="hover:text-orange-700 transition duration-700">{{$contact['phone']}}</a>
+                    <a href="#" class="hover:text-orange-700 transition duration-700">{{$contact['email']}}</a>
+                    <a href="#" class="hover:text-orange-700 transition duration-700">{{$contact['address']}}</a>
                 </div>
             </div>
         </div>
