@@ -148,7 +148,7 @@
 
         <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[35px] hover:scale-110 transition-transform duration-300">
+                <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[30px] hover:scale-110 transition-transform duration-300">
             </a>
         </div>
 
