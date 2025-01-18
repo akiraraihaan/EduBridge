@@ -14,7 +14,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('image');
             $table->integer('duration_months')->default(12);
-            $table->integer('max_students')->default(1000);
+            $table->integer('max_students')->default(166);
+            $table->integer('student_count')->default(0);
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_active')->default(true);

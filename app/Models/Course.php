@@ -17,6 +17,7 @@ class Course extends Model
         'description',
         'image',
         'duration_months',
+        'student_count',
         'max_students',
         'start_date',
         'end_date',

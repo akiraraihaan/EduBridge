@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Enrollment;
 use App\Models\TopPerformer;
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

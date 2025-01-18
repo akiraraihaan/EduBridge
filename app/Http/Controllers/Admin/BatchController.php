@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Batch;
+use App\Models\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -36,14 +37,21 @@ class BatchController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after:start_date',
+                'capacity' => 'required|integer|min:1|max:1000'
+            ]);
+
             $batch = new Batch();
             $batch->name = $request->name;
             $batch->start_date = $request->start_date;
             $batch->end_date = $request->end_date;
             $batch->capacity = $request->capacity;
-            $batch->enrolled_count = 0;
-            $batch->is_open = $request->has('is_open');
+            $batch->enrolled_count = Course::sum('student_count');
             $batch->is_active = $request->has('is_active');
+            $batch->is_open = $request->has('is_open');
 
             if($batch->save()) {
                 return redirect()

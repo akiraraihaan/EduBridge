@@ -21,7 +21,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ],
             [
                 'name' => 'Back End',
@@ -31,7 +32,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ],
             [
                 'name' => 'Data Science',
@@ -41,7 +43,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ],
             [
                 'name' => 'UI/UX Design',
@@ -51,7 +54,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ],
             [
                 'name' => 'Social Media Strategy',
@@ -61,7 +65,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ],
             [
                 'name' => 'Digital Marketing',
@@ -71,7 +76,8 @@ class CourseSeeder extends Seeder
                 'max_students' => 166,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
-                'is_active' => true
+                'is_active' => true,
+                'student_count' => 0
             ]
         ];
 

@@ -112,6 +112,20 @@ class RegisteredUserController extends Controller
                     'course_id' => $request->course_id,
                     'reason' => $request->reason,
                 ]);
+
+                // Cari batch yang aktif dan terbuka
+                $activeBatch = \App\Models\Batch::where('is_active', true)
+                    ->where('is_open', true)
+                    ->first();
+
+                if ($activeBatch) {
+                    // Buat enrollment untuk student ke batch yang aktif
+                    \App\Models\Enrollment::create([
+                        'user_id' => $user->id,
+                        'batch_id' => $activeBatch->id,
+                        'status' => 'active'
+                    ]);
+                }
             }
 
             // Jika mentor, simpan data mentor
