@@ -14,6 +14,8 @@ class BatchSeeder extends Seeder
      */
     public function run(): void
     {
+        Batch::truncate();
+
         Batch::create([
             'name' => 'Batch 1',
             'start_date' => '2025-01-01',

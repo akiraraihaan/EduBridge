@@ -157,7 +157,15 @@
                 @auth
                     <div class="relative group">
                         <button type="button" class="flex items-center gap-2 px-3 md:px-5 py-2.5 bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-full font-medium text-sm text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition duration-300 ease-in-out">
-                            <div class="h-3 w-3 bg-green-500 rounded-full"></div>
+                            @if(Auth::user()->profile_image)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile" class="h-6 w-6 rounded-full object-cover">
+                            @else
+                                <div class="h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                    <span class="text-orange-600 text-xs font-medium">
+                                        {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
+                                    </span>
+                                </div>
+                            @endif
                             <span class="hidden sm:inline">{{ Auth::user()->first_name }}</span>
                             <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -167,19 +175,19 @@
                         <!-- Dynamic Sub-Navbar based on Role -->
                         @if (Auth::user()->isAdmin())
                             <!-- Admin Dropdown -->
-                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out" style="z-index: 99999 !important;">
+                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="px-1">
+                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
+                                        Profil
+                                    </a>
                                     <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Dashboard
                                     </a>
                                     <a href="{{ route('admin.batches.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Manajemen Batch
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
-                                        Manajemen User
-                                    </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
-                                        Manajemen Kursus
+                                    <a href="{{ route('admin.mentors.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
+                                        Manajemen Mentor
                                     </a>
                                     <div class="border-t border-gray-100 my-1"></div>
                                     <form method="POST" action="{{ route('logout') }}" class="block px-1">

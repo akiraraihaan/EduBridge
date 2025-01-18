@@ -143,6 +143,15 @@
                 <form id="loginForm" method="POST" action="{{ route('login') }}" class="space-y-4 sm:space-y-6">
                     @csrf
 
+                    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                    <!-- Error Message -->
+                    @if (session('error'))
+                        <div class="mb-4 font-medium text-sm text-red-600">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     @if (session('success'))
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {

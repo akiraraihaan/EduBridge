@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\CheckRole::class,
             'active' => \App\Http\Middleware\CheckActiveStatus::class,
             'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
+            'check.batch.status' => \App\Http\Middleware\CheckBatchStatus::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
