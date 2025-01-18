@@ -489,6 +489,7 @@
         </div>
     @endguest
 
+    @guest
     <div class="max-w-screen min-h-[400px] flex relative">
         <div class="container mx-auto px-4 py-16">
             <div class="max-w-3xl mx-auto text-center animate-fade-in-up animation-delay-300">
@@ -519,4 +520,5 @@
             </div>
         </div>
     </div>
+    @endguest
 </x-app-final-layout>

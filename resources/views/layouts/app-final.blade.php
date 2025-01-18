@@ -21,17 +21,17 @@
     <div class="fixed inset-0 -z-10 overflow-hidden">
         <!-- Enhanced gradient base -->
         <div class="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-indigo-100"></div>
-        
+
         <!-- Animated elegant accents -->
         <div class="absolute inset-0">
             <!-- Main accent rectangle -->
-            <div class="absolute top-0 right-0 w-1/2 h-screen 
+            <div class="absolute top-0 right-0 w-1/2 h-screen
                         bg-gradient-to-b from-blue-200/40 to-transparent
                         transform -skew-x-12 hidden md:block">
             </div>
-    
+
             <!-- Primary animated shape -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" 
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200"
                  class="absolute hidden lg:block w-[200px] h-[200px] md:w-[300px] md:h-[300px] xl:w-[400px] xl:h-[400px] top-10 md:top-20 right-10 md:right-20 animate-[float_8s_ease-in-out_infinite] opacity-10">
                 <g clip-path="url(#cs_clip_1_misc-9)">
                     <mask id="cs_mask_1_misc-9" style="mask-type:alpha" width="200" height="200" x="0" y="0" maskUnits="userSpaceOnUse">
@@ -61,7 +61,7 @@
                     </clipPath>
                 </defs>
             </svg>
-    
+
             <!-- Orange accent circle -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200"
                  class="absolute hidden md:block w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] lg:w-[320px] lg:h-[320px] bottom-20 md:bottom-40 left-20 md:left-40 animate-[float_10s_ease-in-out_infinite_reverse] opacity-30">
@@ -93,7 +93,7 @@
                     </clipPath>
                 </defs>
             </svg>
-    
+
             <!-- Decorative star shape -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200"
                  class="absolute hidden sm:block w-[128px] h-[128px] md:w-[192px] md:h-[192px] lg:w-[256px] lg:h-[256px] top-20 md:top-40 left-10 md:left-20 animate-[rotate_25s_linear_infinite]">
@@ -127,13 +127,13 @@
             </svg>
         </div>
     </div>
-    
+
     <style>
     @keyframes float {
         0%, 100% { transform: translate(0, 0); }
         50% { transform: translate(0, 20px); }
     }
-    
+
     @keyframes rotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -337,11 +337,11 @@
                 <h2 class="text-xl font-bold tracking-wide">
                     LOKASI KAMI
                 </h2>
-                <iframe 
+                <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2847154493584!2d106.78640777490325!3d-6.228550760602384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f13094c83677%3A0x1f4300031365732b!2sUniversitas%20Pertamina!5e0!3m2!1sid!2sid!4v1699486471099!5m2!1sid!2sid"
                     class="w-full h-48 rounded-lg animate-fade-in-up animation-delay-[1200ms]"
-                    style="border:0;" 
-                    allowfullscreen="" 
+                    style="border:0;"
+                    allowfullscreen=""
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
@@ -355,32 +355,6 @@
     </footer>
 
     <style>
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-
-        .animate-blob {
-            animation: blob 7s infinite;
-        }
-
-        .animation-delay-2000 {
-            animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-            animation-delay: 4s;
-        }
-
-        .animation-delay-500 {
-            animation-delay: 0.5s;
-        }
-
-        .animation-delay-1000 {
-            animation-delay: 1s;
-        }
 
         @keyframes fade-in {
             from { opacity: 0; }

@@ -26,6 +26,7 @@ class BatchController extends Controller
      */
     public function create()
     {
+        
         return view('admin.batches.create');
     }
 

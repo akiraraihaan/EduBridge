@@ -38,7 +38,7 @@ class AboutController extends Controller
                     'name' => 'Fitria Nurhaliza',
                     'position' => 'Master of Science',
                     'description' => 'Spesialis kurikulum dengan pengalaman mengajar 10+ tahun.',
-                    'image' => '/img/Arshan.png',
+                    'image' => '/img/Fitria.png',
                     'ig' => 'https://www.instagram.com/fitrianlz_',
                     'github' => 'https://github.com/FitriaaN'
                 ],
