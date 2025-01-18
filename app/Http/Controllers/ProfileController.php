@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
@@ -31,14 +32,18 @@ class ProfileController extends Controller
 
         // Handle profile image upload
         if ($request->hasFile('profile_image')) {
-            // Delete old image if exists
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
-            }
+            try {
+                // Delete old image if exists
+                if ($user->profile_image) {
+                    Storage::disk('public')->delete($user->profile_image);
+                }
 
-            // Store new image
-            $path = $request->file('profile_image')->store('profile-photos', 'public');
-            $user->profile_image = $path;
+                // Store new image
+                $path = $request->file('profile_image')->store('profile-photos', 'public');
+                $user->profile_image = $path;
+            } catch (\Exception $e) {
+                return back()->withErrors(['profile_image' => 'Gagal mengupload foto profil.']);
+            }
         }
 
         $user->fill($request->validated());
@@ -76,5 +81,25 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Remove the user's profile photo.
+     */
+    public function removePhoto(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->profile_image) {
+            // Delete file if exists
+            Storage::disk('public')->delete($user->profile_image);
+
+            // Update database
+            $user->forceFill([
+                'profile_image' => null
+            ])->save();
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'photo-removed');
     }
 }

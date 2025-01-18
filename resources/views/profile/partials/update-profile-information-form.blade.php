@@ -13,6 +13,12 @@
         @csrf
     </form>
 
+    <!-- Form untuk menghapus foto -->
+    <form id="remove-photo-form" action="{{ route('profile.remove-photo') }}" method="POST">
+        @csrf
+        @method('DELETE')
+    </form>
+
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
@@ -24,9 +30,14 @@
             <div class="mt-2 flex items-center gap-x-3">
                 @if ($user->profile_image)
                     <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile" class="h-12 w-12 rounded-full object-cover">
+                    <button type="button"
+                            onclick="if(confirm('Apakah Anda yakin ingin menghapus foto profil?')) { document.getElementById('remove-photo-form').submit(); return false; }"
+                            class="text-sm text-red-600 hover:text-red-900">
+                        Hapus Foto
+                    </button>
                 @else
-                    <div class="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
-                        <span class="text-gray-500 text-lg font-medium">
+                    <div class="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
+                        <span class="text-orange-600 text-lg font-medium">
                             {{ strtoupper(substr($user->first_name, 0, 1)) }}{{ strtoupper(substr($user->last_name, 0, 1)) }}
                         </span>
                     </div>
@@ -35,8 +46,19 @@
                 <input type="file"
                        id="profile_image"
                        name="profile_image"
+                       accept="image/*"
                        class="rounded-md bg-white/50 border-gray-300 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
             </div>
+
+            @if (session('status') === 'photo-removed')
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 2000)"
+                    class="mt-2 text-sm text-green-600"
+                >{{ __('Foto profil berhasil dihapus.') }}</p>
+            @endif
 
             <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
         </div>
