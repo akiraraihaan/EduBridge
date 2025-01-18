@@ -220,7 +220,7 @@
 
     @auth
         <!-- Content for Logged In Users -->
-        <div class="min-h-screen bg-gray-50">
+        <div class="min-h-screen bg-white/20">
             <!-- Welcome Banner -->
             <div class="bg-white shadow-sm border-b">
                 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
