@@ -92,6 +92,7 @@ class RegisteredUserController extends Controller
                 'preferred_course' => ['required_if:role_id,2', 'nullable', 'exists:courses,id'],
             ]);
 
+            // Set data dasar user
             $userData = [
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -100,7 +101,7 @@ class RegisteredUserController extends Controller
                 'whatsapp' => $request->whatsapp,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
-                'is_active' => true,
+                'is_active' => $request->role_id == 3, // Student langsung aktif, mentor perlu approval admin
             ];
 
             $user = User::create($userData);

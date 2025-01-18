@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\MentorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('batches', BatchController::class);
     Route::post('batches/{batch}/toggle-status', [BatchController::class, 'toggleStatus'])->name('batches.toggle-status');
     Route::post('batches/{batch}/toggle-registration', [BatchController::class, 'toggleRegistration'])->name('batches.toggle-registration');
+
+    // Mentor Management Routes
+    Route::get('/mentors', [MentorController::class, 'index'])->name('mentors.index');
+    Route::put('/mentors/{mentor}/activate', [MentorController::class, 'activate'])->name('mentors.activate');
+    Route::put('/mentors/{mentor}/deactivate', [MentorController::class, 'deactivate'])->name('mentors.deactivate');
 });
 
 require __DIR__.'/auth.php';

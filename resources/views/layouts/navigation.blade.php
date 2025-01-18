@@ -20,6 +20,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (Auth::user()->isAdmin())
+                        <x-nav-link :href="route('admin.batches.index')" :active="request()->routeIs('admin.batches.*')">
+                            {{ __('Kelola Batch') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
+                            {{ __('Kelola Mentor') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -42,6 +50,15 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
+                        @if (Auth::user()->isAdmin())
+                            <x-dropdown-link :href="route('admin.mentors.index')">
+                                {{ __('Kelola Mentor') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('admin.batches.index')">
+                                {{ __('Kelola Batch') }}
+                            </x-dropdown-link>
+                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
