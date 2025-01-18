@@ -167,7 +167,7 @@
                         <!-- Dynamic Sub-Navbar based on Role -->
                         @if (Auth::user()->isAdmin())
                             <!-- Admin Dropdown -->
-                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
+                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out" style="z-index: 99999 !important;">
                                 <div class="px-1">
                                     <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Dashboard

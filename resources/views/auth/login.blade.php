@@ -175,15 +175,6 @@
                         </script>
                     @endif
 
-                    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                    <!-- Error Message -->
-                    @if (session('error'))
-                        <div class="mb-4 font-medium text-sm text-red-600">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <div class="space-y-1 sm:space-y-2">
                         <x-input-label for="email" :value="__('Email')" class="text-sm sm:text-base" />
                         <div class="relative">

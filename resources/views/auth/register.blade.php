@@ -3,15 +3,15 @@
     <div class="fixed inset-0 -z-10 overflow-hidden">
         <!-- Enhanced gradient base -->
         <div class="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-indigo-100"></div>
-        
+
         <!-- Animated elegant accents -->
         <div class="absolute inset-0">
             <!-- Main accent rectangle -->
-            <div class="absolute top-0 right-0 w-1/2 h-screen 
+            <div class="absolute top-0 right-0 w-1/2 h-screen
                         bg-gradient-to-b from-blue-200/40 to-transparent
                         transform -skew-x-12">
             </div>
-    
+
             <!-- Primary animated shape -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="400" height="400" class="absolute top-20 right-20 animate-[float_8s_ease-in-out_infinite] opacity-10">
                 <g clip-path="url(#cs_clip_1_misc-9)">
@@ -42,9 +42,9 @@
                     </clipPath>
                 </defs>
             </svg>
-    
+
             <!-- Orange accent circle -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="320" height="320" 
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="320" height="320"
                  class="absolute bottom-40 left-40 animate-[float_10s_ease-in-out_infinite_reverse] opacity-30">
                 <g clip-path="url(#cs_clip_1_polygon-7)">
                     <mask id="cs_mask_1_polygon-7" style="mask-type:alpha" width="182" height="200" x="9" y="0" maskUnits="userSpaceOnUse">
@@ -74,9 +74,9 @@
                     </clipPath>
                 </defs>
             </svg>
-    
+
             <!-- Decorative star shape -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="256" height="256" 
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" width="256" height="256"
                  class="absolute top-40 left-20 animate-[rotate_25s_linear_infinite]">
                 <g clip-path="url(#cs_clip_1_star-8)">
                     <mask id="cs_mask_1_star-8" style="mask-type:alpha" width="200" height="200" x="0" y="0" maskUnits="userSpaceOnUse">
@@ -108,13 +108,13 @@
             </svg>
         </div>
     </div>
-    
+
     <style>
     @keyframes float {
         0%, 100% { transform: translate(0, 0); }
         50% { transform: translate(0, 20px); }
     }
-    
+
     @keyframes rotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -249,7 +249,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="certifications_file" :value="__('Upload Sertifikasi (PDF, max 2MB)')" class="text-sm sm:text-base" />
+                            <x-input-label for="certifications_file" :value="__('Upload Sertifikasi/Ijazah (PDF, max 2MB)')" class="text-sm sm:text-base" />
                             <input type="file" id="certifications_file" name="certifications_file" accept=".pdf" class="block w-full text-sm text-slate-500 mt-1
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
