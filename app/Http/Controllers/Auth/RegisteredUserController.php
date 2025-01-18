@@ -35,6 +35,38 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         try {
+            // Jika registrasi sebagai student, cek apakah ada batch yang aktif dan terbuka
+            if ($request->role_id == 3) {
+                $activeBatch = \App\Models\Batch::where('is_active', true)
+                    ->where('is_open', true)
+                    ->first();
+
+                if (!$activeBatch) {
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => 'Pendaftaran student saat ini sedang ditutup.'
+                        ], 422);
+                    }
+                    return back()
+                        ->withInput()
+                        ->with('error', 'Pendaftaran student saat ini sedang ditutup.');
+                }
+
+                // Cek apakah batch masih memiliki slot
+                if (!$activeBatch->hasAvailableSlots()) {
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => 'Batch saat ini sudah penuh.'
+                        ], 422);
+                    }
+                    return back()
+                        ->withInput()
+                        ->with('error', 'Batch saat ini sudah penuh.');
+                }
+            }
+
             // Cek apakah email sudah terdaftar (terlepas dari role)
             $existingUser = User::where('email', $request->email)->first();
             if ($existingUser) {

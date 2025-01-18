@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRole::class,
         'check.batch.status' => \App\Http\Middleware\CheckBatchStatus::class,
+        'check.active.batch' => \App\Http\Middleware\CheckActiveBatch::class,
     ];
 }

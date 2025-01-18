@@ -3,35 +3,24 @@
 namespace App\Observers;
 
 use App\Models\Enrollment;
-use App\Models\Course;
 
 class EnrollmentObserver
 {
-    public function created(Enrollment $enrollment)
+    /**
+     * Handle the Enrollment "created" event.
+     */
+    public function created(Enrollment $enrollment): void
     {
-        // Increment student_count di course yang dipilih
-        $user = $enrollment->user;
-        if ($user && $user->course) {
-            $user->course->increment('student_count');
-        }
-
-        // Update enrolled_count di batch berdasarkan total student_count dari semua course
-        $enrollment->batch->update([
-            'enrolled_count' => Course::sum('student_count')
-        ]);
+        $batch = $enrollment->batch;
+        $batch->increment('enrolled_count');
     }
 
-    public function deleted(Enrollment $enrollment)
+    /**
+     * Handle the Enrollment "deleted" event.
+     */
+    public function deleted(Enrollment $enrollment): void
     {
-        // Decrement student_count di course yang dipilih
-        $user = $enrollment->user;
-        if ($user && $user->course) {
-            $user->course->decrement('student_count');
-        }
-
-        // Update enrolled_count di batch berdasarkan total student_count dari semua course
-        $enrollment->batch->update([
-            'enrolled_count' => Course::sum('student_count')
-        ]);
+        $batch = $enrollment->batch;
+        $batch->decrement('enrolled_count');
     }
 }

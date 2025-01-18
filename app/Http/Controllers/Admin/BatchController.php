@@ -37,12 +37,22 @@ class BatchController extends Controller
     public function store(Request $request)
     {
         try {
+            DB::beginTransaction();
+
             $request->validate([
                 'name' => 'required|string|max:255',
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start_date',
                 'capacity' => 'required|integer|min:1|max:1000'
             ]);
+
+            // Jika batch baru akan aktif, nonaktifkan batch lain
+            if ($request->has('is_active')) {
+                Batch::query()->update([
+                    'is_active' => false,
+                    'is_open' => false
+                ]);
+            }
 
             $batch = new Batch();
             $batch->name = $request->name;
@@ -51,19 +61,19 @@ class BatchController extends Controller
             $batch->capacity = $request->capacity;
             $batch->enrolled_count = 0;
             $batch->is_active = $request->has('is_active');
-            $batch->is_open = $request->has('is_open');
+            $batch->is_open = $request->has('is_open') && $request->has('is_active');
 
             if($batch->save()) {
+                DB::commit();
                 return redirect()
                     ->route('admin.batches.index')
                     ->with('success', 'Batch berhasil dibuat');
             }
 
-            return back()
-                ->withInput()
-                ->with('error', 'Gagal menyimpan batch');
+            throw new \Exception('Gagal menyimpan batch');
 
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Error creating batch: ' . $e->getMessage());
 
             return back()
@@ -98,8 +108,6 @@ class BatchController extends Controller
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'year' => 'required|integer|min:2024',
-                'period' => 'required|integer|min:1|max:4',
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start_date',
                 'capacity' => 'required|integer|min:1|max:1000',
@@ -107,23 +115,21 @@ class BatchController extends Controller
                 'is_active' => 'boolean'
             ]);
 
-            // Periksa apakah ada batch aktif lain untuk periode ini (kecuali batch ini sendiri)
-            $existingBatch = Batch::where('is_active', true)
-                ->where('year', $validated['year'])
-                ->where('period', $validated['period'])
-                ->where('id', '!=', $batch->id)
-                ->first();
-
-            if ($existingBatch) {
-                throw new \Exception('Sudah ada batch aktif untuk periode yang sama');
-            }
-
             // Periksa kapasitas
             if ($validated['capacity'] < $batch->enrolled_count) {
                 throw new \Exception('Kapasitas tidak boleh lebih kecil dari jumlah siswa yang sudah terdaftar');
             }
 
-            $validated['is_open'] = $request->has('is_open');
+            // Jika batch akan diaktifkan, nonaktifkan batch lain
+            if ($request->has('is_active') && !$batch->is_active) {
+                Batch::where('id', '!=', $batch->id)
+                    ->update([
+                        'is_active' => false,
+                        'is_open' => false
+                    ]);
+            }
+
+            $validated['is_open'] = $request->has('is_open') && $request->has('is_active');
             $validated['is_active'] = $request->has('is_active');
 
             $batch->update($validated);
@@ -185,9 +191,20 @@ class BatchController extends Controller
     public function toggleStatus(Batch $batch)
     {
         try {
+            DB::beginTransaction();
+
             // Cek jika batch akan dinonaktifkan dan memiliki siswa
             if ($batch->is_active && $batch->enrolled_count > 0) {
                 throw new \Exception('Tidak dapat menonaktifkan batch yang memiliki siswa terdaftar');
+            }
+
+            // Jika akan mengaktifkan batch, nonaktifkan semua batch lain
+            if (!$batch->is_active) {
+                Batch::where('id', '!=', $batch->id)
+                    ->update([
+                        'is_active' => false,
+                        'is_open' => false
+                    ]);
             }
 
             // Update status batch
@@ -197,11 +214,14 @@ class BatchController extends Controller
                 'is_open' => $batch->is_active ? false : $batch->is_open
             ]);
 
+            DB::commit();
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Status batch berhasil diperbarui'
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -212,6 +232,8 @@ class BatchController extends Controller
     public function toggleRegistration(Batch $batch)
     {
         try {
+            DB::beginTransaction();
+
             // Cek apakah batch aktif
             if (!$batch->is_active) {
                 throw new \Exception('Batch harus aktif untuk membuka pendaftaran');
@@ -222,16 +244,25 @@ class BatchController extends Controller
                 throw new \Exception('Batch sudah penuh');
             }
 
+            // Jika akan membuka pendaftaran, tutup pendaftaran batch lain
+            if (!$batch->is_open) {
+                Batch::where('id', '!=', $batch->id)
+                    ->update(['is_open' => false]);
+            }
+
             // Update status pendaftaran
             $batch->update([
                 'is_open' => !$batch->is_open
             ]);
+
+            DB::commit();
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Status pendaftaran berhasil diperbarui'
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
