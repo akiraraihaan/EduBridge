@@ -51,15 +51,6 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        @if (Auth::user()->isAdmin())
-                            <x-dropdown-link :href="route('admin.mentors.index')">
-                                {{ __('Kelola Mentor') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.batches.index')">
-                                {{ __('Kelola Batch') }}
-                            </x-dropdown-link>
-                        @endif
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
