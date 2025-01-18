@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Enrollment;
 use App\Models\TopPerformer;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,17 +18,23 @@ class Batch extends Model
         'start_date',
         'end_date',
         'capacity',
-        'enrolled_count',
+        'is_active',
         'is_open',
-        'is_active'
+        'enrolled_count'
     ];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
-        'is_open' => 'boolean',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'is_open' => 'boolean'
     ];
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'batch_user', 'batch_id', 'user_id')
+            ->withTimestamps();
+    }
 
     public function enrollments()
     {

@@ -63,7 +63,7 @@
                                         <div class="flex space-x-2">
                                             <button
                                                 onclick="toggleBatchStatus('{{ $batch->id }}')"
-                                                class="px-3 py-1 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors duration-200 flex items-center"
+                                                class="px-3 py-1 text-sm rounded-md {{ $batch->is_active ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-green-50 text-green-600 hover:bg-green-100' }} transition-colors duration-200 flex items-center"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
@@ -73,7 +73,7 @@
                                             @if($batch->is_active)
                                             <button
                                                 onclick="toggleRegistrationStatus('{{ $batch->id }}')"
-                                                class="px-3 py-1 text-sm rounded-md bg-green-50 text-green-600 hover:bg-green-100 transition-colors duration-200 flex items-center"
+                                                class="px-3 py-1 text-sm rounded-md {{ $batch->is_open ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100' : 'bg-green-50 text-green-600 hover:bg-green-100' }} transition-colors duration-200 flex items-center"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -181,12 +181,13 @@
         </form>
     </x-modal>
 
-    @push('scripts')
     <script>
         // Setup CSRF token untuk semua request AJAX
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        window.addEventListener('load', function() {
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        });
 
-        function toggleBatchStatus(batchId) {
+        window.toggleBatchStatus = function(batchId) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Status batch akan diubah!",
@@ -198,19 +199,19 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post(`{{ route('admin.batches.toggle-status', '') }}/${batchId}`)
-                .then(response => {
-                    if (response.data.status === 'success') {
+                    axios.post(`/admin/batches/${batchId}/toggle-status`)
+                        .then(response => {
+                            if (response.data.status === 'success') {
                                 Swal.fire(
                                     'Berhasil!',
                                     'Status batch telah diubah.',
                                     'success'
                                 ).then(() => {
-                        window.location.reload();
+                                    window.location.reload();
                                 });
-                    }
-                })
-                .catch(error => {
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire(
                                 'Error!',
                                 error.response.data.message,
@@ -218,10 +219,10 @@
                             );
                         });
                 }
-                });
+            });
         }
 
-        function toggleRegistrationStatus(batchId) {
+        window.toggleRegistrationStatus = function(batchId) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Status pendaftaran batch akan diubah!",
@@ -233,7 +234,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post(`{{ route('admin.batches.toggle-registration', '') }}/${batchId}`)
+                    axios.post(`/admin/batches/${batchId}/toggle-registration`)
                         .then(response => {
                             if (response.data.status === 'success') {
                                 Swal.fire(
@@ -256,11 +257,11 @@
             });
         }
 
-        function editBatch(batchId) {
-            window.location.href = `{{ route('admin.batches.edit', '') }}/${batchId}`;
+        window.editBatch = function(batchId) {
+            window.location.href = `/admin/batches/${batchId}/edit`;
         }
 
-        function deleteBatch(batchId) {
+        window.deleteBatch = function(batchId) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Batch yang dihapus tidak dapat dikembalikan!",
@@ -272,7 +273,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete(`{{ route('admin.batches.destroy', '') }}/${batchId}`)
+                    axios.delete(`/admin/batches/${batchId}`)
                         .then(response => {
                             if (response.data.status === 'success') {
                                 Swal.fire(
@@ -295,23 +296,17 @@
             });
         }
 
-        // Nonaktifkan event listener untuk debugging
-        // document.getElementById('createBatchForm').addEventListener('submit', function(e) {
-        //     e.preventDefault();
-        //     const formData = new FormData(this);
-        //     axios.post(this.action, formData)...
-        // });
-
         // Validasi tanggal
-        document.getElementById('start_date').addEventListener('change', function() {
-            document.getElementById('end_date').min = this.value;
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('start_date').addEventListener('change', function() {
+                document.getElementById('end_date').min = this.value;
+            });
 
-        document.getElementById('end_date').addEventListener('change', function() {
-            document.getElementById('start_date').max = this.value;
+            document.getElementById('end_date').addEventListener('change', function() {
+                document.getElementById('start_date').max = this.value;
+            });
         });
     </script>
-    @endpush
 
     <style>
         @keyframes blob {

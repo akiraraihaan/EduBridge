@@ -49,7 +49,7 @@ class BatchController extends Controller
             $batch->start_date = $request->start_date;
             $batch->end_date = $request->end_date;
             $batch->capacity = $request->capacity;
-            $batch->enrolled_count = Course::sum('student_count');
+            $batch->enrolled_count = 0;
             $batch->is_active = $request->has('is_active');
             $batch->is_open = $request->has('is_open');
 
@@ -185,13 +185,16 @@ class BatchController extends Controller
     public function toggleStatus(Batch $batch)
     {
         try {
-            if (!$batch->is_active && $batch->enrolled_count > 0) {
+            // Cek jika batch akan dinonaktifkan dan memiliki siswa
+            if ($batch->is_active && $batch->enrolled_count > 0) {
                 throw new \Exception('Tidak dapat menonaktifkan batch yang memiliki siswa terdaftar');
             }
 
+            // Update status batch
             $batch->update([
                 'is_active' => !$batch->is_active,
-                'is_open' => !$batch->is_active ? false : $batch->is_open
+                // Jika batch dinonaktifkan, tutup pendaftaran
+                'is_open' => $batch->is_active ? false : $batch->is_open
             ]);
 
             return response()->json([
@@ -209,14 +212,17 @@ class BatchController extends Controller
     public function toggleRegistration(Batch $batch)
     {
         try {
+            // Cek apakah batch aktif
             if (!$batch->is_active) {
                 throw new \Exception('Batch harus aktif untuk membuka pendaftaran');
             }
 
-            if (!$batch->hasAvailableSlots() && !$batch->is_open) {
+            // Cek kapasitas hanya jika akan membuka pendaftaran
+            if (!$batch->is_open && !$batch->hasAvailableSlots()) {
                 throw new \Exception('Batch sudah penuh');
             }
 
+            // Update status pendaftaran
             $batch->update([
                 'is_open' => !$batch->is_open
             ]);
