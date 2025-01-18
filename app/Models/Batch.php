@@ -13,8 +13,6 @@ class Batch extends Model
 
     protected $fillable = [
         'name',
-        'year',
-        'period',
         'start_date',
         'end_date',
         'capacity',
@@ -48,17 +46,6 @@ class Batch extends Model
     public function getAvailableSlotsAttribute()
     {
         return $this->capacity - $this->enrolled_count;
-    }
-
-    public function getPeriodNameAttribute()
-    {
-        return match($this->period) {
-            1 => 'Januari - Maret',
-            2 => 'April - Juni',
-            3 => 'Juli - September',
-            4 => 'Oktober - Desember',
-            default => 'Unknown'
-        };
     }
 
     public function getStatusBadgeAttribute()

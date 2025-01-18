@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->year('year');
-            $table->tinyInteger('period');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('capacity');

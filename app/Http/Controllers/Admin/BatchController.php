@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Batch;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BatchController extends Controller
 {
@@ -14,8 +15,7 @@ class BatchController extends Controller
      */
     public function index()
     {
-        $batches = Batch::orderBy('year', 'desc')
-            ->orderBy('period', 'desc')
+        $batches = Batch::orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('admin.batches.index', compact('batches'));
@@ -26,7 +26,7 @@ class BatchController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.batches.create');
     }
 
@@ -36,63 +36,31 @@ class BatchController extends Controller
     public function store(Request $request)
     {
         try {
-            DB::beginTransaction();
+            $batch = new Batch();
+            $batch->name = $request->name;
+            $batch->start_date = $request->start_date;
+            $batch->end_date = $request->end_date;
+            $batch->capacity = $request->capacity;
+            $batch->enrolled_count = 0;
+            $batch->is_open = $request->has('is_open');
+            $batch->is_active = $request->has('is_active');
 
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'year' => 'required|integer|min:2024',
-                'period' => 'required|integer|min:1|max:4',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date|after:start_date',
-                'capacity' => 'required|integer|min:1|max:1000',
-                'is_open' => 'boolean',
-                'is_active' => 'boolean'
-            ]);
-
-            // Periksa apakah sudah ada batch aktif untuk periode ini
-            $existingBatch = Batch::where('is_active', true)
-                ->where('year', $validated['year'])
-                ->where('period', $validated['period'])
-                ->first();
-
-            if ($existingBatch) {
-                throw new \Exception('Sudah ada batch aktif untuk periode yang sama');
-            }
-
-            // Set default values
-            $validated['enrolled_count'] = 0;
-            $validated['is_open'] = $request->has('is_open');
-            $validated['is_active'] = $request->has('is_active');
-
-            $batch = Batch::create($validated);
-
-            DB::commit();
-
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Batch berhasil dibuat',
-                    'data' => $batch
-                ]);
-            }
-
-            return redirect()
-                ->route('admin.batches.index')
-                ->with('success', 'Batch berhasil dibuat');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $e->getMessage()
-                ], 422);
+            if($batch->save()) {
+                return redirect()
+                    ->route('admin.batches.index')
+                    ->with('success', 'Batch berhasil dibuat');
             }
 
             return back()
                 ->withInput()
-                ->withErrors(['error' => $e->getMessage()]);
+                ->with('error', 'Gagal menyimpan batch');
+
+        } catch (\Exception $e) {
+            Log::error('Error creating batch: ' . $e->getMessage());
+
+            return back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 

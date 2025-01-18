@@ -1,13 +1,4 @@
 <x-app-layout>
-    <!-- Background with blur effect -->
-    <div class="fixed inset-0 -z-10">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
-        <div class="absolute inset-0">
-            <div class="absolute top-20 left-20 w-48 md:w-72 h-48 md:h-72 bg-[#bae8ff] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-            <div class="absolute top-40 right-20 w-48 md:w-72 h-48 md:h-72 bg-[#ffe9d5] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-40 w-48 md:w-72 h-48 md:h-72 bg-[#ffe1c5] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-        </div>
-    </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -39,22 +30,36 @@
                                 <tr class="hover:bg-white/30 transition-colors duration-200">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
                                             {{ $batch->name }}
-                                        </td>
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                                        {{ $batch->year }} P{{ $batch->period }} ({{ $batch->period_name }})
-                                        </td>
+                                        {{ \Carbon\Carbon::parse($batch->start_date)->format('d M Y') }} - {{ \Carbon\Carbon::parse($batch->end_date)->format('d M Y') }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
                                         <div class="flex items-center">
                                             <div class="flex-1 h-2 bg-gray-200 rounded-full mr-2">
-                                                <div class="h-2 bg-blue-500 rounded-full" style="width: {{ $batch->progress_percentage }}%"></div>
+                                                <div class="h-2 bg-blue-500 rounded-full" style="width: {{ ($batch->enrolled_count / $batch->capacity) * 100 }}%"></div>
                                             </div>
                                             <span class="text-xs">{{ $batch->enrolled_count }}/{{ $batch->capacity }}</span>
                                         </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                        {!! $batch->status_badge !!}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($batch->is_active)
+                                            @if($batch->is_open)
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Pendaftaran Dibuka
+                                                </span>
+                                            @else
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                    Pendaftaran Ditutup
+                                                </span>
+                                            @endif
+                                        @else
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                Tidak Aktif
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <div class="flex space-x-3">
                                             <button
                                                 onclick="toggleBatchStatus('{{ $batch->id }}')"
@@ -83,8 +88,8 @@
                                                 Hapus
                                             </button>
                                         </div>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -101,6 +106,17 @@
     <x-modal name="create-batch" :show="false">
         <form method="POST" action="{{ route('admin.batches.store') }}" class="p-6" id="createBatchForm">
             @csrf
+
+            @if($errors->any())
+            <div class="mb-4 p-4 bg-red-50 text-red-500 rounded-lg">
+                <ul class="list-disc list-inside">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <h2 class="text-lg font-medium text-slate-700 mb-4">Tambah Batch Baru</h2>
 
             <div class="space-y-4">
@@ -108,25 +124,6 @@
                     <x-input-label for="name" :value="__('Nama Batch')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required placeholder="Contoh: Batch 1 2024" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <x-input-label for="year" :value="__('Tahun')" />
-                        <x-text-input id="year" class="block mt-1 w-full" type="number" name="year" :value="old('year', date('Y'))" required min="2024" />
-                        <x-input-error :messages="$errors->get('year')" class="mt-2" />
-                    </div>
-                    <div>
-                        <x-input-label for="period" :value="__('Periode')" />
-                        <select id="period" name="period" class="w-full mt-1 px-4 py-2 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-sm transition duration-200 ease-in-out text-slate-600 hover:bg-white/90 focus:ring-2 focus:ring-blue-200" required>
-                            <option value="" disabled selected>Pilih Periode</option>
-                            <option value="1" {{ old('period') == 1 ? 'selected' : '' }}>Januari - Maret</option>
-                            <option value="2" {{ old('period') == 2 ? 'selected' : '' }}>April - Juni</option>
-                            <option value="3" {{ old('period') == 3 ? 'selected' : '' }}>Juli - September</option>
-                            <option value="4" {{ old('period') == 4 ? 'selected' : '' }}>Oktober - Desember</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('period')" class="mt-2" />
-                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -286,38 +283,12 @@
             });
         }
 
-        document.getElementById('createBatchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-
-            axios.post(this.action, formData)
-                .then(response => {
-                    if (response.data.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: 'Batch berhasil dibuat.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                        window.location.reload();
-                        });
-                    }
-                })
-                .catch(error => {
-                    let errorMessage = 'Terjadi kesalahan saat membuat batch';
-                    if (error.response && error.response.data && error.response.data.message) {
-                        errorMessage = error.response.data.message;
-                    }
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: errorMessage
-                    });
-                });
-        });
+        // Nonaktifkan event listener untuk debugging
+        // document.getElementById('createBatchForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     const formData = new FormData(this);
+        //     axios.post(this.action, formData)...
+        // });
 
         // Validasi tanggal
         document.getElementById('start_date').addEventListener('change', function() {
