@@ -29,7 +29,16 @@
 
             <div class="mt-2 flex items-center gap-x-3">
                 @if ($user->profile_image)
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile" class="h-12 w-12 rounded-full object-cover">
+                    <!-- Debug info -->
+                    <div class="text-xs text-gray-500 mb-2">
+                        Path: {{ $user->profile_image }}<br>
+                        Full URL: {{ asset('storage/' . $user->profile_image) }}
+                    </div>
+
+                    <img src="{{ asset('storage/' . $user->profile_image) }}"
+                         alt="Profile"
+                         class="h-12 w-12 rounded-full object-cover"
+                         onerror="this.onerror=null; this.src='{{ asset('img/default-avatar.png') }}'; console.log('Error loading image:', this.src);">
                     <button type="button"
                             onclick="if(confirm('Apakah Anda yakin ingin menghapus foto profil?')) { document.getElementById('remove-photo-form').submit(); return false; }"
                             class="text-sm text-red-600 hover:text-red-900">

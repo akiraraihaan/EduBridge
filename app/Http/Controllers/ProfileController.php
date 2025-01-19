@@ -33,16 +33,38 @@ class ProfileController extends Controller
         // Handle profile image upload
         if ($request->hasFile('profile_image')) {
             try {
+                $file = $request->file('profile_image');
+
+                // Log file info
+                \Log::info('Uploading profile image:', [
+                    'original_name' => $file->getClientOriginalName(),
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize()
+                ]);
+
                 // Delete old image if exists
                 if ($user->profile_image) {
+                    \Log::info('Deleting old image: ' . $user->profile_image);
                     Storage::disk('public')->delete($user->profile_image);
                 }
 
                 // Store new image
-                $path = $request->file('profile_image')->store('profile-photos', 'public');
+                $path = $file->store('profile-photos', 'public');
+                \Log::info('New image stored at: ' . $path);
+
+                // Update user profile_image
                 $user->profile_image = $path;
+
+                // Verify file exists
+                if (!Storage::disk('public')->exists($path)) {
+                    throw new \Exception('File not stored correctly');
+                }
+
+                \Log::info('File exists check passed');
+
             } catch (\Exception $e) {
-                return back()->withErrors(['profile_image' => 'Gagal mengupload foto profil.']);
+                \Log::error('Error uploading profile image: ' . $e->getMessage());
+                return back()->withErrors(['profile_image' => 'Gagal mengupload foto profil: ' . $e->getMessage()]);
             }
         }
 
@@ -53,6 +75,9 @@ class ProfileController extends Controller
         }
 
         $user->save();
+
+        // Log final profile image path
+        \Log::info('Final profile image path: ' . $user->profile_image);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
