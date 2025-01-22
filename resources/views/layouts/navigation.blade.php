@@ -15,6 +15,33 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+                    @if (Auth::user()->isAdmin())
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.batches.index')" :active="request()->routeIs('admin.batches.*')">
+                            {{ __('Batch') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
+                            {{ __('Mentor') }}
+                        </x-nav-link>
+                    @endif
+                    @if (Auth::user()->isMentor())
+                        <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('mentor.modules.index')" :active="request()->routeIs('mentor.modules.*')">
+                            {{ __('Modul') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('mentor.materials.index')" :active="request()->routeIs('mentor.materials.*')">
+                            {{ __('Materi') }}
+                        </x-nav-link>
+                    @endif
+                    @if (Auth::user()->isStudent())
+                        <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -23,7 +50,12 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->first_name }}</div>
+                            <div class="flex items-center">
+                                @if(Auth::user()->profile_image)
+                                    <img src="{{ Storage::url(Auth::user()->profile_image) }}" alt="Profile" class="h-8 w-8 rounded-full object-cover mr-2">
+                                @endif
+                                <span>{{ Auth::user()->first_name }}</span>
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -34,40 +66,26 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        @if (Auth::user()->role_id === 1)
-                            <!-- Admin Menu -->
-                            <x-dropdown-link :href="route('admin.dashboard')">
-                                {{ __('Dashboard Admin') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.profile')">
-                                {{ __('Profile Admin') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.batches.index')">
-                                {{ __('Kelola Batch') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.mentors.index')">
-                                {{ __('Kelola Mentor') }}
-                            </x-dropdown-link>
-                        @elseif (Auth::user()->role_id === 2)
-                            <!-- Mentor Menu -->
-                            <x-dropdown-link :href="route('mentor.dashboard')">
-                                {{ __('Dashboard Mentor') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('mentor.profile')">
-                                {{ __('Profile Mentor') }}
-                            </x-dropdown-link>
-                        @elseif (Auth::user()->role_id === 3)
-                            <!-- Student Menu -->
-                            <x-dropdown-link :href="route('student.dashboard')">
-                                {{ __('Dashboard Siswa') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('student.profile')">
-                                {{ __('Profile Siswa') }}
-                            </x-dropdown-link>
-                        @endif
+                        <div class="px-4 py-2 text-xs text-gray-500">
+                            @if(Auth::user()->isAdmin())
+                                <span>Administrator</span>
+                            @elseif(Auth::user()->isMentor())
+                                <span>Mentor</span>
+                                <div class="mt-1">
+                                    @foreach(Auth::user()->mentorCourses as $mentorCourse)
+                                        <span class="block text-gray-600">{{ $mentorCourse->course->name }}</span>
+                                    @endforeach
+                                </div>
+                            @elseif(Auth::user()->isStudent())
+                                <span>Siswa</span>
+                                @if(Auth::user()->course)
+                                    <span class="block text-gray-600">{{ Auth::user()->course->name }}</span>
+                                @endif
+                            @endif
+                        </div>
 
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Settings') }}
+                            {{ __('Pengaturan Profil') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -77,7 +95,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Keluar') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -98,48 +116,71 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+            @if (Auth::user()->isAdmin())
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.batches.index')" :active="request()->routeIs('admin.batches.*')">
+                    {{ __('Batch') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
+                    {{ __('Mentor') }}
+                </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->isMentor())
+                <x-responsive-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('mentor.modules.index')" :active="request()->routeIs('mentor.modules.*')">
+                    {{ __('Modul') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('mentor.materials.index')" :active="request()->routeIs('mentor.materials.*')">
+                    {{ __('Materi') }}
+                </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->isStudent())
+                <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->first_name }}</div>
+                <div class="font-medium text-base text-gray-800">
+                    @if(Auth::user()->profile_image)
+                        <img src="{{ Storage::url(Auth::user()->profile_image) }}" alt="Profile" class="h-10 w-10 rounded-full object-cover mb-2">
+                    @endif
+                    {{ Auth::user()->first_name }}
+                </div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="mt-1 text-xs text-gray-500">
+                    @if(Auth::user()->isAdmin())
+                        <span>Administrator</span>
+                    @elseif(Auth::user()->isMentor())
+                        <span>Mentor</span>
+                        <div class="mt-1">
+                            @foreach(Auth::user()->mentorCourses as $mentorCourse)
+                                <span class="block text-gray-600">{{ $mentorCourse->course->name }}</span>
+                            @endforeach
+                        </div>
+                    @elseif(Auth::user()->isStudent())
+                        <span>Siswa</span>
+                        @if(Auth::user()->course)
+                            <span class="block text-gray-600">{{ Auth::user()->course->name }}</span>
+                        @endif
+                    @endif
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">
-                @if (Auth::user()->role_id === 1)
-                    <!-- Admin Menu -->
-                    <x-responsive-nav-link :href="route('admin.dashboard')">
-                        {{ __('Dashboard Admin') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.profile')">
-                        {{ __('Profile Admin') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.batches.index')">
-                        {{ __('Kelola Batch') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.mentors.index')">
-                        {{ __('Kelola Mentor') }}
-                    </x-responsive-nav-link>
-                @elseif (Auth::user()->role_id === 2)
-                    <!-- Mentor Menu -->
-                    <x-responsive-nav-link :href="route('mentor.dashboard')">
-                        {{ __('Dashboard Mentor') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('mentor.profile')">
-                        {{ __('Profile Mentor') }}
-                    </x-responsive-nav-link>
-                @elseif (Auth::user()->role_id === 3)
-                    <!-- Student Menu -->
-                    <x-responsive-nav-link :href="route('student.dashboard')">
-                        {{ __('Dashboard Siswa') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('student.profile')">
-                        {{ __('Profile Siswa') }}
-                    </x-responsive-nav-link>
-                @endif
-
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Settings') }}
+                    {{ __('Pengaturan Profil') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -149,7 +190,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Keluar') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

@@ -181,9 +181,8 @@ use Illuminate\Support\Facades\Storage;
 
                         <!-- Dynamic Sub-Navbar based on Role -->
                         @if (Auth::user()->isAdmin())
-                            <!-- Admin Dropdown -->
-                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out -z-1">
-                                <div class="px-1 z-10">
+                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
+                                <div class="px-1">
                                     <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Dashboard
                                     </a>
@@ -206,7 +205,6 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                             </div>
                         @elseif(Auth::user()->isMentor())
-                            <!-- Mentor Dropdown -->
                             <div class="absolute right-0 w-[280px] mt-2 p-3 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="grid grid-cols-2 gap-2">
                                     <a href="{{ route('mentor.dashboard') }}" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
@@ -221,7 +219,7 @@ use Illuminate\Support\Facades\Storage;
                                         </svg>
                                         <span class="text-sm font-medium text-gray-700 group-hover/item:text-orange-600">Profil</span>
                                     </a>
-                                    <form method="POST" action="{{ route('logout') }}" class="block">
+                                    <form method="POST" action="{{ route('logout') }}" class="col-span-2">
                                         @csrf
                                         <button type="submit" class="w-full flex flex-col items-center p-3 rounded-lg hover:bg-red-50 transition-colors duration-200 group/item">
                                             <svg class="w-6 h-6 text-red-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +231,6 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                             </div>
                         @else
-                            <!-- Student Dropdown -->
                             <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="p-2 space-y-1">
                                     <a href="{{ route('student.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">

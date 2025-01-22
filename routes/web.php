@@ -59,6 +59,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
     Route::get('/', [MentorDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [MentorProfileController::class, 'index'])->name('profile');
+    Route::resource('modules', \App\Http\Controllers\Mentor\ModuleController::class);
+    Route::resource('materials', \App\Http\Controllers\Mentor\MaterialController::class);
 });
 
 // Student Routes

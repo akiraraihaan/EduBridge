@@ -89,6 +89,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the mentor courses for the user.
+     */
+    public function mentorCourses()
+    {
+        return $this->hasMany(MentorCourse::class);
+    }
+
+    /**
      * Check if user is admin
      */
     public function isAdmin(): bool

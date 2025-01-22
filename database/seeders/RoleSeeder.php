@@ -13,16 +13,6 @@ class RoleSeeder extends Seeder
         // Hapus semua data yang ada di tabel roles
         Role::truncate();
 
-        // $roles = [
-        //     ['name' => 'admin'],
-        //     ['name' => 'mentor'],
-        //     ['name' => 'student']
-        // ];
-
-        // foreach ($roles as $role) {
-        //     DB::table('roles')->insert($role);
-        // }
-
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'mentor']);
         Role::create(['name' => 'student']);
