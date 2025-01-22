@@ -13,9 +13,6 @@ use Illuminate\Support\Str;
 
 class MaterialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $mentorCourses = Auth::user()->mentorCourses;
@@ -25,9 +22,6 @@ class MaterialController extends Controller
         return view('mentor.materials.index', compact('courses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $mentorCourses = Auth::user()->mentorCourses;
@@ -37,9 +31,6 @@ class MaterialController extends Controller
         return view('mentor.materials.create', compact('modules'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -83,17 +74,6 @@ class MaterialController extends Controller
             ->with('success', 'Materi berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Material $material)
     {
         $mentorCourses = Auth::user()->mentorCourses;
@@ -103,9 +83,6 @@ class MaterialController extends Controller
         return view('mentor.materials.edit', compact('material', 'modules'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Material $material)
     {
         $request->validate([
@@ -152,9 +129,6 @@ class MaterialController extends Controller
             ->with('success', 'Materi berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Material $material)
     {
         if ($material->type === 'pdf' && $material->file_path) {

@@ -6,11 +6,9 @@
             </h2>
             <div class="text-sm text-gray-600">
                 Anda adalah mentor untuk kursus:
-                @foreach(Auth::user()->mentorCourses as $mentorCourse)
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ $mentorCourse->course->name }}
-                    </span>
-                @endforeach
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    {{ $module->course->name }}
+                </span>
             </div>
         </div>
     </x-slot>
@@ -22,20 +20,6 @@
                     <form action="{{ route('mentor.modules.update', $module) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PUT')
-
-                        <div>
-                            <x-input-label for="course_id" :value="__('Kursus')" />
-                            <select id="course_id" name="course_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                <option value="">Pilih Kursus</option>
-                                @foreach($courses as $course)
-                                    <option value="{{ $course->id }}" {{ old('course_id', $module->course_id) == $course->id ? 'selected' : '' }}>
-                                        {{ $course->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <p class="mt-1 text-sm text-gray-500">Pilih kursus tempat modul ini akan ditambahkan</p>
-                            <x-input-error :messages="$errors->get('course_id')" class="mt-2" />
-                        </div>
 
                         <div>
                             <x-input-label for="title" :value="__('Judul Modul')" />
@@ -80,3 +64,4 @@
         </div>
     </div>
 </x-app-layout>
+

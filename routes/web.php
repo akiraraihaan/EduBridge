@@ -11,6 +11,9 @@ use App\Http\Controllers\Student\DashboardController as StudentDashboardControll
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\MentorController;
+use App\Http\Controllers\Mentor\MaterialController as MentorMaterialController;
+use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
+use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 // Mentor Routes
-Route::middleware(['auth', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
     Route::get('/', [MentorDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [MentorProfileController::class, 'index'])->name('profile');
     Route::resource('modules', \App\Http\Controllers\Mentor\ModuleController::class);
@@ -64,9 +67,13 @@ Route::middleware(['auth', 'role:mentor'])->prefix('mentor')->name('mentor.')->g
 });
 
 // Student Routes
-Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [StudentProfileController::class, 'index'])->name('profile');
+    Route::get('/modules', [StudentModuleController::class, 'index'])->name('modules.index');
+    Route::get('/modules/{module}', [StudentModuleController::class, 'show'])->name('modules.show');
+    Route::get('/materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
+    Route::get('/materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
 });
 
 // Dashboard route that redirects based on role middleware
