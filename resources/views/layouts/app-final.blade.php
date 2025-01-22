@@ -184,17 +184,17 @@ use Illuminate\Support\Facades\Storage;
                             <!-- Admin Dropdown -->
                             <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out -z-1">
                                 <div class="px-1 z-10">
-                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
-                                        Profil
-                                    </a>
-                                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
                                         Dashboard
                                     </a>
+                                    <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
+                                        Profil
+                                    </a>
                                     <a href="{{ route('admin.batches.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
-                                        Manajemen Batch
+                                        Kelola Batch
                                     </a>
                                     <a href="{{ route('admin.mentors.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200 rounded-md">
-                                        Manajemen Mentor
+                                        Kelola Mentor
                                     </a>
                                     <div class="border-t border-gray-100 my-1"></div>
                                     <form method="POST" action="{{ route('logout') }}" class="block px-1">
@@ -209,23 +209,17 @@ use Illuminate\Support\Facades\Storage;
                             <!-- Mentor Dropdown -->
                             <div class="absolute right-0 w-[280px] mt-2 p-3 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="grid grid-cols-2 gap-2">
-                                    <a href="#" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
+                                    <a href="{{ route('mentor.dashboard') }}" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
                                         <svg class="w-6 h-6 text-orange-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                         </svg>
                                         <span class="text-sm font-medium text-gray-700 group-hover/item:text-orange-600">Dashboard</span>
                                     </a>
-                                    <a href="#" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
+                                    <a href="{{ route('mentor.profile') }}" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
                                         <svg class="w-6 h-6 text-orange-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                         </svg>
-                                        <span class="text-sm font-medium text-gray-700 group-hover/item:text-orange-600">Kelas Saya</span>
-                                    </a>
-                                    <a href="#" class="flex flex-col items-center p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item">
-                                        <svg class="w-6 h-6 text-orange-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                                        </svg>
-                                        <span class="text-sm font-medium text-gray-700 group-hover/item:text-orange-600">Tugas</span>
+                                        <span class="text-sm font-medium text-gray-700 group-hover/item:text-orange-600">Profil</span>
                                     </a>
                                     <form method="POST" action="{{ route('logout') }}" class="block">
                                         @csrf
@@ -242,51 +236,37 @@ use Illuminate\Support\Facades\Storage;
                             <!-- Student Dropdown -->
                             <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
                                 <div class="p-2 space-y-1">
-                                    <a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                    <a href="{{ route('student.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
                                         <div class="flex-shrink-0">
                                             <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                             </svg>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-medium text-gray-900">Dashboard</p>
-                                            <p class="text-xs text-gray-500">Lihat ringkasan aktivitas Anda</p>
+                                            <p class="text-sm font-medium text-gray-700">Dashboard</p>
                                         </div>
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                    <a href="{{ route('student.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
                                         <div class="flex-shrink-0">
                                             <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                             </svg>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-medium text-gray-900">Kursus Saya</p>
-                                            <p class="text-xs text-gray-500">Akses materi pembelajaran Anda</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-900">Progress</p>
-                                            <p class="text-xs text-gray-500">Pantau perkembangan belajar Anda</p>
+                                            <p class="text-sm font-medium text-gray-700">Profil</p>
                                         </div>
                                     </a>
                                     <div class="border-t border-gray-100 my-1"></div>
                                     <form method="POST" action="{{ route('logout') }}" class="block">
                                         @csrf
-                                        <button type="submit" class="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 transition-all duration-200">
+                                        <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
                                             <div class="flex-shrink-0">
-                                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p class="text-sm font-medium text-red-600">Logout</p>
-                                                <p class="text-xs text-red-500">Keluar dari akun Anda</p>
+                                                <p class="text-sm font-medium">Logout</p>
                                             </div>
                                         </button>
                                     </form>

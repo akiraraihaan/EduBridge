@@ -3,9 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\Admin\BatchController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
+use App\Http\Controllers\Mentor\ProfileController as MentorProfileController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\MentorController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +34,10 @@ Route::get('/home', [GuestController::class, 'welcoming'])->name('home');
 // About Us Route
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+// Authenticated routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Profile routes
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.remove-photo');
@@ -40,14 +45,33 @@ Route::middleware('auth')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
     Route::resource('batches', BatchController::class);
     Route::post('batches/{batch}/toggle-status', [BatchController::class, 'toggleStatus'])->name('batches.toggle-status');
     Route::post('batches/{batch}/toggle-registration', [BatchController::class, 'toggleRegistration'])->name('batches.toggle-registration');
-
-    // Mentor Management Routes
     Route::get('/mentors', [MentorController::class, 'index'])->name('mentors.index');
     Route::put('/mentors/{mentor}/activate', [MentorController::class, 'activate'])->name('mentors.activate');
     Route::put('/mentors/{mentor}/deactivate', [MentorController::class, 'deactivate'])->name('mentors.deactivate');
+});
+
+// Mentor Routes
+Route::middleware(['auth', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
+    Route::get('/', [MentorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [MentorProfileController::class, 'index'])->name('profile');
+});
+
+// Student Routes
+Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [StudentProfileController::class, 'index'])->name('profile');
+});
+
+// Dashboard route that redirects based on role middleware
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('home');
+    })->name('dashboard')->middleware(['role:admin,mentor,student']);
 });
 
 require __DIR__.'/auth.php';
