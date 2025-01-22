@@ -29,21 +29,18 @@
 
             <div class="mt-2 flex items-center gap-x-3">
                 @if ($user->profile_image)
-                    <!-- Debug info -->
-                    <div class="text-xs text-gray-500 mb-2">
-                        Path: {{ $user->profile_image }}<br>
-                        Full URL: {{ asset('storage/' . $user->profile_image) }}
+                    <div class="relative">
+                        <img src="{{ asset('storage/' . $user->profile_image) }}"
+                             alt="Profile"
+                             class="h-12 w-12 rounded-full object-cover">
+                        <button type="button"
+                                onclick="if(confirm('Apakah Anda yakin ingin menghapus foto profil?')) { document.getElementById('remove-photo-form').submit(); return false; }"
+                                class="absolute -top-2 -right-2 bg-red-100 rounded-full p-1 text-red-600 hover:text-red-900">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
-
-                    <img src="{{ asset('storage/' . $user->profile_image) }}"
-                         alt="Profile"
-                         class="h-12 w-12 rounded-full object-cover"
-                         onerror="this.onerror=null; this.src='{{ asset('img/default-avatar.png') }}'; console.log('Error loading image:', this.src);">
-                    <button type="button"
-                            onclick="if(confirm('Apakah Anda yakin ingin menghapus foto profil?')) { document.getElementById('remove-photo-form').submit(); return false; }"
-                            class="text-sm text-red-600 hover:text-red-900">
-                        Hapus Foto
-                    </button>
                 @else
                     <div class="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
                         <span class="text-orange-600 text-lg font-medium">
