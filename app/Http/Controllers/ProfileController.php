@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -41,36 +42,39 @@ class ProfileController extends Controller
                 }
 
                 // Delete old image if exists
-                if ($user->profile_image) {
-                    Storage::disk('public')->delete($user->profile_image);
+                if ($user->profile_image && Storage::disk('public')->exists('avatars/' . $user->profile_image)) {
+                    Storage::disk('public')->delete('avatars/' . $user->profile_image);
                 }
 
                 // Generate unique filename
-                $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $extension = $file->getClientOriginalExtension();
+                $filename = 'avatar_' . time() . '_' . Str::random(10) . '.' . $extension;
 
-                // Store new image with custom filename
-                $path = $file->storeAs('profile-photos', $filename, 'public');
+                // Move file to storage using move method
+                $file->move(storage_path('app/public/avatars'), $filename);
 
-                if (!$path) {
-                    throw new \Exception('Failed to store file');
-                }
-
-                $user->profile_image = $path;
+                // Save filename to database
+                $user->profile_image = $filename;
 
             } catch (\Exception $e) {
+                Log::error('Profile image upload failed: ' . $e->getMessage());
                 return back()->withErrors(['profile_image' => 'Gagal mengupload foto profil: ' . $e->getMessage()]);
             }
         }
 
-        $user->fill($request->validated());
+        $user->fill($request->safe()->except(['profile_image']));
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $user->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        try {
+            $user->save();
+            return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        } catch (\Exception $e) {
+            Log::error('Profile update failed: ' . $e->getMessage());
+            return back()->withErrors(['profile_image' => 'Gagal menyimpan profil: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -85,8 +89,8 @@ class ProfileController extends Controller
         $user = $request->user();
 
         // Delete profile image if exists
-        if ($user->profile_image) {
-            Storage::disk('public')->delete($user->profile_image);
+        if ($user->profile_image && Storage::disk('public')->exists('avatars/' . $user->profile_image)) {
+            Storage::disk('public')->delete('avatars/' . $user->profile_image);
         }
 
         Auth::logout();
@@ -106,9 +110,9 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        if ($user->profile_image) {
-            // Delete file if exists
-            Storage::disk('public')->delete($user->profile_image);
+        if ($user->profile_image && Storage::disk('public')->exists('avatars/' . $user->profile_image)) {
+            // Delete file from storage
+            Storage::disk('public')->delete('avatars/' . $user->profile_image);
 
             // Update database
             $user->forceFill([

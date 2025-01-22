@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -28,11 +32,12 @@
             <x-input-label for="profile_image" :value="__('Foto Profil')" />
 
             <div class="mt-2 flex items-center gap-x-3">
-                @if ($user->profile_image)
-                    <div class="relative">
-                        <img src="{{ asset('storage/' . $user->profile_image) }}"
+                @if ($user->profile_image && Storage::disk('public')->exists('avatars/' . $user->profile_image))
+                    <div class="relative" id="current-photo">
+                        <img src="{{ asset('storage/avatars/' . $user->profile_image) }}"
                              alt="Profile"
-                             class="h-12 w-12 rounded-full object-cover">
+                             class="h-12 w-12 rounded-full object-cover"
+                             onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center\'><span class=\'text-orange-600 text-lg font-medium\'>{{ strtoupper(substr($user->first_name, 0, 1)) }}{{ strtoupper(substr($user->last_name, 0, 1)) }}</span></div>';">
                         <button type="button"
                                 onclick="if(confirm('Apakah Anda yakin ingin menghapus foto profil?')) { document.getElementById('remove-photo-form').submit(); return false; }"
                                 class="absolute -top-2 -right-2 bg-red-100 rounded-full p-1 text-red-600 hover:text-red-900">
@@ -42,17 +47,32 @@
                         </button>
                     </div>
                 @else
-                    <div class="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
+                    <div class="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center" id="current-photo">
                         <span class="text-orange-600 text-lg font-medium">
                             {{ strtoupper(substr($user->first_name, 0, 1)) }}{{ strtoupper(substr($user->last_name, 0, 1)) }}
                         </span>
                     </div>
                 @endif
 
+                <!-- Preview container -->
+                <div id="preview-container" class="relative hidden">
+                    <img id="preview-image"
+                         class="h-12 w-12 rounded-full object-cover"
+                         alt="Preview">
+                    <button type="button"
+                            onclick="cancelPreview()"
+                            class="absolute -top-2 -right-2 bg-red-100 rounded-full p-1 text-red-600 hover:text-red-900">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
                 <input type="file"
                        id="profile_image"
                        name="profile_image"
                        accept="image/*"
+                       onchange="previewImage(this)"
                        class="rounded-md bg-white/50 border-gray-300 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
             </div>
 
@@ -68,6 +88,41 @@
 
             <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
         </div>
+
+        <script>
+            function previewImage(input) {
+                const preview = document.getElementById('preview-image');
+                const previewContainer = document.getElementById('preview-container');
+                const currentPhoto = document.getElementById('current-photo');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        currentPhoto.classList.add('hidden');
+                        previewContainer.classList.remove('hidden');
+                    }
+
+                    reader.onerror = function() {
+                        alert('Error membaca file. Silakan coba file lain.');
+                        cancelPreview();
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function cancelPreview() {
+                const input = document.getElementById('profile_image');
+                const previewContainer = document.getElementById('preview-container');
+                const currentPhoto = document.getElementById('current-photo');
+
+                input.value = ''; // Reset input file
+                previewContainer.classList.add('hidden');
+                currentPhoto.classList.remove('hidden');
+            }
+        </script>
 
         <!-- First Name -->
         <div>

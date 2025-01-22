@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -157,8 +161,11 @@
                 @auth
                     <div class="relative group">
                         <button type="button" class="flex items-center gap-2 px-3 md:px-5 py-2.5 bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-full font-medium text-sm text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition duration-300 ease-in-out">
-                            @if(Auth::user()->profile_image)
-                                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile" class="h-6 w-6 rounded-full object-cover">
+                            @if(Auth::user()->profile_image && Storage::disk('public')->exists('avatars/' . Auth::user()->profile_image))
+                                <img src="{{ asset('storage/avatars/' . Auth::user()->profile_image) }}"
+                                     alt="Profile"
+                                     class="h-6 w-6 rounded-full object-cover"
+                                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center\'><span class=\'text-orange-600 text-xs font-medium\'>{{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}</span></div>';">
                             @else
                                 <div class="h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center">
                                     <span class="text-orange-600 text-xs font-medium">
