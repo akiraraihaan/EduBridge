@@ -160,11 +160,19 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">
-                    @if(Auth::user()->profile_image)
-                        <img src="{{ Storage::url(Auth::user()->profile_image) }}" alt="Profile" class="h-10 w-10 rounded-full object-cover mb-2">
+                <div class="flex items-center">
+                    @if(Auth::user()->profile_image && Storage::disk('public')->exists('avatars/' . Auth::user()->profile_image))
+                        <img src="{{ asset('storage/avatars/' . Auth::user()->profile_image) }}"
+                             alt="Profile"
+                             class="h-8 w-8 rounded-full object-cover mr-2">
+                    @else
+                        <div class="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center mr-2">
+                            <span class="text-orange-600 text-xs font-medium">
+                                {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
+                            </span>
+                        </div>
                     @endif
-                    {{ Auth::user()->first_name }}
+                    <span>{{ Auth::user()->first_name }}</span>
                 </div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 <div class="mt-1 text-xs text-gray-500">

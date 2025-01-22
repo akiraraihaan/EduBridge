@@ -12,11 +12,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->string('file_path')->nullable();
-            $table->enum('type', ['text', 'video', 'document', 'link']);
+            $table->enum('type', ['pdf', 'video']);
             $table->integer('order');
-            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->enum('status', ['draft', 'published'])->default('published');
             $table->timestamps();
         });
     }

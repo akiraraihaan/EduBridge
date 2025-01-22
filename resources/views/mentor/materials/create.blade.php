@@ -6,11 +6,9 @@
             </h2>
             <div class="text-sm text-gray-600">
                 Anda adalah mentor untuk kursus:
-                @foreach(Auth::user()->mentorCourses as $mentorCourse)
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ $mentorCourse->course->name }}
-                    </span>
-                @endforeach
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    {{ $course->name }}
+                </span>
             </div>
         </div>
     </x-slot>
@@ -24,22 +22,15 @@
 
                         <div>
                             <x-input-label for="module_id" :value="__('Modul')" />
-                            <select id="module_id" name="module_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <select id="module_id" name="module_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
                                 <option value="">Pilih Modul</option>
-                                @foreach($modules->groupBy('course_id') as $courseId => $courseModules)
-                                    @php
-                                        $course = App\Models\Course::find($courseId);
-                                    @endphp
-                                    <optgroup label="{{ $course->name }}">
-                                        @foreach($courseModules as $module)
-                                            <option value="{{ $module->id }}" {{ old('module_id') == $module->id ? 'selected' : '' }}>
-                                                {{ $module->title }}
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
+                                @foreach($modules as $module)
+                                    <option value="{{ $module->id }}" {{ old('module_id') == $module->id ? 'selected' : '' }}>
+                                        {{ $module->title }}
+                                    </option>
                                 @endforeach
                             </select>
-                            <p class="mt-1 text-sm text-gray-500">Pilih modul dari kursus yang Anda ajar</p>
+                            <p class="mt-1 text-sm text-gray-500">Pilih modul tempat materi ini akan ditambahkan</p>
                             <x-input-error :messages="$errors->get('module_id')" class="mt-2" />
                         </div>
 
@@ -53,35 +44,24 @@
                         <div>
                             <x-input-label for="content" :value="__('Deskripsi')" />
                             <textarea id="content" name="content" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('content') }}</textarea>
-                            <p class="mt-1 text-sm text-gray-500">Jelaskan secara singkat tentang isi materi ini</p>
+                            <p class="mt-1 text-sm text-gray-500">Jelaskan secara singkat tentang isi dan tujuan materi ini</p>
                             <x-input-error :messages="$errors->get('content')" class="mt-2" />
                         </div>
 
-                        <div>
-                            <x-input-label for="type" :value="__('Tipe Materi')" />
-                            <select id="type" name="type" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" onchange="toggleMaterialType()">
-                                <option value="">Pilih Tipe</option>
-                                <option value="pdf" {{ old('type') == 'pdf' ? 'selected' : '' }}>PDF</option>
-                                <option value="video" {{ old('type') == 'video' ? 'selected' : '' }}>Video YouTube</option>
-                            </select>
-                            <p class="mt-1 text-sm text-gray-500">Pilih tipe materi yang akan diunggah</p>
-                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
-                        </div>
-
-                        <div id="pdf-upload" style="display: none;">
-                            <x-input-label for="file" :value="__('Upload PDF')" />
-                            <input type="file" id="file" name="file" accept=".pdf" class="mt-1 block w-full text-sm text-gray-500
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <x-input-label for="file" :value="__('File PDF (Opsional)')" />
+                            <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
                                 file:text-sm file:font-semibold
-                                file:bg-indigo-50 file:text-indigo-700
-                                hover:file:bg-indigo-100" />
-                            <p class="mt-1 text-sm text-gray-500">Unggah file PDF dengan ukuran maksimal 10MB</p>
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100" accept=".pdf">
+                            <p class="mt-1 text-sm text-gray-500">Unggah file PDF (maksimal 10MB)</p>
                             <x-input-error :messages="$errors->get('file')" class="mt-2" />
                         </div>
 
-                        <div id="video-input" style="display: none;">
-                            <x-input-label for="video_url" :value="__('URL Video YouTube')" />
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <x-input-label for="video_url" :value="__('URL Video YouTube (Opsional)')" />
                             <x-text-input id="video_url" name="video_url" type="url" class="mt-1 block w-full" :value="old('video_url')" placeholder="https://www.youtube.com/watch?v=..." />
                             <p class="mt-1 text-sm text-gray-500">Masukkan URL video YouTube (contoh: https://www.youtube.com/watch?v=xxxxx)</p>
                             <x-input-error :messages="$errors->get('video_url')" class="mt-2" />
@@ -105,31 +85,5 @@
             </div>
         </div>
     </div>
-
-    @push('scripts')
-    <script>
-        function toggleMaterialType() {
-            const type = document.getElementById('type').value;
-            const pdfUpload = document.getElementById('pdf-upload');
-            const videoInput = document.getElementById('video-input');
-
-            if (type === 'pdf') {
-                pdfUpload.style.display = 'block';
-                videoInput.style.display = 'none';
-            } else if (type === 'video') {
-                pdfUpload.style.display = 'none';
-                videoInput.style.display = 'block';
-            } else {
-                pdfUpload.style.display = 'none';
-                videoInput.style.display = 'none';
-            }
-        }
-
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleMaterialType();
-        });
-    </script>
-    @endpush
 </x-app-layout>
 

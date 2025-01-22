@@ -15,20 +15,29 @@ class MaterialController extends Controller
 {
     public function index()
     {
-        $mentorCourses = Auth::user()->mentorCourses;
-        $courseIds = $mentorCourses->pluck('course_id');
-        $courses = Course::whereIn('id', $courseIds)->with('modules.materials')->get();
+        $course = Course::find(Auth::user()->course_id);
+        if (!$course) {
+            return redirect()->route('mentor.dashboard')
+                ->with('error', 'Anda belum ditugaskan ke kursus manapun');
+        }
 
-        return view('mentor.materials.index', compact('courses'));
+        $course->load(['modules.materials' => function($query) {
+            $query->orderBy('order');
+        }]);
+
+        return view('mentor.materials.index', compact('course'));
     }
 
     public function create()
     {
-        $mentorCourses = Auth::user()->mentorCourses;
-        $courseIds = $mentorCourses->pluck('course_id');
-        $modules = Module::whereIn('course_id', $courseIds)->get();
+        $course = Course::find(Auth::user()->course_id);
+        if (!$course) {
+            return redirect()->route('mentor.dashboard')
+                ->with('error', 'Anda belum ditugaskan ke kursus manapun');
+        }
 
-        return view('mentor.materials.create', compact('modules'));
+        $modules = Module::where('course_id', $course->id)->orderBy('order')->get();
+        return view('mentor.materials.create', compact('course', 'modules'));
     }
 
     public function store(Request $request)
@@ -42,6 +51,12 @@ class MaterialController extends Controller
             'video_url' => 'required_if:type,video|string|url',
             'order' => 'required|integer|min:1'
         ]);
+
+        // Verifikasi bahwa modul yang dipilih adalah milik kursus mentor ini
+        $module = Module::findOrFail($request->module_id);
+        if ($module->course_id !== Auth::user()->course_id) {
+            return back()->withErrors(['module_id' => 'Anda tidak memiliki akses ke modul ini']);
+        }
 
         $material = new Material();
         $material->module_id = $request->module_id;
@@ -67,24 +82,33 @@ class MaterialController extends Controller
             $material->file_path = $videoId;
         }
 
-        $material->status = 'published';
         $material->save();
 
         return redirect()->route('mentor.materials.index')
-            ->with('success', 'Materi berhasil ditambahkan');
+            ->with('success', 'Materi berhasil ditambahkan')
+            ->with('scrollTo', 'module-' . $module->id);
     }
 
     public function edit(Material $material)
     {
-        $mentorCourses = Auth::user()->mentorCourses;
-        $courseIds = $mentorCourses->pluck('course_id');
-        $modules = Module::whereIn('course_id', $courseIds)->get();
+        // Verifikasi bahwa material ini milik kursus mentor
+        if ($material->module->course_id !== Auth::user()->course_id) {
+            return redirect()->route('mentor.materials.index')
+                ->with('error', 'Anda tidak memiliki akses ke materi ini');
+        }
 
+        $modules = Module::where('course_id', Auth::user()->course_id)->orderBy('order')->get();
         return view('mentor.materials.edit', compact('material', 'modules'));
     }
 
     public function update(Request $request, Material $material)
     {
+        // Verifikasi bahwa material ini milik kursus mentor
+        if ($material->module->course_id !== Auth::user()->course_id) {
+            return redirect()->route('mentor.materials.index')
+                ->with('error', 'Anda tidak memiliki akses ke materi ini');
+        }
+
         $request->validate([
             'module_id' => 'required|exists:modules,id',
             'title' => 'required|string|max:255',
@@ -94,6 +118,12 @@ class MaterialController extends Controller
             'video_url' => 'required_if:type,video|string|url',
             'order' => 'required|integer|min:1'
         ]);
+
+        // Verifikasi bahwa modul yang dipilih adalah milik kursus mentor ini
+        $module = Module::findOrFail($request->module_id);
+        if ($module->course_id !== Auth::user()->course_id) {
+            return back()->withErrors(['module_id' => 'Anda tidak memiliki akses ke modul ini']);
+        }
 
         $material->module_id = $request->module_id;
         $material->title = $request->title;
@@ -126,11 +156,20 @@ class MaterialController extends Controller
         $material->save();
 
         return redirect()->route('mentor.materials.index')
-            ->with('success', 'Materi berhasil diperbarui');
+            ->with('success', 'Materi berhasil diperbarui')
+            ->with('scrollTo', 'module-' . $module->id);
     }
 
     public function destroy(Material $material)
     {
+        // Verifikasi bahwa material ini milik kursus mentor
+        if ($material->module->course_id !== Auth::user()->course_id) {
+            return redirect()->route('mentor.materials.index')
+                ->with('error', 'Anda tidak memiliki akses ke materi ini');
+        }
+
+        $moduleId = $material->module_id;
+
         if ($material->type === 'pdf' && $material->file_path) {
             Storage::disk('public')->delete($material->file_path);
         }
@@ -138,6 +177,7 @@ class MaterialController extends Controller
         $material->delete();
 
         return redirect()->route('mentor.materials.index')
-            ->with('success', 'Materi berhasil dihapus');
+            ->with('success', 'Materi berhasil dihapus')
+            ->with('scrollTo', 'module-' . $moduleId);
     }
 }
