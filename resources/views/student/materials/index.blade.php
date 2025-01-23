@@ -1,12 +1,12 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="text-2xl font-semibold mb-6">Materi Pembelajaran</h2>
 
                     @forelse($modules as $module)
-                        <div class="mb-8 bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="mb-8 bg-white rounded-lg shadow-sm overflow-hidden">
                             <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% p-4">
                                 <h3 class="text-xl font-semibold bg-gradient-to-r from-orange-800 to-10% to-indigo-800 bg-clip-text text-transparent">{{ $module->title }}</h3>
                                 @if($module->description)

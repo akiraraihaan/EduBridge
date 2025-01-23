@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <div class="mb-6">
                         <a href="{{ route('student.materials.index') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900">

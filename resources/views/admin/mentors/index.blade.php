@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm shadow-sm overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if(session('success'))
                         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">

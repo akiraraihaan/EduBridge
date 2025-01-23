@@ -15,7 +15,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm shadow-sm overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('mentor.materials.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         @csrf

@@ -21,7 +21,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Detail Tugas -->
-            <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg mb-6">
+            <div class="bg-white/50 backdrop-blur-sm shadow-sm overflow-hidden sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-4">Informasi Tugas</h3>
@@ -65,7 +65,7 @@
             </div>
 
             <!-- Daftar Pengumpulan -->
-            <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm shadow-sm overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">Pengumpulan Tugas</h3>
 

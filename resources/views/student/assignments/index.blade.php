@@ -16,7 +16,7 @@
             @else
                 <div class="grid grid-cols-1 gap-6">
                     @foreach($assignments as $assignment)
-                        <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
+                        <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6">
                                 <div class="flex justify-between items-start">
                                     <div>

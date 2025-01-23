@@ -17,7 +17,7 @@
             </div>
 
             <!-- Detail Tugas -->
-            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg mb-6">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-4">{{ $assignment->title }}</h3>
