@@ -419,7 +419,7 @@ use Illuminate\Support\Facades\Storage;
                                 </div>
                             </div>
                             <div class="ml-3 bg-white p-4 rounded-xl shadow-sm max-w-[80%]">
-                                <p class="text-gray-800">Halo! Saya adalah AI Assistant yang siap membantu Anda belajar. Silakan ajukan pertanyaan apa saja!</p>
+                                <p class="text-gray-800">Halo! Saya adalah AI Assistant yang siap membantu Anda belajar di EduBridge. Silakan ajukan pertanyaan apa saja!</p>
                             </div>
                         </div>
                     </div>
@@ -620,7 +620,7 @@ use Illuminate\Support\Facades\Storage;
                             </div>
                         </div>
                         <div class="ml-3 bg-white p-4 rounded-xl shadow-sm">
-                            <p class="text-gray-800">Sedang mengetik...</p>
+                            <p class="text-gray-800">. . .</p>
                         </div>
                     `;
                     chatMessages.appendChild(loadingDiv);
