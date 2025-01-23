@@ -54,7 +54,7 @@ class AboutController extends Controller
                     'name' => 'Anom Wajawening',
                     'position' => 'Mewing Boy',
                     'description' => 'Ahli teknologi dengan fokus pada pengembangan platform edukasi.',
-                    'image' => '/img/Arshan.png',
+                    'image' => '/img/anom.png',
                     'ig' => 'https://www.instagram.com/a_wajawening',
                     'github' => 'https://github.com/Nommmz'
                 ]
