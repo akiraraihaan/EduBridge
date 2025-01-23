@@ -27,11 +27,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        // Check if user is mentor and not active
-        if (Auth::user()->isMentor() && !Auth::user()->is_active) {
+        // Check if user is mentor or student and not active
+        if ((Auth::user()->role_id == 2 || Auth::user()->role_id == 3) && !Auth::user()->is_active) {
+            $message = Auth::user()->role_id == 2
+                ? 'Anda belum diterima atau telah dinyatakan nonaktif'
+                : 'Anda telah dinyatakan nonaktif';
+
             Auth::logout();
             return redirect()->route('login')
-                ->with('error', 'Akun mentor Anda belum diaktifkan oleh admin. Silakan hubungi admin untuk aktivasi.');
+                ->with('error', $message);
         }
 
         $request->session()->regenerate();
