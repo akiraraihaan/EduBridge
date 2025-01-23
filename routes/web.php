@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Mentor\MaterialController as MentorMaterialController;
 use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
+use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,10 +61,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 // Mentor Routes
 Route::middleware(['auth', 'verified', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
-    Route::get('/', [MentorDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [MentorProfileController::class, 'index'])->name('profile');
+    Route::get('/', [\App\Http\Controllers\Mentor\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [\App\Http\Controllers\Mentor\ProfileController::class, 'index'])->name('profile');
     Route::resource('modules', \App\Http\Controllers\Mentor\ModuleController::class);
     Route::resource('materials', \App\Http\Controllers\Mentor\MaterialController::class);
+    Route::resource('assignments', \App\Http\Controllers\Mentor\AssignmentController::class);
+    Route::put('assignments/submissions/{submission}/grade', [\App\Http\Controllers\Mentor\AssignmentController::class, 'gradeSubmission'])->name('assignments.submissions.grade');
 });
 
 // Student Routes
@@ -73,6 +76,9 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name
     Route::get('/materials', [StudentMaterialController::class, 'index'])->name('materials.index');
     Route::get('/materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
     Route::get('/materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
+    Route::get('/assignments', [StudentAssignmentController::class, 'index'])->name('assignments.index');
+    Route::get('/assignments/{assignment}', [StudentAssignmentController::class, 'show'])->name('assignments.show');
+    Route::post('/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('assignments.submit');
 });
 
 // Dashboard route that redirects based on role middleware

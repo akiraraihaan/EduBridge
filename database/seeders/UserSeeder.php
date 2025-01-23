@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'birth_date' => '2000-01-01',
             'email' => 'mentor@email.com',
             'whatsapp' => '081234567890',
-            'course_id' => 5,
+            'course_id' => 1,
             'password' => Hash::make('test1234'),
             'role_id' => 2,
         ]);
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'whatsapp' => '081234567890',
             'password' => Hash::make('test1234'),
             'role_id' => 3,
-            'course_id' => Course::first()->id,
+            'course_id' => 1,
         ]);
 
         $batch = Batch::first();

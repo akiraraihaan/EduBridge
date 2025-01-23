@@ -36,6 +36,9 @@
                         <x-nav-link :href="route('mentor.materials.index')" :active="request()->routeIs('mentor.materials.*')">
                             {{ __('Materi') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('mentor.assignments.index')" :active="request()->routeIs('mentor.assignments.*')">
+                            {{ __('Tugas') }}
+                        </x-nav-link>
                     @endif
                     @if (Auth::user()->isStudent())
                         <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
@@ -45,6 +48,9 @@
                     @if(auth()->user()->hasRole('student'))
                         <x-nav-link :href="route('student.materials.index')" :active="request()->routeIs('student.materials.*')">
                             {{ __('Materi') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('student.assignments.index')" :active="request()->routeIs('student.assignments.*')">
+                            {{ __('Tugas') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -154,10 +160,19 @@
                 <x-responsive-nav-link :href="route('mentor.materials.index')" :active="request()->routeIs('mentor.materials.*')">
                     {{ __('Materi') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('mentor.assignments.index')" :active="request()->routeIs('mentor.assignments.*')">
+                    {{ __('Tugas') }}
+                </x-responsive-nav-link>
             @endif
             @if (Auth::user()->isStudent())
                 <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.materials.index')" :active="request()->routeIs('student.materials.*')">
+                    {{ __('Materi') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.assignments.index')" :active="request()->routeIs('student.assignments.*')">
+                    {{ __('Tugas') }}
                 </x-responsive-nav-link>
             @endif
         </div>
