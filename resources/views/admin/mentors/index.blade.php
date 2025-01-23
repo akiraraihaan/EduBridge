@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if(session('success'))
                         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -114,7 +114,7 @@
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+            <div class="inline-block align-bottom bg-white/50 backdrop-blur-sm shadow-md rounded-lg text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="w-full">

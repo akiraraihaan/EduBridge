@@ -19,7 +19,7 @@
 
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm shadow-md rounded-lg">
                 <div class="p-6 space-y-6">
                     <div class="flex items-center space-x-6">
                         <div class="flex-shrink-0">

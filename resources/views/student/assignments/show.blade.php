@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Detail Tugas -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-4">{{ $assignment->title }}</h3>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Form Pengumpulan -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">
                         @if($submission)
@@ -73,7 +73,7 @@
                     </h3>
 
                     @if($submission && $submission->graded_at)
-                        <div class="bg-white rounded-lg border border-gray-200 p-4 mb-4">
+                        <div class="bg-white/50 backdrop-blur-sm rounded-lg border border-gray-200 p-4 mb-4">
                             <h4 class="font-medium text-gray-900">Feedback dari Mentor</h4>
                             <p class="mt-2 text-gray-600">{{ $submission->feedback ?? 'Tidak ada feedback' }}</p>
                         </div>
@@ -85,7 +85,7 @@
 
                             <div>
                                 <x-input-label for="content" :value="__('Jawaban')" />
-                                <textarea id="content" name="content" rows="4" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required {{ $submission && $submission->graded_at ? 'disabled' : '' }}>{{ old('content', $submission?->content) }}</textarea>
+                                <textarea id="content" name="content" rows="4" class="mt-1 block w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-md" required {{ $submission && $submission->graded_at ? 'disabled' : '' }}>{{ old('content', $submission?->content) }}</textarea>
                                 <x-input-error :messages="$errors->get('content')" class="mt-2" />
                             </div>
 
@@ -135,7 +135,7 @@
             @if($submission)
                 <div class="mt-4">
                     <h3 class="text-lg font-medium text-gray-900 mb-2">Status Pengumpulan</h3>
-                    <div class="bg-white rounded-lg border p-4">
+                    <div class="bg-white/50 backdrop-blur-sm rounded-lg border p-4">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-600">Dikumpulkan pada:</p>

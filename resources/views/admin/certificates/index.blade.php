@@ -10,7 +10,7 @@
             <!-- Mentor Section -->
             <div class="mb-8">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Mentor</h3>
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200 table-fixed">
@@ -24,7 +24,7 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-gray-200">
                                     @forelse($mentors as $mentor)
                                         <tr>
                                             <td class="px-6 py-4">

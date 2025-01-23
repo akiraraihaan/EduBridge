@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="min-h-screen bg-white/20">
+    <div class="min-h-screen bg-white/50 backdrop-blur-sm/20">
         <!-- Welcome Banner -->
-        <div class="bg-white shadow-sm border-b">
+        <div class="bg-white/50 backdrop-blur-sm shadow-sm border-b">
             <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between">
                     <div>
@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <!-- Ringkasan -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-blue-100 text-blue-800">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-green-100 text-green-800">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                     <div class="flex items-center">
                         <div class="p-3 rounded-full bg-yellow-100 text-yellow-800">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Jadwal Mengajar Hari Ini -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Jadwal Mengajar Hari Ini</h2>
                     <div class="divide-y divide-gray-200">
                         <div class="py-3">
@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- Tugas yang Perlu Dinilai -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Tugas yang Perlu Dinilai</h2>
                     <div class="divide-y divide-gray-200">
                         <div class="py-3">
@@ -87,7 +87,7 @@
             </div>
 
             <!-- Performa Siswa -->
-            <div class="mt-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div class="mt-6 bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200">
                 <h2 class="text-lg font-semibold text-gray-900 mb-4">Performa Rata-rata Siswa</h2>
                 <div class="space-y-4">
                     <div class="flex items-center">

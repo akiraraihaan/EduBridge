@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if($certificates->isEmpty())
                         <div class="text-center py-8">
@@ -20,7 +20,7 @@
                     @else
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach($certificates as $certificate)
-                                <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                                <div class="bg-white/50 backdrop-blur-sm border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                                     <div class="p-6">
                                         <div class="flex items-center justify-between mb-4">
                                             <div class="flex items-center">

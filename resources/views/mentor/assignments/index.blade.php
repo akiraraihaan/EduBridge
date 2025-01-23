@@ -37,7 +37,7 @@
                 </div>
             @else
                 @foreach($course->modules as $module)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                    <div class="bg-white/50 backdrop-blur-sm shadow-md overflow-hidden sm:rounded-lg mb-6">
                         <div class="p-6 text-gray-900">
                             <h3 class="text-lg font-semibold mb-4">{{ $module->title }}</h3>
 
