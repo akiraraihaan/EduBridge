@@ -24,11 +24,11 @@ class StudentController extends Controller
         foreach ($courses as $course) {
             $students = User::where('role_id', 3) // role student
                 ->where('course_id', $course->id)
-                ->where('is_active', true)
                 ->withCount(['submissions as average_score' => function($query) {
                     $query->select(DB::raw('coalesce(avg(score),0)'))
                         ->whereNotNull('score');
                 }])
+                ->orderByDesc('is_active') // Urutkan berdasarkan status aktif terlebih dahulu
                 ->orderByDesc('average_score')
                 ->get();
 

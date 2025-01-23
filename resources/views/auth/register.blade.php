@@ -243,6 +243,17 @@
                     <!-- Mentor Fields -->
                     <div id="mentor-fields" class="space-y-6 hidden">
                         <div>
+                            <x-input-label for="preferred_course" :value="__('Pilih Kursus')" class="text-sm sm:text-base" />
+                            <select id="preferred_course" name="preferred_course" class="w-full px-4 py-3 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)] transition duration-200 ease-in-out text-slate-600 placeholder:text-slate-400 hover:bg-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.03)] focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-100/50 disabled:opacity-50 disabled:cursor-not-allowed" required>
+                                <option value="" disabled selected>Pilih Kursus</option>
+                                @foreach(\App\Models\Course::all() as $course)
+                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('preferred_course')" class="mt-2 text-xs sm:text-sm" />
+                        </div>
+
+                        <div>
                             <x-input-label for="education_background" :value="__('Latar Belakang Pendidikan')" class="text-sm sm:text-base" />
                             <textarea id="education_background" name="education_background" rows="3" class="w-full px-4 py-3 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)] transition duration-200 ease-in-out text-slate-600 placeholder:text-slate-400 hover:bg-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.03)] focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-100/50 disabled:opacity-50 disabled:cursor-not-allowed">{{ old('education_background') }}</textarea>
                             <x-input-error :messages="$errors->get('education_background')" class="mt-2 text-xs sm:text-sm" />
@@ -259,17 +270,6 @@
                                 cursor-pointer
                             "/>
                             <x-input-error :messages="$errors->get('certifications_file')" class="mt-2 text-xs sm:text-sm" />
-                        </div>
-
-                        <div>
-                            <x-input-label for="preferred_course" :value="__('Kursus yang Ingin Diajar')" class="text-sm sm:text-base" />
-                            <select id="preferred_course" name="preferred_course" class="w-full px-4 py-3 bg-white/70 backdrop-blur-md border-0 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.02),0_1px_6px_rgba(0,0,0,0.03)] transition duration-200 ease-in-out text-slate-600 placeholder:text-slate-400 hover:bg-white/90 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.03)] focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-100/50 disabled:opacity-50 disabled:cursor-not-allowed">
-                                <option value="" disabled selected>Pilih Kursus</option>
-                                @foreach(\App\Models\Course::all() as $course)
-                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('preferred_course')" class="mt-2 text-xs sm:text-sm" />
                         </div>
                     </div>
 

@@ -38,7 +38,7 @@ class User extends Authenticatable
         // Mentor fields
         'education_background',
         'certifications_file',
-        'preferred_course',
+        'preferred_course'
     ];
 
     /**
@@ -98,7 +98,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the course that owns the user (for students).
+     * Get the course that owns the user.
      */
     public function course()
     {
