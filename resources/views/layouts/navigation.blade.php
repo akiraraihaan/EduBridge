@@ -42,6 +42,11 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     @endif
+                    @if(auth()->user()->hasRole('student'))
+                        <x-nav-link :href="route('student.materials.index')" :active="request()->routeIs('student.materials.*')">
+                            {{ __('Materi') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

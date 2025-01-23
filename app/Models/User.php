@@ -67,9 +67,30 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function hasRole(int $roleId): bool
+    /**
+     * Check if user has the given role(s)
+     * @param string|array $roles
+     */
+    public function hasRole($roles): bool
     {
-        return $this->role_id === $roleId;
+        if (is_string($roles)) {
+            $roles = explode(',', $roles);
+        }
+
+        foreach ($roles as $role) {
+            $roleId = match (trim($role)) {
+                'admin' => 1,
+                'mentor' => 2,
+                'student' => 3,
+                default => null
+            };
+
+            if ($roleId && $this->role_id === $roleId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
