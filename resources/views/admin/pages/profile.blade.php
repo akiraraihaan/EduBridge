@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-final-layout>
     <div class="min-h-screen bg-white/20">
         <!-- Welcome Banner -->
         <div class="bg-white shadow-sm border-b">
@@ -61,4 +61,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-final-layout>
