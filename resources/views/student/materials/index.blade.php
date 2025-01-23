@@ -7,10 +7,10 @@
 
                     @forelse($modules as $module)
                         <div class="mb-8 bg-white rounded-lg shadow-md overflow-hidden">
-                            <div class="bg-indigo-600 p-4">
-                                <h3 class="text-xl font-semibold text-white">{{ $module->title }}</h3>
+                            <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% p-4">
+                                <h3 class="text-xl font-semibold bg-gradient-to-r from-orange-800 to-10% to-indigo-800 bg-clip-text text-transparent">{{ $module->title }}</h3>
                                 @if($module->description)
-                                    <p class="text-indigo-100 mt-1">{{ $module->description }}</p>
+                                    <p class="bg-gradient-to-r from-orange-800 to-blue-800 bg-clip-text text-transparent mt-1">{{ $module->description }}</p>
                                 @endif
                             </div>
 
@@ -49,7 +49,7 @@
 
                                                 <div class="flex flex-wrap gap-4">
                                                     <a href="{{ route('student.materials.show', $material) }}"
-                                                       class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                       class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
