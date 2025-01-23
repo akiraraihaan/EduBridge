@@ -380,7 +380,7 @@ use Illuminate\Support\Facades\Storage;
         @auth
         @if(auth()->user()->hasRole('student'))
             <!-- Chat Tab -->
-            <div id="chat-tab" class="fixed bottom-8 right-8 w-96 transition-all duration-300 transform translate-y-full z-50">
+            <div id="chat-tab" class="fixed bottom-1 right-8 w-96 transition-all duration-300 transform translate-y-full z-50">
                 <!-- Chat Header/Toggle -->
                 <button onclick="toggleChat()" class="absolute -top-16 right-0 flex items-center justify-center w-14 h-14 text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-full hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -447,7 +447,6 @@ use Illuminate\Support\Facades\Storage;
     </footer>
 
     <style>
-
         @keyframes fade-in {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -513,7 +512,6 @@ use Illuminate\Support\Facades\Storage;
                     block: 'start'
                 });
             } else {
-                // Jika tidak berada di halaman dengan section courses, arahkan ke halaman utama
                 window.location.href = '/#courses';
             }
         }
@@ -522,7 +520,6 @@ use Illuminate\Support\Facades\Storage;
                 const chatTab = document.getElementById('chat-tab');
                 chatTab.classList.toggle('translate-y-full');
 
-                // Scroll to bottom when opening
                 if (!chatTab.classList.contains('translate-y-full')) {
                     const chatMessages = document.getElementById('chat-messages');
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -540,15 +537,12 @@ use Illuminate\Support\Facades\Storage;
                     const message = messageInput.value;
                     if (!message.trim()) return;
 
-                    // Add user message to chat
                     addMessageToChat('user', message);
                     messageInput.value = '';
 
                     try {
-                        // Show loading state
                         const loadingId = addLoadingMessage();
 
-                        // Send message to server
                         const response = await fetch('{{ route("student.ai-chat.send") }}', {
                             method: 'POST',
                             headers: {
@@ -560,7 +554,6 @@ use Illuminate\Support\Facades\Storage;
 
                         const data = await response.json();
 
-                        // Remove loading message
                         removeLoadingMessage(loadingId);
 
                         if (data.success) {
@@ -573,38 +566,39 @@ use Illuminate\Support\Facades\Storage;
                         addMessageToChat('system', 'Maaf, terjadi kesalahan. Silakan coba lagi.');
                     }
 
-                    // Scroll to bottom
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 });
 
                 function addMessageToChat(type, message) {
                     const messageDiv = document.createElement('div');
-                    messageDiv.className = 'flex items-start';
+                    messageDiv.className = `flex items-start ${type === 'user' ? 'flex-row-reverse' : ''}`;
 
                     const iconDiv = document.createElement('div');
                     iconDiv.className = 'flex-shrink-0';
 
                     const iconContainer = document.createElement('div');
-                    iconContainer.className = `w-8 h-8 rounded-full ${type === 'user' ? 'bg-gradient-to-r from-green-500 to-green-600' : 'bg-gradient-to-r from-blue-600 to-blue-700'} flex items-center justify-center`;
-
-                    const icon = document.createElement('svg');
-                    icon.className = 'w-5 h-5 text-white';
-                    icon.setAttribute('fill', 'none');
-                    icon.setAttribute('stroke', 'currentColor');
-                    icon.setAttribute('viewBox', '0 0 24 24');
 
                     if (type === 'user') {
-                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />';
+                        // Get user's initials or profile picture
+                        const userInitials = '{{ substr(auth()->user()->name, 0, 2) }}';
+                        iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center';
+                        iconContainer.innerHTML = `<span class="text-white text-sm font-semibold">${userInitials}</span>`;
                     } else {
+                        iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center';
+                        const icon = document.createElement('svg');
+                        icon.className = 'w-5 h-5 text-white';
+                        icon.setAttribute('fill', 'none');
+                        icon.setAttribute('stroke', 'currentColor');
+                        icon.setAttribute('viewBox', '0 0 24 24');
                         icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />';
+                        iconContainer.appendChild(icon);
                     }
 
-                    iconContainer.appendChild(icon);
                     iconDiv.appendChild(iconContainer);
                     messageDiv.appendChild(iconDiv);
 
                     const messageContent = document.createElement('div');
-                    messageContent.className = 'ml-3 bg-white p-4 rounded-xl shadow-sm max-w-[80%]';
+                    messageContent.className = `${type === 'user' ? 'mr-3' : 'ml-3'} bg-white p-4 rounded-xl shadow-sm max-w-[80%]`;
                     messageContent.innerHTML = `<p class="text-gray-800 whitespace-pre-wrap">${message}</p>`;
 
                     messageDiv.appendChild(messageContent);
