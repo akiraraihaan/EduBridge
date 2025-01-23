@@ -260,7 +260,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="certifications_file" :value="__('Upload Sertifikasi/Ijazah (PDF, max 2MB)')" class="text-sm sm:text-base" />
+                            <x-input-label for="certifications_file" :value="__('Upload Sertifikasi/Ijazah (PDF max 2MB, gabung dengan CV)')" class="text-sm sm:text-base" />
                             <input type="file" id="certifications_file" name="certifications_file" accept=".pdf" class="block w-full text-sm text-slate-500 mt-1
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
@@ -285,7 +285,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <p id="password-length-error" class="mt-2 text-sm text-red-600 hidden">Password minimal harus 8 karakter</p>
+                            <p id="password-length-error" class="mt-2 text-sm text-red-600 hidden">Password minimal 8 karakter</p>
                             <x-input-error :messages="$errors->get('password')" class="mt-2 text-xs sm:text-sm" />
                         </div>
 
