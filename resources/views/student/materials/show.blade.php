@@ -19,13 +19,14 @@
 
                     @if($material->video_id)
                         <div class="mb-8">
-                            <div class="aspect-w-16 aspect-h-9">
+                            <div class="relative w-full" style="padding-bottom: 56.25%">
                                 <iframe
                                     src="https://www.youtube.com/embed/{{ $material->video_id }}"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
-                                    class="w-full h-full rounded-lg shadow-lg"
+                                    class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                                    style="max-width: 1280px; max-height: 720px; margin: 0 auto;"
                                 ></iframe>
                             </div>
                         </div>

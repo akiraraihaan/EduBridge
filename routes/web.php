@@ -70,8 +70,6 @@ Route::middleware(['auth', 'verified', 'role:mentor'])->prefix('mentor')->name('
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [StudentProfileController::class, 'index'])->name('profile');
-    Route::get('/modules', [StudentModuleController::class, 'index'])->name('modules.index');
-    Route::get('/modules/{module}', [StudentModuleController::class, 'show'])->name('modules.show');
     Route::get('/materials', [StudentMaterialController::class, 'index'])->name('materials.index');
     Route::get('/materials/{material}', [StudentMaterialController::class, 'show'])->name('materials.show');
     Route::get('/materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
