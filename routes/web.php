@@ -15,6 +15,7 @@ use App\Http\Controllers\Mentor\MaterialController as MentorMaterialController;
 use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
+use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/mentors', [MentorController::class, 'index'])->name('mentors.index');
     Route::put('/mentors/{mentor}/activate', [MentorController::class, 'activate'])->name('mentors.activate');
     Route::put('/mentors/{mentor}/deactivate', [MentorController::class, 'deactivate'])->name('mentors.deactivate');
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::put('/students/{student}/toggle-status', [StudentController::class, 'toggleStatus'])->name('students.toggle-status');
 });
 
 // Mentor Routes

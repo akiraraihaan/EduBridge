@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Role;
+use App\Models\Course;
+use App\Models\Submission;
+use App\Models\MentorCourse;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -115,6 +119,14 @@ class User extends Authenticatable
     public function mentorCourses()
     {
         return $this->hasMany(MentorCourse::class);
+    }
+
+    /**
+     * Get the submissions for the user.
+     */
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
 
     /**

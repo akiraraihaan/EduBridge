@@ -38,6 +38,9 @@
                     <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
                         {{ __('Kelola Mentor') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                        {{ __('Kelola Siswa') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.profile')" :active="request()->routeIs('admin.profile')">
                         {{ __('Profil') }}
                     </x-nav-link>

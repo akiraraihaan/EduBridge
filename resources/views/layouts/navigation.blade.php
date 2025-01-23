@@ -25,6 +25,9 @@
                         <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
                             {{ __('Mentor') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                            {{ __('Siswa') }}
+                        </x-nav-link>
                     @endif
                     @if (Auth::user()->isMentor())
                         <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
@@ -148,6 +151,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
                     {{ __('Mentor') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                    {{ __('Siswa') }}
                 </x-responsive-nav-link>
             @endif
             @if (Auth::user()->isMentor())
