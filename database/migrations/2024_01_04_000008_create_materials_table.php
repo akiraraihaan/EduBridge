@@ -14,9 +14,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->string('file_path')->nullable();
-            $table->enum('type', ['pdf', 'video']);
-            $table->integer('order');
-            $table->enum('status', ['draft', 'published'])->default('published');
+            $table->string('video_id')->nullable();
+            $table->integer('order')->default(1);
+            $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
         });
     }

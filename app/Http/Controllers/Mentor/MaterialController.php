@@ -46,9 +46,8 @@ class MaterialController extends Controller
             'module_id' => 'required|exists:modules,id',
             'title' => 'required|string|max:255',
             'content' => 'nullable|string',
-            'type' => 'required|in:pdf,video',
-            'file' => 'required_if:type,pdf|mimes:pdf|max:10240', // Max 10MB untuk PDF
-            'video_url' => 'required_if:type,video|string|url',
+            'file' => 'nullable|mimes:pdf|max:10240', // Max 10MB untuk PDF
+            'video_url' => 'nullable|string|url',
             'order' => 'required|integer|min:1'
         ]);
 
@@ -62,24 +61,25 @@ class MaterialController extends Controller
         $material->module_id = $request->module_id;
         $material->title = $request->title;
         $material->content = $request->content;
-        $material->type = $request->type;
         $material->order = $request->order;
 
-        if ($request->type === 'pdf' && $request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
             $filename = time() . '_' . Str::slug($request->title) . '.pdf';
             $path = $file->storeAs('materials', $filename, 'public');
             $material->file_path = $path;
-        } elseif ($request->type === 'video') {
+        }
+
+        if ($request->video_url) {
             // Extract YouTube video ID from URL
-            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/", $request->video_url, $matches);
+            preg_match("/^(?:http(?:s)?:\\/\\/)?(?:www\\.)?(?:m\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:(?:watch)?\\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\\/))([^\\?&\"'>]+)/", $request->video_url, $matches);
             $videoId = $matches[1] ?? null;
 
             if (!$videoId) {
                 return back()->withErrors(['video_url' => 'URL YouTube tidak valid']);
             }
 
-            $material->file_path = $videoId;
+            $material->video_id = $videoId;
         }
 
         $material->save();
@@ -113,9 +113,8 @@ class MaterialController extends Controller
             'module_id' => 'required|exists:modules,id',
             'title' => 'required|string|max:255',
             'content' => 'nullable|string',
-            'type' => 'required|in:pdf,video',
             'file' => 'nullable|mimes:pdf|max:10240', // Max 10MB untuk PDF
-            'video_url' => 'required_if:type,video|string|url',
+            'video_url' => 'nullable|string|url',
             'order' => 'required|integer|min:1'
         ]);
 
@@ -128,10 +127,9 @@ class MaterialController extends Controller
         $material->module_id = $request->module_id;
         $material->title = $request->title;
         $material->content = $request->content;
-        $material->type = $request->type;
         $material->order = $request->order;
 
-        if ($request->type === 'pdf' && $request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             // Hapus file lama jika ada
             if ($material->file_path) {
                 Storage::disk('public')->delete($material->file_path);
@@ -141,7 +139,9 @@ class MaterialController extends Controller
             $filename = time() . '_' . Str::slug($request->title) . '.pdf';
             $path = $file->storeAs('materials', $filename, 'public');
             $material->file_path = $path;
-        } elseif ($request->type === 'video') {
+        }
+
+        if ($request->video_url) {
             // Extract YouTube video ID from URL
             preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/", $request->video_url, $matches);
             $videoId = $matches[1] ?? null;
@@ -150,7 +150,7 @@ class MaterialController extends Controller
                 return back()->withErrors(['video_url' => 'URL YouTube tidak valid']);
             }
 
-            $material->file_path = $videoId;
+            $material->video_id = $videoId;
         }
 
         $material->save();

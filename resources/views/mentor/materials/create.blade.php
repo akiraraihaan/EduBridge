@@ -50,12 +50,8 @@
 
                         <div class="border rounded-lg p-4 bg-gray-50">
                             <x-input-label for="file" :value="__('File PDF (Opsional)')" />
-                            <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100" accept=".pdf">
+                            <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-500" accept=".pdf" onchange="previewPDF(this)">
+                            <iframe id="pdf-preview" class="mt-2" style="display:none; width:100%; height:200px;"></iframe>
                             <p class="mt-1 text-sm text-gray-500">Unggah file PDF (maksimal 10MB)</p>
                             <x-input-error :messages="$errors->get('file')" class="mt-2" />
                         </div>
@@ -85,5 +81,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function previewPDF(input) {
+        const file = input.files[0];
+        if (file && file.type === "application/pdf") {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('pdf-preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    </script>
 </x-app-layout>
 

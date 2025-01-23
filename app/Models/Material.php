@@ -14,7 +14,7 @@ class Material extends Model
         'title',
         'content',
         'file_path',
-        'type',
+        'video_id',
         'order',
         'status'
     ];
