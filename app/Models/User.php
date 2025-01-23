@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Course;
 use App\Models\Submission;
 use App\Models\MentorCourse;
+use App\Models\Certificate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -171,5 +172,10 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
     }
 }

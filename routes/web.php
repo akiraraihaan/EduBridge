@@ -16,6 +16,7 @@ use App\Http\Controllers\Student\MaterialController as StudentMaterialController
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\CertificateController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/mentors/{mentor}/deactivate', [MentorController::class, 'deactivate'])->name('mentors.deactivate');
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::put('/students/{student}/toggle-status', [StudentController::class, 'toggleStatus'])->name('students.toggle-status');
+    Route::resource('certificates', CertificateController::class)->except(['edit', 'update', 'show']);
 });
 
 // Mentor Routes
@@ -90,6 +92,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return redirect()->route('home');
     })->name('dashboard')->middleware(['role:admin,mentor,student']);
+});
+
+// Add certificate routes for student and mentor
+Route::middleware(['auth'])->group(function () {
+    Route::get('/certificates', function () {
+        $certificates = Auth::user()->certificates;
+        return view('certificates.index', compact('certificates'));
+    })->name('certificates.index');
 });
 
 require __DIR__.'/auth.php';

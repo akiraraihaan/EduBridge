@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Batch;
 use App\Models\Module;
 use App\Models\MentorCourse;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,5 +44,10 @@ class Course extends Model
     public function mentors()
     {
         return $this->hasMany(MentorCourse::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(User::class)->where('role_id', 3);
     }
 }

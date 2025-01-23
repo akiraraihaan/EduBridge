@@ -28,6 +28,9 @@
                         <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
                             {{ __('Siswa') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.certificates.index')" :active="request()->routeIs('admin.certificates.*')">
+                            {{ __('Sertifikat') }}
+                        </x-nav-link>
                     @endif
                     @if (Auth::user()->isMentor())
                         <x-nav-link :href="route('mentor.dashboard')" :active="request()->routeIs('mentor.dashboard')">
@@ -54,6 +57,11 @@
                         </x-nav-link>
                         <x-nav-link :href="route('student.assignments.index')" :active="request()->routeIs('student.assignments.*')">
                             {{ __('Tugas') }}
+                        </x-nav-link>
+                    @endif
+                    @if (Auth::user()->role_id === 2 || Auth::user()->role_id === 3)
+                        <x-nav-link :href="route('certificates.index')" :active="request()->routeIs('certificates.*')">
+                            {{ __('Sertifikat Saya') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -154,6 +162,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
                     {{ __('Siswa') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.certificates.index')" :active="request()->routeIs('admin.certificates.*')">
+                    {{ __('Sertifikat') }}
                 </x-responsive-nav-link>
             @endif
             @if (Auth::user()->isMentor())
