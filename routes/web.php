@@ -20,6 +20,7 @@ use App\Http\Controllers\Student\DashboardController as StudentDashboardControll
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
+use App\Http\Controllers\Admin\TopPerformerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::put('/students/{student}/toggle-status', [StudentController::class, 'toggleStatus'])->name('students.toggle-status');
     Route::resource('certificates', CertificateController::class)->except(['edit', 'update', 'show']);
+
+    // Top Performers
+    Route::get('/top-performers', [TopPerformerController::class, 'index'])->name('top-performers.index');
+    Route::get('/top-performers/export', [TopPerformerController::class, 'export'])->name('top-performers.export');
 });
 
 // Mentor Routes

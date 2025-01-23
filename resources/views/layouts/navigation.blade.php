@@ -20,16 +20,19 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.batches.index')" :active="request()->routeIs('admin.batches.*')">
-                            {{ __('Batch') }}
+                            {{ __('Kelola Batch') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.mentors.index')" :active="request()->routeIs('admin.mentors.*')">
-                            {{ __('Mentor') }}
+                            {{ __('Kelola Mentor') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
-                            {{ __('Siswa') }}
+                            {{ __('Kelola Siswa') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.certificates.index')" :active="request()->routeIs('admin.certificates.*')">
-                            {{ __('Sertifikat') }}
+                            {{ __('Distribusi Sertifikat') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.top-performers.index')" :active="request()->routeIs('admin.top-performers.*')">
+                            <span class="italic">{{ __('Top Performers') }}</span>
                         </x-nav-link>
                     @endif
                     @if (Auth::user()->isMentor())
@@ -153,6 +156,9 @@
             @if (Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.top-performers.index')" :active="request()->routeIs('admin.top-performers.*')">
+                    {{ __('Top Performers') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.batches.index')" :active="request()->routeIs('admin.batches.*')">
                     {{ __('Batch') }}
