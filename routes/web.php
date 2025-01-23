@@ -3,22 +3,23 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\Admin\BatchController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
-use App\Http\Controllers\Mentor\ProfileController as MentorProfileController;
-use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
-use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\MentorController;
-use App\Http\Controllers\Mentor\MaterialController as MentorMaterialController;
-use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
-use App\Http\Controllers\Student\ModuleController as StudentModuleController;
-use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\CertificateController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Mentor\DashboardController as MentorDashboardController;
+use App\Http\Controllers\Mentor\ProfileController as MentorProfileController;
+use App\Http\Controllers\Mentor\MaterialController as MentorMaterialController;
+use App\Http\Controllers\Mentor\ModuleController as MentorModuleController;
+use App\Http\Controllers\Mentor\AssignmentController as MentorAssignmentController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\ProfileController as StudentProfileController;
+use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
+use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,12 +67,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 // Mentor Routes
 Route::middleware(['auth', 'verified', 'role:mentor'])->prefix('mentor')->name('mentor.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Mentor\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [\App\Http\Controllers\Mentor\ProfileController::class, 'index'])->name('profile');
-    Route::resource('modules', \App\Http\Controllers\Mentor\ModuleController::class);
-    Route::resource('materials', \App\Http\Controllers\Mentor\MaterialController::class);
-    Route::resource('assignments', \App\Http\Controllers\Mentor\AssignmentController::class);
-    Route::put('assignments/submissions/{submission}/grade', [\App\Http\Controllers\Mentor\AssignmentController::class, 'gradeSubmission'])->name('assignments.submissions.grade');
+    Route::get('/', [MentorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [MentorProfileController::class, 'index'])->name('profile');
+    Route::resource('modules', MentorModuleController::class);
+    Route::resource('materials', MentorMaterialController::class);
+    Route::resource('assignments', MentorAssignmentController::class);
+    Route::put('assignments/submissions/{submission}/grade', [MentorAssignmentController::class, 'gradeSubmission'])->name('assignments.submissions.grade');
 });
 
 // Student Routes
