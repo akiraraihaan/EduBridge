@@ -17,7 +17,6 @@ class Assignment extends Model
         'description',
         'due_date',
         'max_score',
-        'is_final_project',
         'status'
     ];
 

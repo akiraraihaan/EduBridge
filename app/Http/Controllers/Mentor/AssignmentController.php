@@ -56,7 +56,6 @@ class AssignmentController extends Controller
             'description' => 'required|string',
             'due_date' => 'required|date|after:today',
             'max_score' => 'required|integer|min:0|max:100',
-            'is_final_project' => 'boolean',
             'status' => 'required|in:draft,published'
         ]);
 

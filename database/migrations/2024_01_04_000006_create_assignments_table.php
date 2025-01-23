@@ -15,7 +15,6 @@ return new class extends Migration
             $table->text('description');
             $table->date('due_date');
             $table->integer('max_score')->default(100);
-            $table->boolean('is_final_project')->default(false);
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
         });

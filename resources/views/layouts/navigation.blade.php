@@ -40,13 +40,13 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('mentor.modules.index')" :active="request()->routeIs('mentor.modules.*')">
-                            {{ __('Modul') }}
+                            {{ __('Kelola Modul') }}
                         </x-nav-link>
                         <x-nav-link :href="route('mentor.materials.index')" :active="request()->routeIs('mentor.materials.*')">
-                            {{ __('Materi') }}
+                            {{ __('Kelola Materi') }}
                         </x-nav-link>
                         <x-nav-link :href="route('mentor.assignments.index')" :active="request()->routeIs('mentor.assignments.*')">
-                            {{ __('Tugas') }}
+                            {{ __('Kelola Tugas') }}
                         </x-nav-link>
                     @endif
                     @if (Auth::user()->isStudent())

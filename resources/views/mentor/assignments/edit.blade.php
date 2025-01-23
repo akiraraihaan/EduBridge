@@ -58,13 +58,6 @@
                             <x-input-error :messages="$errors->get('max_score')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center">
-                            <input id="is_final_project" name="is_final_project" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" {{ old('is_final_project', $assignment->is_final_project) ? 'checked' : '' }}>
-                            <label for="is_final_project" class="ml-2 block text-sm text-gray-900">
-                                {{ __('Ini adalah Final Project') }}
-                            </label>
-                        </div>
-
                         <div>
                             <x-input-label for="status" :value="__('Status')" />
                             <select id="status" name="status" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
