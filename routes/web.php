@@ -21,6 +21,7 @@ use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use App\Http\Controllers\Admin\TopPerformerController;
+use App\Http\Controllers\Student\AIChatController as StudentAIChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,9 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name
     Route::get('/assignments/{assignment}', [StudentAssignmentController::class, 'show'])->name('assignments.show');
     Route::post('/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('assignments.submit');
     Route::get('/assignments/{assignment}/submissions/{submission}', [StudentAssignmentController::class, 'showSubmission'])->name('assignments.submissions.show');
+
+    // AI Chat routes
+    Route::post('/ai-chat/send', [StudentAIChatController::class, 'sendMessage'])->name('ai-chat.send');
 });
 
 // Dashboard route that redirects based on role middleware

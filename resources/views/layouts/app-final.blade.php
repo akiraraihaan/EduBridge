@@ -377,6 +377,73 @@ use Illuminate\Support\Facades\Storage;
                 © {{ date('Y') }} EduBridge Team | All rights reserved
             </p>
         </div>
+        @auth
+        @if(auth()->user()->hasRole('student'))
+            <!-- Chat Tab -->
+            <div id="chat-tab" class="fixed bottom-8 right-8 w-96 transition-all duration-300 transform translate-y-full z-50">
+                <!-- Chat Header/Toggle -->
+                <button onclick="toggleChat()" class="absolute -top-16 right-0 flex items-center justify-center w-14 h-14 text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-full hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                </button>
+
+                <!-- Chat Box -->
+                <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 h-[500px] flex flex-col overflow-hidden">
+                    <!-- Chat Header -->
+                    <div class="p-4 bg-gradient-to-r from-blue-600 to-blue-700 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-semibold">Chat dengan AI Assistant</h3>
+                        </div>
+                        <button onclick="toggleChat()" class="text-white hover:text-gray-200 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                        <!-- Welcome Message -->
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-3 bg-white p-4 rounded-xl shadow-sm max-w-[80%]">
+                                <p class="text-gray-800">Halo! Saya adalah AI Assistant yang siap membantu Anda belajar. Silakan ajukan pertanyaan apa saja!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <form id="chat-form" class="p-4 bg-white border-t border-gray-100">
+                        <div class="flex space-x-3">
+                            <input type="text"
+                                   id="message-input"
+                                   class="flex-1 rounded-xl border-gray-200 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                   placeholder="Ketik pesan Anda di sini..."
+                                   required>
+                            <button type="submit"
+                                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-xl font-semibold text-xs text-white uppercase tracking-widest hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @endif
+        @endauth
     </footer>
 
     <style>
@@ -450,6 +517,130 @@ use Illuminate\Support\Facades\Storage;
                 window.location.href = '/#courses';
             }
         }
+
+        function toggleChat() {
+                const chatTab = document.getElementById('chat-tab');
+                chatTab.classList.toggle('translate-y-full');
+
+                // Scroll to bottom when opening
+                if (!chatTab.classList.contains('translate-y-full')) {
+                    const chatMessages = document.getElementById('chat-messages');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const chatForm = document.getElementById('chat-form');
+                const messageInput = document.getElementById('message-input');
+                const chatMessages = document.getElementById('chat-messages');
+
+                chatForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    const message = messageInput.value;
+                    if (!message.trim()) return;
+
+                    // Add user message to chat
+                    addMessageToChat('user', message);
+                    messageInput.value = '';
+
+                    try {
+                        // Show loading state
+                        const loadingId = addLoadingMessage();
+
+                        // Send message to server
+                        const response = await fetch('{{ route("student.ai-chat.send") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ message })
+                        });
+
+                        const data = await response.json();
+
+                        // Remove loading message
+                        removeLoadingMessage(loadingId);
+
+                        if (data.success) {
+                            addMessageToChat('ai', data.message);
+                        } else {
+                            throw new Error(data.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        addMessageToChat('system', 'Maaf, terjadi kesalahan. Silakan coba lagi.');
+                    }
+
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                });
+
+                function addMessageToChat(type, message) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'flex items-start';
+
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'flex-shrink-0';
+
+                    const iconContainer = document.createElement('div');
+                    iconContainer.className = `w-8 h-8 rounded-full ${type === 'user' ? 'bg-gradient-to-r from-green-500 to-green-600' : 'bg-gradient-to-r from-blue-600 to-blue-700'} flex items-center justify-center`;
+
+                    const icon = document.createElement('svg');
+                    icon.className = 'w-5 h-5 text-white';
+                    icon.setAttribute('fill', 'none');
+                    icon.setAttribute('stroke', 'currentColor');
+                    icon.setAttribute('viewBox', '0 0 24 24');
+
+                    if (type === 'user') {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />';
+                    } else {
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />';
+                    }
+
+                    iconContainer.appendChild(icon);
+                    iconDiv.appendChild(iconContainer);
+                    messageDiv.appendChild(iconDiv);
+
+                    const messageContent = document.createElement('div');
+                    messageContent.className = 'ml-3 bg-white p-4 rounded-xl shadow-sm max-w-[80%]';
+                    messageContent.innerHTML = `<p class="text-gray-800 whitespace-pre-wrap">${message}</p>`;
+
+                    messageDiv.appendChild(messageContent);
+                    chatMessages.appendChild(messageDiv);
+                }
+
+                function addLoadingMessage() {
+                    const loadingId = 'loading-' + Date.now();
+                    const loadingDiv = document.createElement('div');
+                    loadingDiv.id = loadingId;
+                    loadingDiv.className = 'flex items-start';
+                    loadingDiv.innerHTML = `
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-3 bg-white p-4 rounded-xl shadow-sm">
+                            <p class="text-gray-800">Sedang mengetik...</p>
+                        </div>
+                    `;
+                    chatMessages.appendChild(loadingDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    return loadingId;
+                }
+
+                function removeLoadingMessage(loadingId) {
+                    const loadingElement = document.getElementById(loadingId);
+                    if (loadingElement) {
+                        loadingElement.remove();
+                    }
+                }
+            });
     </script>
 </body>
 
