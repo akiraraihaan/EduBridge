@@ -1,22 +1,24 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Detail Submission') }}
-                </h2>
-                <div class="text-sm text-gray-600 mt-1">
-                    {{ $assignment->title }}
-                </div>
-            </div>
-            <a href="{{ route('student.assignments.show', $assignment) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Kembali
-            </a>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detail Submission') }}
+        </h2>
+        <div class="text-sm text-gray-600 mt-1">
+            {{ $assignment->title }}
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-6">
+                <a href="{{ route('student.assignments.show', $assignment) }}" class="inline-flex items-center text-gray-600 hover:text-gray-900">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Kembali ke Detail Tugas
+                </a>
+            </div>
+
             <div class="bg-white/50 backdrop-blur-sm overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <!-- Status dan Nilai -->
