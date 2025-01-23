@@ -27,11 +27,6 @@ class ViewServiceProvider extends ServiceProvider
                     'phone' => '(021) 1234-5678',
                     'address' => 'Jakarta, Indonesia'
                 ],
-                'quickLinks' => [
-                    ['title' => 'Kursus', 'url' => '#'],
-                    ['title' => 'Pendaftaran', 'url' => '#'],
-                    ['title' => 'Tentang Kami', 'url' => route('about')]
-                ],
                 'description' => 'Platform pembelajaran digital yang menghubungkan siswa dengan mentor terbaik.'
             ];
 

@@ -338,9 +338,14 @@ use Illuminate\Support\Facades\Storage;
                     PUSAT BANTUAN
                 </h2>
                 <div class="flex flex-col items-center leading-relaxed">
-                    @foreach($footerData['quickLinks'] as $link)
-                        <a href="{{ $link['url'] }}" class="hover:text-orange-700 transition duration-700 animate-fade-in-up animation-delay-[{{ 700 + $loop->index * 100 }}ms]">{{ $link['title'] }}</a>
-                    @endforeach
+                    @auth
+                        <a href="{{ route('about') }}">Tentang Kami</a>
+                    @else
+                        <a href="{{ route('about') }}">Tentang Kami</a>
+                        <a href="#courses" onclick="scrollToCourses(event)" class="cursor-pointer hover:text-orange-700 transition duration-700">Kursus</a>
+                        <a href="{{ route('register') }}">Pendaftaran</a>
+                        <a href="{{ route('login') }}">Masuk</a>
+                    @endauth
                 </div>
             </div>
             <div class="w-full md:w-1/4 flex flex-col items-center gap-4 mb-8 md:mb-0 animate-fade-in-up animation-delay-700">
@@ -430,6 +435,22 @@ use Illuminate\Support\Facades\Storage;
             animation: fade-in-right 1s ease-out forwards;
         }
     </style>
+
+    <script>
+        function scrollToCourses(event) {
+            event.preventDefault();
+            const coursesSection = document.getElementById('courses');
+            if (coursesSection) {
+                coursesSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            } else {
+                // Jika tidak berada di halaman dengan section courses, arahkan ke halaman utama
+                window.location.href = '/#courses';
+            }
+        }
+    </script>
 </body>
 
 </html>

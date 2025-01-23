@@ -136,7 +136,7 @@
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                         </a>
-                        <a href="#courses"
+                        <a href="#courses" onclick="scrollToCourses(event)"
                             class="w-full sm:w-auto text-center inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white/80 backdrop-blur-sm text-slate-800 font-medium rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 border border-slate-200 animate-fade-in">
                             Lihat Kursus
                         </a>
@@ -433,34 +433,6 @@
                     </div>
                 @endif
 
-                <!-- Common Section: Available Courses -->
-                <div class="mt-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
-                        @if (Auth::user()->isStudent())
-                            Rekomendasi Kursus
-                        @elseif(Auth::user()->isMentor())
-                            Kursus yang Anda Ajar
-                        @else
-                            Semua Kursus
-                        @endif
-                    </h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach (\App\Models\Course::all() as $course)
-                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition duration-300">
-                                <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}" class="w-full h-48 object-cover">
-                                <div class="p-4">
-                                    <h3 class="text-lg font-semibold text-gray-900">{{ $course->name }}</h3>
-                                    <p class="text-sm text-gray-500 mt-1">{{ $course->status ?? 'Available' }}</p>
-                                    @if (Auth::user()->isAdmin())
-                                        <div class="mt-4 flex justify-end">
-                                            <button class="text-sm text-blue-600 hover:text-blue-800">Edit</button>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
             </div>
         </div>
     @endauth
@@ -468,22 +440,36 @@
     <!-- Preview Courses Section -->
     @guest
         <div class="max-w-screen min-fit flex relative">
-            <div class="w-screen flex flex-col items-center justify-start z-10">
+            <div id="courses" class="w-screen flex flex-col items-center justify-start z-10">
                 <div class="flex flex-col items-center mt-32 animate-fade-in-up animation-delay-300">
                     <h1 class="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-orange-900 text-[36px] font-bold tracking-tight">Program Kursus</h1>
                 </div>
 
-                <div class="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12 max-w-4xl">
-                    @foreach (\App\Models\Course::all() as $course)
-                        <a href="#" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up animation-delay-[{{ 500 + $loop->index * 200 }}ms]">
-                            <div class="relative">
-                                <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}" class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
+                <div class="container mx-auto px-4 mt-12 max-w-4xl">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+                        @foreach (\App\Models\Course::all() as $course)
+                            <div class="h-fit">
+                                <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up animation-delay-[{{ 500 + $loop->index * 200 }}ms]">
+                                    <div class="relative">
+                                        <img src="{{ $course->image ?? asset('img/course-placeholder.jpg') }}" class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-center">
+                                            <h2 class="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">{{ $course->name }}</h2>
+                                            <button onclick="toggleDescription(event, 'description-{{ $course->id }}')" class="text-gray-500 hover:text-orange-600 transition-colors">
+                                                <svg class="w-6 h-6 transform transition-transform duration-300" id="icon-{{ $course->id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div id="description-{{ $course->id }}" class="mt-4 text-gray-600 overflow-hidden transition-all duration-300 max-h-0 opacity-0">
+                                            <p class="text-sm">{{ $course->description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="p-6">
-                                <h2 class="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">{{ $course->name }}</h2>
-                            </div>
-                        </a>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -522,3 +508,23 @@
     </div>
     @endguest
 </x-app-final-layout>
+
+<script>
+    function toggleDescription(event, descriptionId) {
+        event.preventDefault();
+        const description = document.getElementById(descriptionId);
+        const iconId = 'icon-' + descriptionId.split('-')[1];
+        const icon = document.getElementById(iconId);
+
+        // Toggle description
+        if (description.style.maxHeight === '0px' || !description.style.maxHeight) {
+            description.style.maxHeight = description.scrollHeight + 'px';
+            description.style.opacity = '1';
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            description.style.maxHeight = '0px';
+            description.style.opacity = '0';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    }
+</script>
