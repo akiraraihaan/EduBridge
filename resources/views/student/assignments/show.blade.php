@@ -131,6 +131,33 @@
                     @endif
                 </div>
             </div>
+
+            @if($submission)
+                <div class="mt-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Status Pengumpulan</h3>
+                    <div class="bg-white rounded-lg border p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Dikumpulkan pada:</p>
+                                <p class="font-medium">{{ $submission->created_at->format('d M Y H:i') }}</p>
+                                @if($submission->graded_at)
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
+                                        Sudah Dinilai
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mt-2">
+                                        Belum Dinilai
+                                    </span>
+                                @endif
+                            </div>
+                            <a href="{{ route('student.assignments.submissions.show', ['assignment' => $assignment->id, 'submission' => $submission->id]) }}"
+                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

@@ -79,6 +79,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name
     Route::get('/assignments', [StudentAssignmentController::class, 'index'])->name('assignments.index');
     Route::get('/assignments/{assignment}', [StudentAssignmentController::class, 'show'])->name('assignments.show');
     Route::post('/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('assignments.submit');
+    Route::get('/assignments/{assignment}/submissions/{submission}', [StudentAssignmentController::class, 'showSubmission'])->name('assignments.submissions.show');
 });
 
 // Dashboard route that redirects based on role middleware

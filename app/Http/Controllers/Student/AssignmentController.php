@@ -150,4 +150,12 @@ class AssignmentController extends Controller
         return redirect()->route('student.assignments.show', $assignment)
             ->with('success', 'Tugas berhasil dikumpulkan');
     }
+
+    public function showSubmission(Assignment $assignment, Submission $submission)
+    {
+        return view('student.assignments.submission', [
+            'assignment' => $assignment,
+            'submission' => $submission
+        ]);
+    }
 }
