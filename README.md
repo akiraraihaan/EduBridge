@@ -11,6 +11,6 @@
 
     Happy testing!
 
-    Jika ingin mengaktifkan AI chat powered by Gemini, lakukan hal berikut:
+    Untuk mengaktifkan AI chat powered by Gemini, lakukan hal berikut:
     1. tambahkan variabel di env -> GEMINI_API_KEY=your_api_key_here
     2. API key gemini bisa didapat dari https://makersuite.google.com/app/ setelah membuat daftar dan buat project
