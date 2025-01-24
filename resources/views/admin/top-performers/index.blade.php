@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Top Performer Seeker') }}
             </h2>
-            <a href="{{ route('admin.top-performers.export') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+            <a href="{{ route('admin.top-performers.export') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-800 hover:to-blue-600 transition duration-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
                 {{ __('Export CSV') }}
             </a>
         </div>
