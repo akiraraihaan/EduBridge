@@ -22,8 +22,8 @@
                         @method('PUT')
 
                         <div>
-                            <x-input-label for="module_id" :value="__('Modul')" />
-                            <select id="module_id" name="module_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <label for="module_id" class="block text-sm font-medium text-gray-700">Modul</label>
+                            <select id="module_id" name="module_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 <option value="">Pilih Modul</option>
                                 @foreach($modules as $module)
                                     <option value="{{ $module->id }}" {{ old('module_id', $assignment->module_id) == $module->id ? 'selected' : '' }}>
@@ -31,49 +31,61 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('module_id')" class="mt-2" />
+                            @error('module_id')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <x-input-label for="title" :value="__('Judul Tugas')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title', $assignment->title)" required />
-                            <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                            <label for="title" class="block text-sm font-medium text-gray-700">Judul Tugas</label>
+                            <input type="text" name="title" id="title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ old('title', $assignment->title) }}" required>
+                            @error('title')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <x-input-label for="description" :value="__('Deskripsi')" />
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>{{ old('description', $assignment->description) }}</textarea>
-                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                            <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>{{ old('description', $assignment->description) }}</textarea>
+                            @error('description')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <x-input-label for="due_date" :value="__('Tenggat Waktu')" />
-                            <x-text-input id="due_date" name="due_date" type="date" class="mt-1 block w-full" :value="old('due_date', $assignment->due_date->format('Y-m-d'))" required />
-                            <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
+                            <label for="due_date" class="block text-sm font-medium text-gray-700">Tenggat Waktu</label>
+                            <input type="date" name="due_date" id="due_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ old('due_date', $assignment->due_date->format('Y-m-d')) }}" required>
+                            @error('due_date')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <x-input-label for="max_score" :value="__('Nilai Maksimal')" />
-                            <x-text-input id="max_score" name="max_score" type="number" class="mt-1 block w-full" :value="old('max_score', $assignment->max_score)" min="0" max="100" required />
-                            <x-input-error :messages="$errors->get('max_score')" class="mt-2" />
+                            <label for="max_score" class="block text-sm font-medium text-gray-700">Nilai Maksimal</label>
+                            <input type="number" name="max_score" id="max_score" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ old('max_score', $assignment->max_score) }}" min="0" max="100" required>
+                            @error('max_score')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <x-input-label for="status" :value="__('Status')" />
-                            <select id="status" name="status" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 <option value="draft" {{ old('status', $assignment->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                                 <option value="published" {{ old('status', $assignment->status) == 'published' ? 'selected' : '' }}>Dipublikasi</option>
                             </select>
-                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                            @error('status')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            <x-secondary-button type="button" class="mr-3" onclick="window.history.back()">
-                                {{ __('Batal') }}
-                            </x-secondary-button>
-                            <x-primary-button>
-                                {{ __('Simpan Perubahan') }}
-                            </x-primary-button>
+                            <button type="button" onclick="window.history.back()" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 mr-3">
+                                Batal
+                            </button>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                Simpan Perubahan
+                            </button>
                         </div>
                     </form>
                 </div>

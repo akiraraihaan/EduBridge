@@ -21,8 +21,8 @@
                         @csrf
 
                         <div>
-                            <x-input-label for="module_id" :value="__('Modul')" />
-                            <select id="module_id" name="module_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <label for="module_id" class="block text-sm font-medium text-gray-700 mb-1">Modul</label>
+                            <select id="module_id" name="module_id" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" required>
                                 <option value="">Pilih Modul</option>
                                 @foreach($modules as $module)
                                     <option value="{{ $module->id }}" {{ old('module_id') == $module->id ? 'selected' : '' }}>
@@ -30,49 +30,55 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="mt-1 text-sm text-gray-500">Pilih modul tempat tugas ini akan ditambahkan</p>
                             <x-input-error :messages="$errors->get('module_id')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="title" :value="__('Judul Tugas')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required />
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
+                            <input type="text" id="title" name="title" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('title') }}" required>
+                            <p class="mt-1 text-sm text-gray-500">Berikan judul yang deskriptif untuk tugas ini</p>
                             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="description" :value="__('Deskripsi')" />
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>{{ old('description') }}</textarea>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                            <textarea id="description" name="description" rows="4" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" required>{{ old('description') }}</textarea>
+                            <p class="mt-1 text-sm text-gray-500">Jelaskan secara detail tentang tugas yang harus dikerjakan</p>
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="due_date" :value="__('Tenggat Waktu')" />
-                            <x-text-input id="due_date" name="due_date" type="date" class="mt-1 block w-full" :value="old('due_date')" required />
+                            <label for="due_date" class="block text-sm font-medium text-gray-700 mb-1">Tenggat Waktu</label>
+                            <input type="date" id="due_date" name="due_date" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('due_date') }}" required>
+                            <p class="mt-1 text-sm text-gray-500">Tentukan batas waktu pengumpulan tugas</p>
                             <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="max_score" :value="__('Nilai Maksimal')" />
-                            <x-text-input id="max_score" name="max_score" type="number" class="mt-1 block w-full" :value="old('max_score', 100)" min="0" max="100" required />
+                            <label for="max_score" class="block text-sm font-medium text-gray-700 mb-1">Nilai Maksimal</label>
+                            <input type="number" id="max_score" name="max_score" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('max_score', 100) }}" min="0" max="100" required>
+                            <p class="mt-1 text-sm text-gray-500">Tentukan nilai maksimal untuk tugas ini (0-100)</p>
                             <x-input-error :messages="$errors->get('max_score')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="status" :value="__('Status')" />
-                            <select id="status" name="status" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select id="status" name="status" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" required>
                                 <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                                 <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Dipublikasi</option>
                             </select>
+                            <p class="mt-1 text-sm text-gray-500">Pilih status publikasi tugas</p>
                             <x-input-error :messages="$errors->get('status')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
-                            <x-secondary-button type="button" class="mr-3" onclick="window.history.back()">
-                                {{ __('Batal') }}
-                            </x-secondary-button>
-                            <x-primary-button>
+                        <div class="flex items-center gap-4">
+                            <button type="submit" class="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-lg font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
                                 {{ __('Simpan') }}
-                            </x-primary-button>
+                            </button>
+                            <a href="{{ route('mentor.assignments.index') }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-all">
+                                {{ __('Batal') }}
+                            </a>
                         </div>
                     </form>
                 </div>

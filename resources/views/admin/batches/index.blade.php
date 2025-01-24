@@ -18,11 +18,11 @@
                     <table class="min-w-full divide-y divide-gray-200/50">
                             <thead>
                                 <tr>
-                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-center text-xs font-medium text-slate-900 uppercase tracking-wider rounded-tl-xl">Batch</th>
-                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-center text-xs font-medium text-slate-900 uppercase tracking-wider">Periode</th>
-                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-center text-xs font-medium text-slate-900 uppercase tracking-wider">Kapasitas</th>
-                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-center text-xs font-medium text-slate-900 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-center text-xs font-medium text-slate-900 uppercase tracking-wider rounded-tr-xl">Aksi</th>
+                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-left text-xs font-medium text-slate-700 uppercase tracking-wider rounded-tl-xl">Batch</th>
+                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Periode</th>
+                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Kapasitas</th>
+                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 bg-white/30 backdrop-blur-md text-left text-xs font-medium text-slate-700 uppercase tracking-wider rounded-tr-xl">Aksi</th>
                                 </tr>
                             </thead>
                         <tbody class="bg-white/20 backdrop-blur-md divide-y divide-gray-200/50">

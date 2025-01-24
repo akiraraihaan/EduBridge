@@ -22,8 +22,8 @@
                         @method('PUT')
 
                         <div>
-                            <x-input-label for="module_id" :value="__('Modul')" />
-                            <select id="module_id" name="module_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                            <label for="module_id" class="block text-sm font-medium text-gray-700 mb-1">Modul</label>
+                            <select id="module_id" name="module_id" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" required>
                                 <option value="">Pilih Modul</option>
                                 @foreach($modules as $module)
                                     <option value="{{ $module->id }}" {{ old('module_id', $material->module_id) == $module->id ? 'selected' : '' }}>
@@ -36,49 +36,51 @@
                         </div>
 
                         <div>
-                            <x-input-label for="title" :value="__('Judul Materi')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title', $material->title)" required />
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Materi</label>
+                            <input type="text" id="title" name="title" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('title', $material->title) }}" required>
                             <p class="mt-1 text-sm text-gray-500">Berikan judul yang deskriptif untuk materi ini</p>
                             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="content" :value="__('Deskripsi')" />
-                            <textarea id="content" name="content" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('content', $material->content) }}</textarea>
+                            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                            <textarea id="content" name="content" rows="3" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200">{{ old('content', $material->content) }}</textarea>
                             <p class="mt-1 text-sm text-gray-500">Jelaskan secara singkat tentang isi dan tujuan materi ini</p>
                             <x-input-error :messages="$errors->get('content')" class="mt-2" />
                         </div>
 
-                        <div class="border rounded-lg p-4 bg-gray-50">
-                            <x-input-label for="file" :value="__('File PDF (Opsional)')" />
+                        <div class="border rounded-lg p-4 bg-blue-50">
+                            <label for="file" class="block text-sm font-medium text-gray-700 mb-1">File PDF (Opsional)</label>
                             @if($material->file_path)
                                 <div class="mb-2">
                                     <p class="text-sm text-gray-600">File PDF saat ini: {{ basename($material->file_path) }}</p>
                                 </div>
                             @endif
-                            <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-500" accept=".pdf" onchange="previewPDF(this)">
+                            <input type="file" id="file" name="file" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 text-sm text-gray-500" accept=".pdf" onchange="previewPDF(this)">
                             <iframe id="pdf-preview" class="mt-2" style="display:none; width:100%; height:200px;"></iframe>
                             <p class="mt-1 text-sm text-gray-500">Unggah file PDF baru (maksimal 10MB) atau biarkan kosong untuk mempertahankan file yang ada</p>
                             <x-input-error :messages="$errors->get('file')" class="mt-2" />
                         </div>
 
-                        <div class="border rounded-lg p-4 bg-gray-50">
-                            <x-input-label for="video_url" :value="__('URL Video YouTube (Opsional)')" />
-                            <x-text-input id="video_url" name="video_url" type="url" class="mt-1 block w-full" :value="old('video_url', $material->video_id ? 'https://www.youtube.com/watch?v=' . $material->video_id : '')" placeholder="https://www.youtube.com/watch?v=..." />
+                        <div class="border rounded-lg p-4 bg-blue-50">
+                            <label for="video_url" class="block text-sm font-medium text-gray-700 mb-1">URL Video YouTube (Opsional)</label>
+                            <input type="url" id="video_url" name="video_url" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('video_url', $material->video_id ? 'https://www.youtube.com/watch?v=' . $material->video_id : '') }}" placeholder="https://www.youtube.com/watch?v=...">
                             <p class="mt-1 text-sm text-gray-500">Masukkan URL video YouTube (contoh: https://www.youtube.com/watch?v=xxxxx)</p>
                             <x-input-error :messages="$errors->get('video_url')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="order" :value="__('Urutan dalam Modul')" />
-                            <x-text-input id="order" name="order" type="number" class="mt-1 block w-full" :value="old('order', $material->order)" required min="1" />
+                            <label for="order" class="block text-sm font-medium text-gray-700 mb-1">Urutan dalam Modul</label>
+                            <input type="number" id="order" name="order" class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200" value="{{ old('order', $material->order) }}" required min="1">
                             <p class="mt-1 text-sm text-gray-500">Urutan penampilan materi dalam modul (1 = pertama, 2 = kedua, dst)</p>
                             <x-input-error :messages="$errors->get('order')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <x-primary-button>{{ __('Simpan Perubahan') }}</x-primary-button>
-                            <a href="{{ route('mentor.materials.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                            <button type="submit" class="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-lg font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+                                {{ __('Simpan Perubahan') }}
+                            </button>
+                            <a href="{{ route('mentor.materials.index') }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-all">
                                 {{ __('Batal') }}
                             </a>
                         </div>
