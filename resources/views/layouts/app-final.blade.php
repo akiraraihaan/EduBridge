@@ -341,12 +341,12 @@ use Illuminate\Support\Facades\Storage;
                 </h2>
                 <div class="flex flex-col items-center leading-relaxed">
                     @auth
-                        <a href="{{ route('about') }}">Tentang Kami</a>
+                        <a href="{{ route('about') }}" class="cursor-pointer hover:text-orange-700 transition duration-700">Tentang Kami</a>
                     @else
-                        <a href="{{ route('about') }}">Tentang Kami</a>
+                        <a href="{{ route('about') }}" class="cursor-pointer hover:text-orange-700 transition duration-700">Tentang Kami</a>
                         <a href="#courses" onclick="scrollToCourses(event)" class="cursor-pointer hover:text-orange-700 transition duration-700">Kursus</a>
-                        <a href="{{ route('register') }}">Pendaftaran</a>
-                        <a href="{{ route('login') }}">Masuk</a>
+                        <a href="{{ route('register') }}" class="cursor-pointer hover:text-orange-700 transition duration-700">Pendaftaran</a>
+                        <a href="{{ route('login') }}" class="cursor-pointer hover:text-orange-700 transition duration-700">Masuk</a>
                     @endauth
                 </div>
             </div>
