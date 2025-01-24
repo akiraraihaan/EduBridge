@@ -8,9 +8,9 @@
                     @forelse($modules as $module)
                         <div class="mb-8 bg-white rounded-lg shadow-sm overflow-hidden">
                             <div class="bg-gradient-to-r from-[#ffe9d5] from-10% via-[#fffbf7] via-45% to-[#ffe9d5] to-90% p-4">
-                                <h3 class="text-xl font-semibold bg-gradient-to-r from-orange-800 to-10% to-indigo-800 bg-clip-text text-transparent">{{ $module->title }}</h3>
+                                <h3 class="text-xl font-semibold text-orange-800">{{ $module->title }}</h3>
                                 @if($module->description)
-                                    <p class="bg-gradient-to-r from-orange-800 to-blue-800 bg-clip-text text-transparent mt-1">{{ $module->description }}</p>
+                                    <p class="text-orange-900 mt-1">{{ $module->description }}</p>
                                 @endif
                             </div>
 
