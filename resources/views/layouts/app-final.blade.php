@@ -579,10 +579,14 @@ use Illuminate\Support\Facades\Storage;
                     const iconContainer = document.createElement('div');
 
                     if (type === 'user') {
-                        // Get user's initials or profile picture
-                        const userInitials = '{{ substr(auth()->user()->name, 0, 2) }}';
-                        iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center';
-                        iconContainer.innerHTML = `<span class="text-white text-sm font-semibold">${userInitials}</span>`;
+                        @auth
+                            const userInitials = '{{ substr(auth()->user()->first_name . " " . auth()->user()->last_name, 0, 2) }}';
+                            iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center';
+                            iconContainer.innerHTML = `<span class="text-white text-sm font-semibold">${userInitials}</span>`;
+                        @else
+                            iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center';
+                            iconContainer.innerHTML = '<span class="text-white text-sm font-semibold">G</span>';
+                        @endauth
                     } else {
                         iconContainer.className = 'w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center';
                         const icon = document.createElement('svg');
