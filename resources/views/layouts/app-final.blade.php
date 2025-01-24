@@ -144,182 +144,184 @@ use Illuminate\Support\Facades\Storage;
     }
     </style>
 
-    <!-- Navbar -->
-    <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-md border-b border-white/50">
-        <div class="px-4 md:ml-10 flex justify-center items-center animate-fade-in">
-            <a href="{{ route('home') }}" class="font-bold italic p-2 text-slate-800 hover:text-orange-600 transition duration-300">{{ config('app.name') }}</a>
-        </div>
+    <!-- Navbar dengan stacking context baru -->
+    <div class="fixed top-0 left-0 right-0 z-[9999]">
+        <div class="min-h-[10vh] flex items-center justify-between bg-white/80 backdrop-blur-lg shadow-md border-b border-white/50">
+            <div class="px-4 md:ml-10 flex justify-center items-center animate-fade-in">
+                <a href="{{ route('home') }}" class="font-bold italic p-2 text-slate-800 hover:text-orange-600 transition duration-300">{{ config('app.name') }}</a>
+            </div>
 
-        <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
-            <a href="{{ route('home') }}">
-                <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[30px] hover:scale-110 transition-transform duration-300">
-            </a>
-        </div>
+            <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[30px] hover:scale-110 transition-transform duration-300">
+                </a>
+            </div>
 
-        @if (Route::has('login'))
-            <div class="flex gap-2 md:gap-6 px-4 md:mr-10 items-center animate-fade-in">
-                @auth
-                    <div class="relative group">
-                        <button type="button" class="flex items-center gap-2 px-3 md:px-5 py-2.5 bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-full font-medium text-sm text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition duration-300 ease-in-out">
-                            @if(Auth::user()->profile_image && Storage::disk('public')->exists('avatars/' . Auth::user()->profile_image))
-                                <img src="{{ asset('storage/avatars/' . Auth::user()->profile_image) }}"
-                                     alt="Profile"
-                                     class="h-6 w-6 rounded-full object-cover"
-                                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center\'><span class=\'text-orange-600 text-xs font-medium\'>{{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}</span></div>';">
+            @if (Route::has('login'))
+                <div class="flex gap-2 md:gap-6 px-4 md:mr-10 items-center animate-fade-in">
+                    @auth
+                        <div class="relative group">
+                            <button type="button" class="flex items-center gap-2 px-3 md:px-5 py-2.5 bg-gradient-to-r from-[#ffe9d5] to-[#ffe1c5] rounded-full font-medium text-sm text-slate-800 hover:shadow-lg hover:shadow-orange-500/30 transition duration-300 ease-in-out">
+                                @if(Auth::user()->profile_image && Storage::disk('public')->exists('avatars/' . Auth::user()->profile_image))
+                                    <img src="{{ asset('storage/avatars/' . Auth::user()->profile_image) }}"
+                                         alt="Profile"
+                                         class="h-6 w-6 rounded-full object-cover"
+                                         onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center\'><span class=\'text-orange-600 text-xs font-medium\'>{{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}</span></div>';">
+                                @else
+                                    <div class="h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                        <span class="text-orange-600 text-xs font-medium">
+                                            {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
+                                        </span>
+                                    </div>
+                                @endif
+                                <span class="hidden sm:inline">{{ Auth::user()->first_name }}</span>
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <!-- Dynamic Sub-Navbar based on Role -->
+                            @if (Auth::user()->isAdmin())
+                                <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
+                                    <div class="p-2 space-y-1">
+                                        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Dashboard</p>
+                                            </div>
+                                        </a>
+                                        <a href="{{ route('admin.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Profil</p>
+                                            </div>
+                                        </a>
+                                        <div class="border-t border-gray-100 my-1"></div>
+                                        <form method="POST" action="{{ route('logout') }}" class="block">
+                                            @csrf
+                                            <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                                <div class="flex-shrink-0">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium">Logout</p>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @elseif(Auth::user()->isMentor())
+                                <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
+                                    <div class="p-2 space-y-1">
+                                        <a href="{{ route('mentor.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Dashboard</p>
+                                            </div>
+                                        </a>
+                                        <a href="{{ route('mentor.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Profil</p>
+                                            </div>
+                                        </a>
+                                        <div class="border-t border-gray-100 my-1"></div>
+                                        <form method="POST" action="{{ route('logout') }}" class="block">
+                                            @csrf
+                                            <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                                <div class="flex-shrink-0">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium">Logout</p>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             @else
-                                <div class="h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center">
-                                    <span class="text-orange-600 text-xs font-medium">
-                                        {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
-                                    </span>
+                                <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
+                                    <div class="p-2 space-y-1">
+                                        <a href="{{ route('student.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Dashboard</p>
+                                            </div>
+                                        </a>
+                                        <a href="{{ route('student.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
+                                            <div class="flex-shrink-0">
+                                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-700">Profil</p>
+                                            </div>
+                                        </a>
+                                        <div class="border-t border-gray-100 my-1"></div>
+                                        <form method="POST" action="{{ route('logout') }}" class="block">
+                                            @csrf
+                                            <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                                <div class="flex-shrink-0">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium">Logout</p>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             @endif
-                            <span class="hidden sm:inline">{{ Auth::user()->first_name }}</span>
-                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-
-                        <!-- Dynamic Sub-Navbar based on Role -->
-                        @if (Auth::user()->isAdmin())
-                            <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
-                                <div class="p-2 space-y-1">
-                                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Dashboard</p>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('admin.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Profil</p>
-                                        </div>
-                                    </a>
-                                    <div class="border-t border-gray-100 my-1"></div>
-                                    <form method="POST" action="{{ route('logout') }}" class="block">
-                                        @csrf
-                                        <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
-                                            <div class="flex-shrink-0">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium">Logout</p>
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        @elseif(Auth::user()->isMentor())
-                            <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
-                                <div class="p-2 space-y-1">
-                                    <a href="{{ route('mentor.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Dashboard</p>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('mentor.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Profil</p>
-                                        </div>
-                                    </a>
-                                    <div class="border-t border-gray-100 my-1"></div>
-                                    <form method="POST" action="{{ route('logout') }}" class="block">
-                                        @csrf
-                                        <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
-                                            <div class="flex-shrink-0">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium">Logout</p>
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        @else
-                            <div class="absolute right-0 w-[280px] mt-2 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out z-50">
-                                <div class="p-2 space-y-1">
-                                    <a href="{{ route('student.dashboard') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Dashboard</p>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('student.profile') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 transition-all duration-200">
-                                        <div class="flex-shrink-0">
-                                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700">Profil</p>
-                                        </div>
-                                    </a>
-                                    <div class="border-t border-gray-100 my-1"></div>
-                                    <form method="POST" action="{{ route('logout') }}" class="block">
-                                        @csrf
-                                        <button type="submit" class="w-full flex items-center gap-3 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
-                                            <div class="flex-shrink-0">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium">Logout</p>
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @else
-                    <a href="{{ route('login') }}" class="relative px-3 md:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full font-medium text-sm text-white hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 ease-in-out hover:scale-105 animate-fade-in-left">
-                        Masuk
-                    </a>
-
-                    <div class="hidden sm:block h-6 w-[1px] bg-gray-300"></div>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="relative px-3 md:px-5 py-2.5 bg-gradient-to-r from-orange-400 to-orange-300 rounded-full font-medium text-sm text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 ease-in-out hover:scale-105 animate-fade-in-right">
-                            Daftar
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="relative px-3 md:px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full font-medium text-sm text-white hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 ease-in-out hover:scale-105 animate-fade-in-left">
+                            Masuk
                         </a>
-                    @endif
-                @endauth
-            </div>
-        @endif
+
+                        <div class="hidden sm:block h-6 w-[1px] bg-gray-300"></div>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="relative px-3 md:px-5 py-2.5 bg-gradient-to-r from-orange-400 to-orange-300 rounded-full font-medium text-sm text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 ease-in-out hover:scale-105 animate-fade-in-right">
+                                Daftar
+                            </a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+        </div>
     </div>
 
-    <!-- Page Content -->
-    <main>
+    <!-- Main content dengan margin top untuk fixed navbar -->
+    <div class="pt-[10vh]">
         {{ $slot }}
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -398,7 +400,7 @@ use Illuminate\Support\Facades\Storage;
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
                                 </svg>
                             </div>
-                            <h3 class="text-white font-semibold">Chat dengan AI Assistant</h3>
+                            <h3 class="text-white font-semibold">Chat powered by Gemini</h3>
                         </div>
                         <button onclick="toggleChat()" class="text-white hover:text-gray-200 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
