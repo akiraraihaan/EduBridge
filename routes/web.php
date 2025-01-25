@@ -95,6 +95,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('student')->name
 
     // AI Chat routes
     Route::post('/ai-chat/send', [StudentAIChatController::class, 'sendMessage'])->name('ai-chat.send');
+    Route::get('/ai-chat/history', [StudentAIChatController::class, 'getChatHistory'])->name('ai-chat.history');
 });
 
 // Dashboard route that redirects based on role middleware

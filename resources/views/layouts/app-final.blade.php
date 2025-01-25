@@ -533,6 +533,34 @@ use Illuminate\Support\Facades\Storage;
                 const messageInput = document.getElementById('message-input');
                 const chatMessages = document.getElementById('chat-messages');
 
+                // Load chat history when page loads
+                async function loadChatHistory() {
+                    try {
+                        const response = await fetch('{{ route("student.ai-chat.history") }}');
+                        const data = await response.json();
+
+                        if (data.success && data.history.length > 0) {
+                            // Clear default welcome message
+                            chatMessages.innerHTML = '';
+
+                            // Display chat history
+                            data.history.forEach(message => {
+                                addMessageToChat(
+                                    message.role === 'user' ? 'user' : 'ai',
+                                    message.content
+                                );
+                            });
+
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
+                    } catch (error) {
+                        console.error('Error loading chat history:', error);
+                    }
+                }
+
+                // Load chat history when page loads
+                loadChatHistory();
+
                 chatForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
 
