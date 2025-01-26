@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Submission;
 use App\Models\MentorCourse;
 use App\Models\Certificate;
+use App\Models\Enrollment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -70,6 +71,22 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the enrollments for the user.
+     */
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /**
+     * Get the current active enrollment for the user.
+     */
+    public function enrollment()
+    {
+        return $this->hasOne(Enrollment::class)->where('status', 'active');
     }
 
     /**

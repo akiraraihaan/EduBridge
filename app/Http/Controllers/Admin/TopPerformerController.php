@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\User;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Writer;
@@ -13,10 +14,21 @@ class TopPerformerController extends Controller
 {
     public function index()
     {
+        $activeBatch = Batch::where('is_active', true)->first();
+
+        if (!$activeBatch) {
+            return view('admin.top-performers.index', ['courses' => collect()]);
+        }
+
         // Ambil semua course yang aktif
         $courses = Course::where('is_active', true)
-            ->with(['modules.assignments.submissions' => function($query) {
-                $query->whereNotNull('score'); // Hanya submission yang sudah dinilai
+            ->with(['modules.assignments.submissions' => function($query) use ($activeBatch) {
+                $query->whereHas('student', function($q) use ($activeBatch) {
+                    $q->whereHas('enrollments', function($eq) use ($activeBatch) {
+                        $eq->where('batch_id', $activeBatch->id)
+                            ->where('status', 'active');
+                    });
+                })->whereNotNull('score'); // Hanya submission yang sudah dinilai
             }])
             ->get();
 
@@ -24,6 +36,10 @@ class TopPerformerController extends Controller
         foreach ($courses as $course) {
             $topStudents = User::where('role_id', 3) // role student
                 ->where('course_id', $course->id)
+                ->whereHas('enrollments', function($query) use ($activeBatch) {
+                    $query->where('batch_id', $activeBatch->id)
+                        ->where('status', 'active');
+                })
                 ->where('is_active', true)
                 ->withCount(['submissions as average_score' => function($query) {
                     $query->select(DB::raw('coalesce(avg(score),0)'))
@@ -41,6 +57,12 @@ class TopPerformerController extends Controller
 
     public function export()
     {
+        $activeBatch = Batch::where('is_active', true)->first();
+
+        if (!$activeBatch) {
+            return back()->with('error', 'Tidak ada batch yang aktif');
+        }
+
         // Persiapkan data untuk ekspor
         $courses = Course::where('is_active', true)->get();
         $csvData = [];
@@ -58,6 +80,10 @@ class TopPerformerController extends Controller
         foreach ($courses as $course) {
             $topStudents = User::where('role_id', 3)
                 ->where('course_id', $course->id)
+                ->whereHas('enrollments', function($query) use ($activeBatch) {
+                    $query->where('batch_id', $activeBatch->id)
+                        ->where('status', 'active');
+                })
                 ->where('is_active', true)
                 ->withCount(['submissions as average_score' => function($query) {
                     $query->select(DB::raw('coalesce(avg(score),0)'))

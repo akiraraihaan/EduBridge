@@ -4,14 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 
 class MentorController extends Controller
 {
     public function index()
     {
+        $activeBatch = Batch::where('is_active', true)->first();
+
         $mentors = User::where('role_id', 2)
-            ->with('preferredCourse')
+            ->whereHas('enrollments', function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch?->id)
+                    ->where('status', 'active');
+            })
+            ->with(['preferredCourse', 'enrollments' => function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch?->id)
+                    ->where('status', 'active');
+            }])
             ->latest()
             ->get();
 

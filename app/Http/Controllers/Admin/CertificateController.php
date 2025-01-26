@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,23 +15,63 @@ class CertificateController extends Controller
 {
     public function index()
     {
+        $activeBatch = Batch::where('is_active', true)->first();
+
+        if (!$activeBatch) {
+            return view('admin.certificates.index', [
+                'mentors' => collect(),
+                'courses' => collect(),
+                'certificates' => collect()
+            ]);
+        }
+
         $mentors = User::where('role_id', 2)
+            ->whereHas('enrollments', function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch->id)
+                    ->where('status', 'active');
+            })
             ->with(['preferredCourse', 'certificates'])
             ->get();
 
-        $courses = Course::with(['students' => function($query) {
-            $query->with('certificates');
+        $courses = Course::with(['students' => function($query) use ($activeBatch) {
+            $query->whereHas('enrollments', function($q) use ($activeBatch) {
+                $q->where('batch_id', $activeBatch->id)
+                    ->where('status', 'active');
+            })->with('certificates');
         }])->get();
 
-        $certificates = Certificate::with('user')->get();
+        $certificates = Certificate::whereHas('user.enrollments', function($query) use ($activeBatch) {
+            $query->where('batch_id', $activeBatch->id)
+                ->where('status', 'active');
+        })->with('user')->get();
 
         return view('admin.certificates.index', compact('mentors', 'courses', 'certificates'));
     }
 
     public function create()
     {
-        $students = User::where('role_id', 3)->where('is_active', true)->get();
-        $mentors = User::where('role_id', 2)->where('is_active', true)->get();
+        $activeBatch = Batch::where('is_active', true)->first();
+
+        if (!$activeBatch) {
+            return back()->with('error', 'Tidak ada batch yang aktif');
+        }
+
+        $students = User::where('role_id', 3)
+            ->whereHas('enrollments', function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch->id)
+                    ->where('status', 'active');
+            })
+            ->where('is_active', true)
+            ->get();
+
+        $mentors = User::where('role_id', 2)
+            ->whereHas('enrollments', function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch->id)
+                    ->where('status', 'active');
+            })
+            ->where('is_active', true)
+            ->get();
+
         return view('admin.certificates.create', compact('students', 'mentors'));
     }
 
