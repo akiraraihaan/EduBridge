@@ -9,7 +9,7 @@
                         <p class="mt-1 text-sm text-gray-500">Kelola informasi profil Anda</p>
                     </div>
                     <div>
-                        <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 active:bg-orange-800 focus:outline-none focus:border-orange-800 focus:ring ring-orange-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase hover:from-orange-600 hover:to-orange-700 active:from-orange-700 active:to-orange-800 focus:outline-none focus:border-orange-800 focus:ring ring-orange-300 disabled:opacity-25 transition ease-in-out duration-150">
                             Edit Profile
                         </a>
                     </div>

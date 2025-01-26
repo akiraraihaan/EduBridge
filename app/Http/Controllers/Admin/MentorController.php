@@ -13,17 +13,16 @@ class MentorController extends Controller
     {
         $activeBatch = Batch::where('is_active', true)->first();
 
+        // Ambil semua mentor, baik yang sudah terdaftar di batch ini maupun belum
         $mentors = User::where('role_id', 2)
-            ->whereHas('enrollments', function($query) use ($activeBatch) {
-                $query->where('batch_id', $activeBatch?->id)
-                    ->where('status', 'active');
-            })
             ->with(['preferredCourse', 'enrollments' => function($query) use ($activeBatch) {
-                $query->where('batch_id', $activeBatch?->id)
-                    ->where('status', 'active');
+                $query->where('batch_id', $activeBatch?->id);
             }])
             ->latest()
-            ->get();
+            ->get()
+            ->filter(function($mentor) {
+                return $mentor->is_active; // Hanya tampilkan mentor yang aktif
+            });
 
         return view('admin.mentors.index', compact('mentors'));
     }
@@ -34,10 +33,31 @@ class MentorController extends Controller
             return back()->with('error', 'User ini bukan mentor.');
         }
 
+        $activeBatch = Batch::where('is_active', true)->first();
+        if (!$activeBatch) {
+            return back()->with('error', 'Tidak ada batch yang aktif.');
+        }
+
         $mentor->update([
             'is_active' => true,
             'course_id' => $mentor->preferred_course // Otomatis menggunakan preferred_course
         ]);
+
+        // Cek apakah mentor sudah punya enrollment di batch ini
+        $enrollment = $mentor->enrollments()
+            ->where('batch_id', $activeBatch->id)
+            ->first();
+
+        if (!$enrollment) {
+            // Jika belum ada enrollment, buat baru
+            $mentor->enrollments()->create([
+                'batch_id' => $activeBatch->id,
+                'status' => 'active'
+            ]);
+        } else {
+            // Jika sudah ada, aktifkan kembali
+            $enrollment->update(['status' => 'active']);
+        }
 
         return back()->with('success', 'Mentor berhasil diaktifkan.');
     }
@@ -48,10 +68,24 @@ class MentorController extends Controller
             return back()->with('error', 'User ini bukan mentor.');
         }
 
+        $activeBatch = Batch::where('is_active', true)->first();
+        if (!$activeBatch) {
+            return back()->with('error', 'Tidak ada batch yang aktif.');
+        }
+
         $mentor->update([
             'is_active' => false,
             'course_id' => null // Reset course_id saat dinonaktifkan
         ]);
+
+        // Cek apakah mentor punya enrollment di batch ini
+        $enrollment = $mentor->enrollments()
+            ->where('batch_id', $activeBatch->id)
+            ->first();
+
+        if ($enrollment) {
+            $enrollment->update(['status' => 'dropped']);
+        }
 
         return back()->with('success', 'Mentor berhasil dinonaktifkan.');
     }
