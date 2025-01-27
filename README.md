@@ -29,7 +29,7 @@
     - fitur AI chat sudah bisa mengakses chat dengan history per session (mengingat chat atasnya), tidak seperti sebelumnya hanya bisa per request
     - [bug fixed] semua data yg diakses sudah terhubung ke salah satu batch yang sedang aktif, sehingga tidak akan ada data yang tidak sesuai dengan batch yang aktif (pengelolaan batch sesuai dengan yang batch yang sedang aktif)
 
-    *detail tambahan:
+    *detail kecil yang diperhatikan:
     - setiap button di welcome page bisa diakses (khususnya unauthenticated user)
     - opsi kursus, daftar, dan masuk pada footer akan hilang jika user sudah login
     - scroll ke section kursus sudah smooth
@@ -38,3 +38,10 @@
     - di page tentang kami tertera data tim, hingga ke akun instagram dan github
     - entrance animation sudah ada di semua page
     - dan masih banyak lagi :D
+
+    *improvisasi ke depannya:
+    - data user untuk admin kelola siswa bisa dibuat paginate dan dilengkapi dengan fitur search serta filter
+    - fitur DO (menonaktifkan student) untuk implementasi seleksi jumlah yang banyak bisa dibuat sekaligus
+    - fitur AI chat bisa diimplementasi dengan menggunakan model yang lebih baik (misalnya menggunakan model yang lebih baik dari gemini)
+    - fitur admin distribusi sertifikat bisa dibuat sekaligus untuk memudahkan pengelolaan sertifikat (otomasi atau minimal paginate beserta fitur search dan filter)
+    - dan lain-lain
