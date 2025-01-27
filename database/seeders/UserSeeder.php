@@ -41,6 +41,7 @@ class UserSeeder extends Seeder
             'email' => 'mentor@email.com',
             'whatsapp' => '081345678901',
             'course_id' => 1,
+            'preferred_course' => 1,
             'password' => Hash::make('test1234'),
             'role_id' => 2,
             'is_active' => true,

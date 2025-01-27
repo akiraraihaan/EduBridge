@@ -19,10 +19,7 @@ class MentorController extends Controller
                 $query->where('batch_id', $activeBatch?->id);
             }])
             ->latest()
-            ->get()
-            ->filter(function($mentor) {
-                return $mentor->is_active; // Hanya tampilkan mentor yang aktif
-            });
+            ->get(); // Tanpa filter is_active agar menampilkan semua mentor
 
         return view('admin.mentors.index', compact('mentors'));
     }

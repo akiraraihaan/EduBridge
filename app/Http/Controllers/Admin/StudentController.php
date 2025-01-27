@@ -25,8 +25,7 @@ class StudentController extends Controller
             ->with(['modules.assignments.submissions' => function($query) use ($activeBatch) {
                 $query->whereHas('student', function($q) use ($activeBatch) {
                     $q->whereHas('enrollments', function($eq) use ($activeBatch) {
-                        $eq->where('batch_id', $activeBatch->id)
-                            ->where('status', 'active');
+                        $eq->where('batch_id', $activeBatch->id);
                     });
                 })->whereNotNull('score'); // Hanya submission yang sudah dinilai
             }])
@@ -37,8 +36,7 @@ class StudentController extends Controller
             $students = User::where('role_id', 3) // role student
                 ->where('course_id', $course->id)
                 ->whereHas('enrollments', function($query) use ($activeBatch) {
-                    $query->where('batch_id', $activeBatch->id)
-                        ->where('status', 'active');
+                    $query->where('batch_id', $activeBatch->id);
                 })
                 ->withCount(['submissions as average_score' => function($query) {
                     $query->select(DB::raw('coalesce(avg(score),0)'))

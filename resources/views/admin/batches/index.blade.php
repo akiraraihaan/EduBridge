@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white/40 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-xl border border-white/50">
                     <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl sm:text-2xl font-semibold text-slate-700">Manajemen Batch</h2>

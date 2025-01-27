@@ -26,23 +26,28 @@ class CertificateController extends Controller
         }
 
         $mentors = User::where('role_id', 2)
-            ->whereHas('enrollments', function($query) use ($activeBatch) {
-                $query->where('batch_id', $activeBatch->id)
-                    ->where('status', 'active');
-            })
-            ->with(['preferredCourse', 'certificates'])
-            ->get();
+            ->with(['preferredCourse', 'certificates', 'enrollments' => function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch->id);
+            }])
+            ->latest()
+            ->get()
+            ->filter(function($mentor) {
+                return $mentor->is_active;
+            });
 
         $courses = Course::with(['students' => function($query) use ($activeBatch) {
             $query->whereHas('enrollments', function($q) use ($activeBatch) {
-                $q->where('batch_id', $activeBatch->id)
-                    ->where('status', 'active');
-            })->with('certificates');
+                $q->where('batch_id', $activeBatch->id);
+            })
+            ->where('is_active', true)
+            ->with('certificates');
         }])->get();
 
-        $certificates = Certificate::whereHas('user.enrollments', function($query) use ($activeBatch) {
-            $query->where('batch_id', $activeBatch->id)
-                ->where('status', 'active');
+        $certificates = Certificate::whereHas('user', function($query) use ($activeBatch) {
+            $query->whereHas('enrollments', function($q) use ($activeBatch) {
+                $q->where('batch_id', $activeBatch->id);
+            })
+            ->where('is_active', true);
         })->with('user')->get();
 
         return view('admin.certificates.index', compact('mentors', 'courses', 'certificates'));
@@ -56,18 +61,19 @@ class CertificateController extends Controller
             return back()->with('error', 'Tidak ada batch yang aktif');
         }
 
+        $mentors = User::where('role_id', 2)
+            ->with(['enrollments' => function($query) use ($activeBatch) {
+                $query->where('batch_id', $activeBatch->id);
+            }])
+            ->latest()
+            ->get()
+            ->filter(function($mentor) {
+                return $mentor->is_active;
+            });
+
         $students = User::where('role_id', 3)
             ->whereHas('enrollments', function($query) use ($activeBatch) {
-                $query->where('batch_id', $activeBatch->id)
-                    ->where('status', 'active');
-            })
-            ->where('is_active', true)
-            ->get();
-
-        $mentors = User::where('role_id', 2)
-            ->whereHas('enrollments', function($query) use ($activeBatch) {
-                $query->where('batch_id', $activeBatch->id)
-                    ->where('status', 'active');
+                $query->where('batch_id', $activeBatch->id);
             })
             ->where('is_active', true)
             ->get();
