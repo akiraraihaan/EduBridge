@@ -45,3 +45,5 @@
     - fitur AI chat bisa diimplementasi dengan menggunakan model yang lebih baik (misalnya menggunakan model yang lebih baik dari gemini)
     - fitur admin distribusi sertifikat bisa dibuat sekaligus untuk memudahkan pengelolaan sertifikat (otomasi atau minimal paginate beserta fitur search dan filter)
     - dan lain-lain
+
+    ~ sedang coba deploy, EduBridge's Team ~
