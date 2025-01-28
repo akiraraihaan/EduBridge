@@ -1,0 +1,21 @@
+[build]
+builder = "nixpacks"
+buildCommand = "composer install && npm install && npm run dev && php artisan optimize:clear"
+
+[deploy]
+startCommand = "php artisan migrate:fresh --seed"
+restartPolicyType = "on_failure"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+
+[phases.setup]
+nixPkgs = ["php81", "php81Extensions.pgsql", "nodejs", "npm"]
+
+[phases.build]
+cmds = [
+    "npm install",
+    "npm run dev",
+    "composer install",
+    "php artisan optimize:clear",
+    "php artisan storage:link"
+]
