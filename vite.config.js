@@ -8,13 +8,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    build: {
-        outDir: 'public/build',
-        manifest: true,
-    },
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
 });
