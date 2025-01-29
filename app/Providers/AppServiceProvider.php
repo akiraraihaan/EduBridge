@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Enrollment;
 use App\Observers\EnrollmentObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Enrollment::observe(EnrollmentObserver::class);
+
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
