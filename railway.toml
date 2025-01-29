@@ -3,6 +3,7 @@ builder = "nixpacks"
 buildCommand = "composer install && npm install && npm run build"
 
 [deploy]
+startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
 restartPolicyType = "on_failure"
 
 [phases.setup]
@@ -14,5 +15,8 @@ cmds = [
     "npm run build",
     "composer install",
     "php artisan storage:link",
-    "php artisan migrate:fresh --seed"
+    "php artisan migrate:fresh --seed",
+    "php artisan config:cache",
+    "php artisan route:cache",
+    "php artisan view:cache"
 ]
