@@ -567,11 +567,18 @@ use Illuminate\Support\Facades\Storage;
                     const message = messageInput.value;
                     if (!message.trim()) return;
 
+                    // Disable input dan button selama proses
+                    messageInput.disabled = true;
+                    const submitButton = chatForm.querySelector('button[type="submit"]');
+                    submitButton.disabled = true;
+
                     addMessageToChat('user', message);
                     messageInput.value = '';
 
+                    let loadingId = null;
+
                     try {
-                        const loadingId = addLoadingMessage();
+                        loadingId = addLoadingMessage();
 
                         const response = await fetch('{{ route("student.ai-chat.send") }}', {
                             method: 'POST',
@@ -579,15 +586,16 @@ use Illuminate\Support\Facades\Storage;
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
-                            body: JSON.stringify({ message })
+                            body: JSON.stringify({ message }),
+                            timeout: 30000 // 30 detik timeout
                         });
 
-                        const data = await response.json();
-                        removeLoadingMessage(loadingId);
-
                         if (!response.ok) {
-                            throw new Error(data.message || 'Terjadi kesalahan pada server');
+                            const errorData = await response.json();
+                            throw new Error(errorData.message || 'Terjadi kesalahan pada server');
                         }
+
+                        const data = await response.json();
 
                         if (data.success) {
                             addMessageToChat('ai', data.message);
@@ -596,7 +604,21 @@ use Illuminate\Support\Facades\Storage;
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        addMessageToChat('system', `Error: ${error.message || 'Terjadi kesalahan. Silakan coba lagi.'}`);
+                        let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
+
+                        if (error.message === 'Failed to fetch') {
+                            errorMessage = 'Gagal terhubung ke server. Mohon periksa koneksi internet Anda.';
+                        }
+
+                        addMessageToChat('system', `Error: ${errorMessage}`);
+                    } finally {
+                        if (loadingId) {
+                            removeLoadingMessage(loadingId);
+                        }
+                        // Re-enable input dan button
+                        messageInput.disabled = false;
+                        submitButton.disabled = false;
+                        messageInput.focus();
                     }
 
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -646,7 +668,7 @@ use Illuminate\Support\Facades\Storage;
                     const loadingId = 'loading-' + Date.now();
                     const loadingDiv = document.createElement('div');
                     loadingDiv.id = loadingId;
-                    loadingDiv.className = 'flex items-start';
+                    loadingDiv.className = 'flex items-start loading-message';
                     loadingDiv.innerHTML = `
                         <div class="flex-shrink-0">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center">
@@ -657,7 +679,7 @@ use Illuminate\Support\Facades\Storage;
                             </div>
                         </div>
                         <div class="ml-3 bg-white p-4 rounded-xl shadow-sm">
-                            <p class="text-gray-800">. . .</p>
+                            <p class="text-gray-800">Sedang mengetik...</p>
                         </div>
                     `;
                     chatMessages.appendChild(loadingDiv);
@@ -666,6 +688,11 @@ use Illuminate\Support\Facades\Storage;
                 }
 
                 function removeLoadingMessage(loadingId) {
+                    // Remove any existing loading messages first
+                    const existingLoadingMessages = document.querySelectorAll('.loading-message');
+                    existingLoadingMessages.forEach(msg => msg.remove());
+
+                    // Then remove the specific loading message if it exists
                     const loadingElement = document.getElementById(loadingId);
                     if (loadingElement) {
                         loadingElement.remove();

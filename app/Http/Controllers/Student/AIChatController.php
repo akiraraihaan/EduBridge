@@ -17,6 +17,9 @@ class AIChatController extends Controller
         ]);
 
         try {
+            // Set timeout untuk HTTP request
+            $timeout = 25; // 25 detik
+
             // Get chat history from session
             $chatHistory = Session::get('chat_history', []);
 
@@ -40,7 +43,7 @@ class AIChatController extends Controller
                      "\nBerdasarkan konteks di atas, tolong berikan respons untuk pesan berikut:\n" .
                      $request->message;
 
-            $response = Http::withHeaders([
+            $response = Http::timeout($timeout)->withHeaders([
                 'Content-Type' => 'application/json',
                 'x-goog-api-key' => config('services.gemini.api_key'),
             ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', [
@@ -58,6 +61,10 @@ class AIChatController extends Controller
                     'maxOutputTokens' => 1024,
                 ]
             ]);
+
+            if (!$response->successful()) {
+                throw new \Exception('Gagal mendapatkan respons dari Gemini API');
+            }
 
             $aiResponse = $response->json();
 
@@ -85,9 +92,18 @@ class AIChatController extends Controller
             ], 500);
 
         } catch (\Exception $e) {
+            \Log::error('AI Chat Error: ' . $e->getMessage());
+
+            $errorMessage = 'Terjadi kesalahan: ';
+            if ($e instanceof \Illuminate\Http\Client\ConnectionException) {
+                $errorMessage .= 'Gagal terhubung ke server AI. Mohon coba lagi.';
+            } else {
+                $errorMessage .= $e->getMessage();
+            }
+
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => $errorMessage
             ], 500);
         }
     }
