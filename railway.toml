@@ -4,8 +4,6 @@ buildCommand = "composer install && npm install && npm run build"
 
 [deploy]
 startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
-healthcheckPath = "/"
-healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 
 [phases.setup]
@@ -24,6 +22,6 @@ cmds = [
 GEMINI_API_KEY = "AIzaSyDTbPsIZYEd6E3u6UObjfSdye-LvpKHFm4"
 
 [[services]]
-internal_port = 8000
+internal_port = 8080
 protocol = "tcp"
 auto_start = true
