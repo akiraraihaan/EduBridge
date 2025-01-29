@@ -583,17 +583,20 @@ use Illuminate\Support\Facades\Storage;
                         });
 
                         const data = await response.json();
-
                         removeLoadingMessage(loadingId);
+
+                        if (!response.ok) {
+                            throw new Error(data.message || 'Terjadi kesalahan pada server');
+                        }
 
                         if (data.success) {
                             addMessageToChat('ai', data.message);
                         } else {
-                            throw new Error(data.message);
+                            throw new Error(data.message || 'Gagal mendapatkan respons dari AI');
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        addMessageToChat('system', 'Maaf, terjadi kesalahan. Silakan coba lagi.');
+                        addMessageToChat('system', `Error: ${error.message || 'Terjadi kesalahan. Silakan coba lagi.'}`);
                     }
 
                     chatMessages.scrollTop = chatMessages.scrollHeight;
