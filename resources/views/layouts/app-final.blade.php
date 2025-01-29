@@ -151,7 +151,7 @@ use Illuminate\Support\Facades\Storage;
                 <a href="{{ route('home') }}" class="font-bold italic p-2 text-slate-800 hover:text-orange-600 transition duration-300">{{ config('app.name') }}</a>
             </div>
 
-            <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up">
+            <div class="absolute left-[47%] transform -translate-x-1/2 animate-fade-in-up hidden md:block">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('img/logo-ori.png') }}" alt="EduBridge Logo" class="w-auto h-[25px] sm:h-[30px] md:h-[30px] hover:scale-110 transition-transform duration-300">
                 </a>
