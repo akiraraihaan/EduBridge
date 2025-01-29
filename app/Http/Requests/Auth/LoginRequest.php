@@ -41,7 +41,6 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        try {
             if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
                 RateLimiter::hit($this->throttleKey());
 
@@ -51,15 +50,6 @@ class LoginRequest extends FormRequest
             }
 
             RateLimiter::clear($this->throttleKey());
-        } catch (ValidationException $e) {
-            if ($this->expectsJson() || $this->is('api/*') || $this->wantsJson()) {
-                throw ValidationException::withMessages([
-                    'error' => 'Email atau password salah.',
-                    'details' => $e->errors(),
-                ])->status(422);
-            }
-            throw $e;
-        }
     }
 
     /**
@@ -76,12 +66,6 @@ class LoginRequest extends FormRequest
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        if ($this->expectsJson() || $this->is('api/*') || $this->wantsJson()) {
-            throw ValidationException::withMessages([
-                'error' => 'Terlalu banyak percobaan login. Silakan coba lagi dalam ' . ceil($seconds / 60) . ' menit.',
-            ])->status(429);
-        }
 
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
